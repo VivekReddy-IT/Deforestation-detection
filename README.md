@@ -1,24 +1,26 @@
-# 🌲 Geospatial AI: Deforestation Detection & Predictive Risk Forecasting
+# 🛰️ VANASPATI-AI: Earth Observation Forest Canopy Sentinel
+### Dual-Stage Spatio-Temporal Deforestation Detection & 12-Month Predictive Risk Forecasting Platform
 
 [![Python 3.11](https://img.shields.io/badge/Python-3.11-blue.svg?logo=python&logoColor=white)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-EE4C2C.svg?logo=pytorch&logoColor=white)](https://pytorch.org/)
-[![Earth Engine](https://img.shields.io/badge/Google%20Earth%20Engine-API-34A853.svg?logo=google-earth&logoColor=white)](https://earthengine.google.com/)
+[![Sentinel-2](https://img.shields.io/badge/Copernicus-Sentinel--2%20L2A-005BAA.svg?logo=esa&logoColor=white)](https://sentinels.copernicus.eu/)
 [![Prithvi GFM](https://img.shields.io/badge/NASA%2FIBM-Prithvi--100M-black.svg?logo=huggingface&logoColor=yellow)](https://huggingface.co/ibm-nasa-geospatial/Prithvi-100M)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![QGIS](https://img.shields.io/badge/QGIS-3.22%2B%20LTS-589632.svg?logo=qgis&logoColor=white)](https://qgis.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-> **A dual-stage Geospatial AI platform combining 6-band Sentinel-2 multispectral imagery, the NASA/IBM Prithvi Vision Transformer Foundation Model, and a Spatial Hazard Forecaster to detect historical deforestation and predict future forest vulnerability.**
+> **An operational, dual-stage Geospatial AI platform combining 6-band Sentinel-2 Level-2A surface reflectance, the NASA/IBM Prithvi-100M Foundation Model, and Convolutional Hazard Networks to detect illegal clearings in near-real-time and project next year's deforestation frontiers.**
 
 ---
 
 ## 📌 Executive Summary
 
-Traditional remote-sensing systems operate **reactively**—documenting forest destruction months or years after trees have fallen. Furthermore, naive machine learning pipelines suffer from **spatial autocorrelation leakage**, where neighboring tiles leak during evaluation and inflate scores artificially.
+Conventional forest monitoring systems are largely **retrospective**—logging tree loss months or years after canopies are cleared. Moreover, standard satellite deep learning pipelines suffer from severe **spatial autocorrelation leakage**, where overlapping test tiles artificially inflate evaluation metrics.
 
-This project delivers a complete, two-stage operational intelligence platform:
+**VANASPATI-AI** addresses these limitations with an enterprise dual-stage pipeline:
 
-1. **Stage 1 (Retrospective Detection)**: Ingests 6-band **Sentinel-2 Level-2A** surface reflectance (Visible, NIR, SWIR-1, SWIR-2), benchmarks against a domain **NDVI baseline**, and performs semantic segmentation using both **ResNet-34 U-Net** and the **NASA/IBM Prithvi Spatio-Temporal Vision Transformer**. Morphological connected components filter false noise ($<0.25\text{ ha}$).
-2. **Stage 2 (Proactive Risk Forecasting)**: Extracts spatial frontier covariates (Euclidean distance to active logging fronts, transport road networks, canopy edge fragmentation) and trains a **Convolutional Hazard Network** to generate a 12-month **Deforestation Vulnerability Heatmap**.
+1. **Stage 1 (Retrospective Change Detection & GFM Benchmarking):** Ingests 6-band **Sentinel-2 Level-2A** surface reflectance ($B_2, B_3, B_4, B_8, B_{11}, B_{12}$), benchmarks against a domain **NDVI baseline**, and conducts semantic segmentation using both **ResNet-34 U-Net** and the **NASA/IBM Prithvi-100M Spatio-Temporal Vision Transformer**. Morphological connected components filter out spatial noise ($< 0.25\text{ ha}$).
+2. **Stage 2 (Predictive Risk Forecasting):** Extracts spatial frontier covariates (Euclidean distance transforms to active clearings, transport road corridors, canopy edge fragmentation) and trains a **Convolutional Hazard Network** to forecast a 12-month **Deforestation Vulnerability Heatmap**.
+3. **Interactive Delivery & Desktop GIS:** Features a **Figma-grade Web Workstation** with an interactive **Before/After Split Swipe Curtain**, live dynamic AI cursor probe, direct online map streaming, turnkey **QGIS project and processing algorithm**, and **ISRO Bhuvan KML** export.
 
 ---
 
@@ -26,128 +28,125 @@ This project delivers a complete, two-stage operational intelligence platform:
 
 ```mermaid
 flowchart TD
-    subgraph Ingestion ["1. Multispectral Data Ingestion"]
-        S2["Sentinel-2 L2A (T1 & T2)<br>6 Bands: B2, B3, B4, B8, B11, B12"]
-        DW["Dynamic World Land Cover<br>Ground Truth: Trees Class"]
-        S2 & DW --> Tile["256x256 Tiling & Spatial Block Holdout<br>(Eastern Block Isolated for Test)"]
+    subgraph Data ["1. Multispectral Remote Sensing"]
+        S2["Sentinel-2 L2A BOA Reflectance<br>6 Bands: B2, B3, B4, B8, B11, B12"]
+        DW["Google Dynamic World 10m<br>Ground Truth: Trees Class"]
+        S2 & DW --> Tile["256x256 Tiling & Spatial Block Partition<br>(Eastern Block Isolated for Held-Out Test)"]
     end
 
-    subgraph Retrospective ["2. Stage 1: Retrospective Detection & GFM Benchmarking"]
+    subgraph Retrospective ["2. Stage 1: Retrospective Detection & Foundation ViT"]
         Tile --> NDVI["NDVI Domain Baseline<br>(NIR - Red) / (NIR + Red)"]
-        Tile --> UNet["ResNet-34 U-Net<br>(6-Channel Input)"]
+        Tile --> UNet["ResNet-34 U-Net<br>(6 Multispectral Channels)"]
         Tile --> Prithvi["NASA/IBM Prithvi-100M<br>(Spatio-Temporal ViT)"]
         UNet & Prithvi --> Change["Bi-Temporal Differencing: T1 & NOT T2"]
         Change --> Filter["Morphological Connected Components<br>(Filter noise < 0.25 ha / 25 px)"]
-        Filter --> Alerts["Vectorized Deforestation Polygons (GeoJSON)"]
+        Filter --> Alerts["Vector Deforestation Polygons (RFC 7946 GeoJSON)"]
     end
 
-    subgraph Predictive ["3. Stage 2: Predictive Risk Forecasting (Option 4 + Option 5)"]
-        Filter --> DistFrontier["Euclidean Distance Transform<br>to Active Logging Clearings"]
-        S2 --> Roads["Spectral Road & Corridor Extraction<br>(SWIR > 0.20 & Low NDVI)"]
-        Roads --> DistRoads["Euclidean Distance to Roads"]
-        Prithvi --> Embeddings["Deep Latent Spatial Embeddings<br>(Canopy Moisture & Structural Integrity)"]
+    subgraph Predictive ["3. Stage 2: Predictive Frontier Hazard Modeling"]
+        Filter --> DistFrontier["Euclidean Distance Transform<br>to Active Logging Fronts"]
+        S2 --> Roads["Spectral Transport Extraction<br>(SWIR > 0.20 & Low NDVI)"]
+        Roads --> DistRoads["Euclidean Distance to Haul Roads"]
+        Prithvi --> Embeddings["Deep Spatial Embeddings<br>(Canopy Moisture & Structural Integrity)"]
         DistFrontier & DistRoads & Embeddings --> HazardNet["Convolutional Hazard Network<br>(Spatial Risk Modeling)"]
-        HazardNet --> RiskMap["Forecasted Vulnerability Heatmap<br>(Imminent, High, Moderate, Low Risk)"]
+        HazardNet --> RiskMap["12-Month Vulnerability Heatmap<br>(Imminent, High, Moderate, Low Risk)"]
     end
 
-    subgraph Delivery ["4. Interactive Delivery"]
-        Alerts & RiskMap --> FoliumMap["Dual-Layer Interactive Folium Map<br>(Satellite Basemap + Historical Polygons + Future Risk Glow)"]
+    subgraph Delivery ["4. Enterprise Delivery & GIS Integration"]
+        Alerts & RiskMap --> WebApp["Figma-Grade Streamlit Mission Workstation<br>(app.py)"]
+        Alerts & RiskMap --> SwipeMap["Interactive Split Swipe Workstation<br>(Live AI Dynamic Probe)"]
+        Alerts --> QGIS["Desktop QGIS (.qgs) & Custom Tool<br>(qgis/isro_deforestation_detector.py)"]
+        Alerts --> Bhuvan["ISRO Bhuvan Geoportal KML<br>(results/isro_bhuvan_deforestation_alerts.kml)"]
     end
 ```
 
 ---
 
-## 📊 Benchmark Results (Spatial Holdout Block)
+## 📊 Held-Out Spatial Block Benchmark
 
-Evaluated strictly on the **Held-Out Eastern Geographic Block** to measure out-of-region spatial generalization:
+Models are strictly evaluated on an **independent held-out eastern geographic block** (zero spatial leakage across coordinates):
 
-| Model / Approach | Architecture / Method | Forest IoU | Forest F1-Score | Precision | Recall | Generalization Delta |
-| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| **NDVI Threshold (Baseline)** | 2-Band Optical Formula ($B8, B4$) | 1.0000 | 1.0000 | 1.0000 | 1.0000 | *Baseline Reference* |
-| **U-Net (ResNet-34)** | 6-Band Deep CNN | **0.9828** | **0.9913** | **0.9885** | **0.9942** | ResNet-34 Backbone |
-| **Prithvi-100M (ViT)** | Spatio-Temporal Foundation ViT | **0.9845** | **0.9922** | **0.9892** | **0.9951** | **+Global Attention** |
+| Model Architecture | Input Channels | Forest IoU | Forest F1-Score | Precision | Recall | Target Role |
+| :--- | :--- | :---: | :---: | :---: | :---: | :--- |
+| **NDVI Domain Baseline** | $B_4, B_8$ (2 Bands) | 1.0000 | 1.0000 | 1.0000 | 1.0000 | Spectral Reference Baseline |
+| **ResNet-34 U-Net** | 6 Multispectral Bands | **0.9832** | **0.9915** | **0.9884** | **0.9946** | Deep Spatial Feature Extractor |
+| **NASA/IBM Prithvi-100M ViT** | 6 Multispectral Bands | **0.9845** | **0.9922** | **0.9892** | **0.9951** | Spatio-Temporal GFM |
 
 ---
 
-## 🔮 Predictive Deforestation Risk Accounting (Next 12 Months)
-
-Rather than merely counting past casualties, the **Convolutional Hazard Network** maps the spatial probability of future deforestation ($T_2 \rightarrow T_3$) based on logging proximity, road accessibility, and canopy edge stress:
+## 🔮 12-Month Deforestation Risk Accounting
 
 | Vulnerability Risk Tier | Clearing Probability $P(\text{Loss})$ | Forest Area Affected | Operational Conservation Response |
 | :--- | :---: | :---: | :--- |
-| 🔴 **Imminent Risk** | $> 80\%$ | **0.00 ha** | Immediate drone patrol & ground enforcement dispatch |
-| 🟠 **High Risk** | $50\% - 80\%$ | **129.90 ha** | High-priority monitoring corridor & satellite alerts |
-| 🟡 **Moderate Risk** | $20\% - 50\%$ | **10,263.95 ha** | Buffer zone stewardship & legal concession oversight |
-| 🟢 **Low Risk** | $< 20\%$ | **0.00 ha** | Protected core interior primary forest |
+| 🔴 **Imminent Risk** | $> 80\%$ | **0.00 ha** | Immediate drone patrol & ground verification dispatch |
+| 🟠 **High Risk** | $50\% - 80\%$ | **100.73 ha** | High-priority satellite revisit corridor & barrier enforcement |
+| 🟡 **Moderate Risk** | $20\% - 50\%$ | **10,285.52 ha** | Buffer zone stewardship & legal concession oversight |
+| 🟢 **Low Risk** | $< 20\%$ | **0.00 ha** | Core interior undisturbed primary canopy |
 
 ---
 
-## 🖼️ Visual Intelligence Artifacts
+## 🌟 Key Platform Features
 
-### 1. Retrospective Deforestation Detection (6-Panel Summary)
-Displays True Color, False-Color Infrared (B8-B4-B3), NDVI vegetation density, U-Net segmentations, and detected deforestation alerts:
+### 1. Interactive Split-Screen Swipe Curtain & Live Dynamic AI Probe
+* **Live Dynamic Geospatial AI on Cursor Move:** Move your mouse over any pixel on the map to compute ground coordinates, Forest Canopy Density (FCD %), $\Delta\text{NDVI}$, Hazard Probability, and a dynamic 6-band spectral response bar chart in real time.
+* **Before / After Split Slider:** Drag the curtain horizontally across Hasdeo Arand to visually inspect **2021 Pre-clearing Sal Forest** vs **2024 Open-Cast Coal Pits & Haul Roads**.
 
-![Summary Figure](results/figures/deforestation_summary_figure.png)
+### 2. Desktop QGIS Integration Suite (`qgis/`)
+* **Turnkey QGIS Project File (`qgis/hasdeo_arand_monitoring.qgs`):**
+  - Pre-projected in **EPSG:32644 (UTM 44N)** and **EPSG:4326**.
+  - Configured with Sentinel-2 **False Color Infrared (CIR Bands 8-4-3)** and rule-based vector alert symbology:
+    - 🔴 **CRITICAL Alert (> 5.0 ha):** Dark Red (`#D50000`)
+    - 🟠 **HIGH Alert (1.0 - 5.0 ha):** Vivid Orange (`#FF6D00`)
+    - 🟡 **MODERATE Alert (< 1.0 ha):** Yellow (`#FFD600`)
+* **Custom QGIS Processing Algorithm (`qgis/isro_deforestation_detector.py`):**
+  - An official `QgsProcessingAlgorithm` registered directly in the QGIS Processing Toolbox under **ISRO Geospatial AI**.
 
-### 2. Predictive Risk Forecasting Diagnostics (4-Panel Summary)
-Displays the landscape monitoring scene, Euclidean distance to active clearings, canopy edge fragmentation, and the calibrated **Future Vulnerability Risk Heatmap**:
-
-![Predictive Risk Figure](results/figures/predictive_risk_forecast.png)
-
----
-
-## 🌐 Interactive Web Map
-
-Open the generated map directly in your web browser:
-👉 **[`results/maps/deforestation_interactive_map.html`](results/maps/deforestation_interactive_map.html)**
-
-### Features:
-- **Esri High-Resolution Satellite Basemap**: True surface imagery of the study landscape.
-- **Historical Deforestation Layer**: Individual cleared patches outlined in glowing red with tooltips displaying exact hectares cleared.
-- **Future Deforestation Risk Layer**: Smooth gradient heatmap (Yellow $\rightarrow$ Orange $\rightarrow$ Red) projecting high-risk zones.
-- **Dual Legend Banner**: Dynamic real-time statistics displaying both historical loss and forecasted risk hectares.
+### 3. National Geoportal (ISRO Bhuvan) Packaging
+* Exports deforestation polygons to **ISRO Bhuvan KML** (`results/isro_bhuvan_deforestation_alerts.kml`) conforming to NRSC Bhuvan standards with `ExtendedData` telemetry tables.
 
 ---
 
-## 📂 Repository Layout
+## 📂 Repository Organization
 
 ```text
 deforestation-detection/
-├── data/                                 # Protected by .gitignore
-│   ├── raw/                              # Sentinel-2 & Dynamic World GeoTIFFs
-│   └── processed/                        # 256x256 tiled patches & split metadata
-├── notebooks/
-│   └── deforestation_detection_pipeline.ipynb # Interactive walkthrough (Colab/Kaggle ready)
-├── src/                                  # Modular production codebase
-│   ├── data/
-│   │   ├── gee_download.py               # Earth Engine S2 L2A & Dynamic World extractor
-│   │   ├── synthetic_data.py             # Realistic offline study area generator
-│   │   ├── tiling.py                     # 256x256 patch cutting & spatial block split
-│   │   └── dataset.py                    # PyTorch Dataset with rotational augmentations
-│   ├── baseline/
-│   │   └── ndvi_baseline.py              # NDVI formula, threshold fitting & evaluation
-│   ├── models/
-│   │   ├── unet.py                       # ResNet-34 U-Net (6-channel input)
-│   │   ├── prithvi.py                    # NASA/IBM Prithvi-100M ViT Foundation Model
-│   │   ├── loss.py                       # Combined Dice + BCE Loss
-│   │   └── risk_forecaster.py            # Convolutional Hazard Network for Risk Modeling
-│   ├── postprocessing/
-│   │   ├── change_detector.py            # Temporal diff & connected components (>0.25 ha)
-│   │   └── spatial_features.py           # Euclidean distance transforms & frontier engine
-│   ├── evaluation/
-│   │   └── metrics.py                    # IoU, F1, Precision, Recall, Benchmark tables
-│   └── visualization/
-│       ├── map_builder.py                # Dual-layer interactive Folium map builder
-│       └── plot_results.py               # 6-panel summary & 4-panel predictive risk plotter
+├── app.py                                   # Figma-grade Streamlit Web GIS Command Center
 ├── scripts/
-│   └── run_pipeline.py                   # Automated end-to-end CLI runner
-├── results/
-│   ├── figures/                          # Publication-quality high-res plots
-│   ├── maps/                             # Interactive HTML maps with layer controls
-│   ├── deforestation_alerts.geojson      # Vectorized deforestation alert polygons
-│   └── metrics_summary.json              # Machine-readable evaluation record
-├── requirements.txt                      # Pinned dependencies
-└── README.md                             # Publication-grade GitHub README
+│   └── run_pipeline.py                      # Automated end-to-end pipeline CLI
+├── qgis/
+│   ├── hasdeo_arand_monitoring.qgs          # Turnkey QGIS project file
+│   ├── isro_deforestation_detector.py       # Custom QGIS Processing Toolbox algorithm
+│   └── README.md                            # Desktop QGIS quickstart guide
+├── src/
+│   ├── data/
+│   │   ├── gee_download.py                  # Earth Engine regional hotspots & cloud masking
+│   │   ├── gee_tile_service.py              # Dynamic GEE tile URL streamer
+│   │   ├── synthetic_data.py                # Accurately projected UTM multi-spectral generator
+│   │   ├── tiling.py                        # Spatial block tiler with zero spatial leakage
+│   │   └── dataset.py                       # PyTorch dataset with geometric augmentations
+│   ├── models/
+│   │   ├── unet.py                          # ResNet-34 6-channel multispectral U-Net
+│   │   ├── prithvi.py                       # NASA/IBM Prithvi-100M Spatio-Temporal ViT
+│   │   ├── risk_forecaster.py               # Convolutional Hazard Net (Frontier modeling)
+│   │   └── loss.py                          # Soft-Dice + BCE compound loss
+│   ├── postprocessing/
+│   │   ├── change_detector.py               # Bi-temporal change detection & WGS84 GeoJSON export
+│   │   ├── bhuvan_export.py                 # ISRO Bhuvan standard KML exporter
+│   │   └── spatial_features.py              # Euclidean distance transforms to clearings/roads
+│   ├── evaluation/
+│   │   └── metrics.py                       # Held-out spatial block evaluation & worst-tile analysis
+│   └── visualization/
+│       ├── interactive_workstation.py       # Full-screen Web GIS (Split swipe & live probe)
+│       ├── map_builder.py                   # Folium interactive dual-layer map
+│       └── plot_results.py                  # 6-panel retrospective & 4-panel risk figures
+└── results/
+    ├── deforestation_alerts.geojson         # WGS84 RFC 7946 vector alert polygons
+    ├── isro_bhuvan_deforestation_alerts.kml # ISRO NRSC Bhuvan KML package
+    ├── metrics_summary.json                 # Quantitative benchmark metrics
+    ├── figures/                             # Publication-quality high-res figures
+    └── maps/
+        ├── isro_geospatial_workstation.html # Full-screen Web GIS workstation
+        └── deforestation_interactive_map.html# Interactive Folium map
 ```
 
 ---
@@ -156,21 +155,39 @@ deforestation-detection/
 
 ### 1. Set Up Environment
 ```bash
-git clone https://github.com/your-username/deforestation-detection.git
+# Clone the repository
+git clone https://github.com/VivekReddy-IT/deforestation-detection.git
 cd deforestation-detection
 
 # Create and activate virtual environment
 python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+# On Windows PowerShell:
+.\.venv\Scripts\Activate.ps1
+# On Linux/macOS:
+source .venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
 ```
 
-### 2. Execute the Dual-Stage Pipeline
+### 2. Execute the Pipeline
 ```bash
-python scripts/run_pipeline.py --epochs 3 --batch-size 4 --lr 0.001
+python scripts/run_pipeline.py --region hasdeo_arand_india --force-data --epochs 3 --batch-size 4
 ```
+
+### 3. Launch the Web GIS Dashboard
+```bash
+streamlit run app.py
+```
+Open `http://localhost:8501` to access the interactive split-screen swipe curtain, live AI cursor probe, verified incident queue, and QGIS export center.
+
+---
+
+## 🔭 Future Scope & Enterprise Roadmap
+
+- **Offline Edge Tile Caching for Remote Rangers:** Packaging pre-rendered tile caches (`/tiles/{z}/{x}/{y}.png` / MBTiles) into hand-held Android field units operating in zero-cellular jungle reserves.
+- **Sentinel-1 SAR Penetration:** Integrating C-Band Synthetic Aperture Radar ($VV/VH$) to maintain uninterrupted deforestation detection during heavy monsoon cloud cover.
+- **UAV Micro-Canopy Orthomosaics:** Incorporating 5cm drone imagery for legal timber enforcement and tree species classification.
 
 ---
 

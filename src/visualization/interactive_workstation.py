@@ -293,7 +293,7 @@ def build_isro_geospatial_workstation(
         <div class="header-actions">
             <button class="btn-action" onclick="exportBhuvanKML()"><i class="fa-solid fa-earth-asia"></i> Export Bhuvan KML</button>
             <button class="btn-action" onclick="downloadGeoJSON()"><i class="fa-solid fa-file-code"></i> GeoJSON</button>
-            <button class="btn-action btn-primary" onclick="triggerISROFieldDispatch()"><i class="fa-solid fa-satellite-dish"></i> Sync ISRO_APP (MQTT)</button>
+            <button class="btn-action btn-primary" onclick="triggerQgisExport()"><i class="fa-solid fa-layer-group"></i> QGIS Project Suite</button>
         </div>
     </div>
 
@@ -541,11 +541,11 @@ def build_isro_geospatial_workstation(
 
         // 9. Dispatch & Export Actions
         function dispatchRanger(id, lat, lon) {{
-            alert(`🚨 FIELD DISPATCH BROADCAST (ISRO_APP)\\n\\nIncident: ${{id}}\\nCoordinates: ${{lat.toFixed(5)}}°N, ${{lon.toFixed(5)}}°E\\n\\nAlert emitted via MQTT to field patrol team.`);
+            alert("Forest Incident Patrol Ticket Generated\\n\\nIncident ID: " + id + "\\nCentroid: " + lat.toFixed(5) + "°N, " + lon.toFixed(5) + "°E\\nTarget: High-Priority Deforestation Ground Validation");
         }}
 
-        function triggerISROFieldDispatch() {{
-            alert(`📡 ISRO Field Tactical Gateway Synced!\\n\\nTile server active on http://localhost:8080/tiles/{{z}}/{{x}}/{{y}}.png\\nAll ${{rawGeojsonData.features.length}} active deforestation polygons broadcast to ISRO_APP via MQTT topic: 'isro/alerts/deforestation'`);
+        function triggerQgisExport() {{
+            alert("Desktop QGIS Package Ready\\n\\nTurnkey Project: qgis/hasdeo_arand_monitoring.qgs\\nProcessing Algorithm: qgis/isro_deforestation_detector.py\\n\\nDouble-click the .qgs file in QGIS to open the pre-styled multispectral and vector layers.");
         }}
 
         function exportBhuvanKML() {{
