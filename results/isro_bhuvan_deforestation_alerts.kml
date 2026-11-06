@@ -33,35 +33,35 @@
     <Folder>
       <name>Active Deforestation Incidents</name>
       <Placemark>
-        <name>ISRO-HAS-001 (1.19 ha)</name>
-        <styleUrl>#high_alert</styleUrl>
+        <name>ISRO-HAS-001 (0.594 ha)</name>
+        <styleUrl>#moderate_alert</styleUrl>
         <ExtendedData>
           <Data name="Incident_ID">
             <value>ISRO-HAS-001</value>
           </Data>
           <Data name="Cleared_Area_Hectares">
-            <value>1.19</value>
+            <value>0.594</value>
           </Data>
           <Data name="Cleared_Area_Acres">
-            <value>2.94</value>
+            <value>1.47</value>
           </Data>
           <Data name="Severity_Level">
-            <value>HIGH (Active Logging Front)</value>
+            <value>MODERATE (Encroachment/Clear-cut)</value>
           </Data>
           <Data name="Urgency_Code">
-            <value>PATROL_REQUIRED</value>
+            <value>MONITORING</value>
           </Data>
           <Data name="Estimated_CO2_Loss_Tonnes">
-            <value>368.9</value>
+            <value>184.1</value>
           </Data>
           <Data name="UTM_Coordinates">
-            <value>44N 682523 2524665</value>
+            <value>44N 684722 2528834</value>
           </Data>
           <Data name="Latitude">
-            <value>22.819752</value>
+            <value>22.857149</value>
           </Data>
           <Data name="Longitude">
-            <value>82.778481</value>
+            <value>82.800398</value>
           </Data>
           <Data name="Verification_Status">
             <value>PENDING_FIELD_VERIFICATION</value>
@@ -72,12 +72,12 @@
         &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
             &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-001 | Deforestation Alert&lt;/h3&gt;
             &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;1.19 ha&lt;/b&gt; (2.94 acres)&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;HIGH (Active Logging Front)&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;PATROL_REQUIRED&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;368.9 t CO₂&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.81975°N, 82.77848°E&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 682523 2524665&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.594 ha&lt;/b&gt; (1.47 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;184.1 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.85715°N, 82.80040°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 684722 2528834&lt;/td&gt;&lt;/tr&gt;
                 &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
             &lt;/table&gt;
             &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
@@ -89,23 +89,23 @@
           <altitudeMode>clampToGround</altitudeMode>
           <outerBoundaryIs>
             <LinearRing>
-              <coordinates>82.77688311453436,22.820034794574035,0 82.77688194261431,22.819944501705397,0 82.7762975262976,22.81995101887823,0 82.77629518324521,22.81977043308045,0 82.77639258585118,22.819769347043227,0 82.77639375743857,22.81985963993789,0 82.77678336805975,22.81985529517509,0 82.77678219621573,22.819765002299512,0 82.77697700136241,22.819762829570752,0 82.77697582939601,22.81967253670365,0 82.77717063439061,22.81967036374651,0 82.77717180648534,22.81976065660406,0 82.77795102673961,22.81975196235798,0 82.77794985413165,22.819661669538622,0 82.77833946385965,22.81965732100709,0 82.77833829100099,22.819567028205746,0 82.77853309570105,22.819564853592638,0 82.77853426868802,22.819655146384424,0 82.7786316710933,22.819654058983865,0 82.77863049804218,22.819563766196858,0 82.77911750965866,22.81955832832573,0 82.77911516293265,22.81937774279626,0 82.77921256510982,22.819376655053148,0 82.779213738534,22.81946694781364,0 82.77950594522228,22.819463684213066,0 82.77950477160563,22.81937339146691,0 82.77960217375903,22.819372303485867,0 82.77960100008416,22.819282010743407,0 82.77969840216745,22.819280922707666,0 82.77969957590646,22.819371215445347,0 82.77989438018352,22.819369039185855,0 82.7798979018212,22.819639917363727,0 82.77980049949316,22.819641005537555,0 82.77980167332011,22.81973129826613,0 82.77989907571231,22.819730210087517,0 82.7799025974213,22.820001088252432,0 82.77970779224603,22.820003264578858,0 82.77970661846541,22.81991297184874,0 82.77960921593304,22.819914059917945,0 82.7796080422225,22.819823767181962,0 82.77951063974834,22.819824855186905,0 82.7795118133947,22.819915147927663,0 82.77941441085044,22.819916235877905,0 82.77941323726822,22.819825943132365,0 82.77873141974104,22.81983355708505,0 82.77873259287414,22.81992384986404,0 82.77814817723419,22.819930373818014,0 82.77814934998828,22.82002066662458,0 82.7776623364709,22.820026101640973,0 82.7776611640376,22.819935808810527,0 82.77707674800574,22.819942328838582,0 82.77707792005411,22.82003262169767,0 82.77688311453436,22.820034794574035,0</coordinates>
+              <coordinates>82.79728513344809,22.85722667041004,0 82.79728408069387,22.85714662590922,0 82.79779291448557,22.85714087738176,0 82.79779186143841,22.857060832902455,0 82.79796147256667,22.857058916372896,0 82.79796252571305,22.857138960844757,0 82.80364449129628,22.85707465249384,0 82.80364554777118,22.8571546967147,0 82.79728513344809,22.85722667041004,0</coordinates>
             </LinearRing>
           </outerBoundaryIs>
         </Polygon>
       </Placemark>
       <Placemark>
-        <name>ISRO-HAS-002 (0.99 ha)</name>
+        <name>ISRO-HAS-002 (0.548 ha)</name>
         <styleUrl>#moderate_alert</styleUrl>
         <ExtendedData>
           <Data name="Incident_ID">
             <value>ISRO-HAS-002</value>
           </Data>
           <Data name="Cleared_Area_Hectares">
-            <value>0.99</value>
+            <value>0.548</value>
           </Data>
           <Data name="Cleared_Area_Acres">
-            <value>2.45</value>
+            <value>1.35</value>
           </Data>
           <Data name="Severity_Level">
             <value>MODERATE (Encroachment/Clear-cut)</value>
@@ -114,16 +114,16 @@
             <value>MONITORING</value>
           </Data>
           <Data name="Estimated_CO2_Loss_Tonnes">
-            <value>306.9</value>
+            <value>169.9</value>
           </Data>
           <Data name="UTM_Coordinates">
-            <value>44N 680113 2524119</value>
+            <value>44N 684099 2524317</value>
           </Data>
           <Data name="Latitude">
-            <value>22.815085</value>
+            <value>22.816441</value>
           </Data>
           <Data name="Longitude">
-            <value>82.75495</value>
+            <value>82.793793</value>
           </Data>
           <Data name="Verification_Status">
             <value>PENDING_FIELD_VERIFICATION</value>
@@ -134,12 +134,12 @@
         &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
             &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-002 | Deforestation Alert&lt;/h3&gt;
             &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.99 ha&lt;/b&gt; (2.45 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.548 ha&lt;/b&gt; (1.35 acres)&lt;/td&gt;&lt;/tr&gt;
                 &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
                 &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;306.9 t CO₂&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.81508°N, 82.75495°E&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 680113 2524119&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;169.9 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.81644°N, 82.79379°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 684099 2524317&lt;/td&gt;&lt;/tr&gt;
                 &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
             &lt;/table&gt;
             &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
@@ -151,23 +151,23 @@
           <altitudeMode>clampToGround</altitudeMode>
           <outerBoundaryIs>
             <LinearRing>
-              <coordinates>82.75495808291848,22.819555372546468,0 82.75484352507709,22.810616266809014,0 82.75494092230352,22.810615194289227,0 82.75505548649512,22.81955429956001,0 82.75495808291848,22.819555372546468,0</coordinates>
+              <coordinates>82.7929421028856,22.81708720234238,0 82.79293791028195,22.81676702195763,0 82.7928531294541,22.816767975978692,0 82.79285103327949,22.816607885773795,0 82.79302059473268,22.816605977701474,0 82.79301954655344,22.816525932605188,0 82.79293476587863,22.81652688666016,0 82.79293371775358,22.8164468415593,0 82.79301849837891,22.81644588750805,0 82.79301640204397,22.816285797311217,0 82.79386420705777,22.81627625439471,0 82.79386315840239,22.81619620933219,0 82.79411749966954,22.81619334558973,0 82.79411854847339,22.81627339064109,0 82.79445767029736,22.81626957167211,0 82.79445662129552,22.81618952663562,0 82.79479574284885,22.81618570696056,0 82.79479679204869,22.81626575198217,0 82.79488157247515,22.816264796947035,0 82.79488052322583,22.816184751929146,0 82.79547398573752,22.816178065447588,0 82.79547503533331,22.81625811043943,0 82.79496635289709,22.81626384186684,0 82.79496950082182,22.816503976904247,0 82.79488472025139,22.816504931995606,0 82.79488262172919,22.816344841964067,0 82.79352613356879,22.81636011717856,0 82.7935271820356,22.816440162254256,0 82.79369674321819,22.816438253475845,0 82.7936977917887,22.816518298543247,0 82.7932738885507,22.81652307016991,0 82.79327284022767,22.816443025083917,0 82.79318805961596,22.816443979270357,0 82.79319330103064,22.816844204710396,0 82.7931085201669,22.816845158870354,0 82.79311061666671,22.81700524904786,0 82.79302583569945,22.81700620317019,0 82.79302688390692,22.81708624826139,0 82.7929421028856,22.81708720234238,0</coordinates>
             </LinearRing>
           </outerBoundaryIs>
         </Polygon>
       </Placemark>
       <Placemark>
-        <name>ISRO-HAS-003 (0.81 ha)</name>
+        <name>ISRO-HAS-003 (0.409 ha)</name>
         <styleUrl>#moderate_alert</styleUrl>
         <ExtendedData>
           <Data name="Incident_ID">
             <value>ISRO-HAS-003</value>
           </Data>
           <Data name="Cleared_Area_Hectares">
-            <value>0.81</value>
+            <value>0.409</value>
           </Data>
           <Data name="Cleared_Area_Acres">
-            <value>2.0</value>
+            <value>1.01</value>
           </Data>
           <Data name="Severity_Level">
             <value>MODERATE (Encroachment/Clear-cut)</value>
@@ -176,16 +176,16 @@
             <value>MONITORING</value>
           </Data>
           <Data name="Estimated_CO2_Loss_Tonnes">
-            <value>251.1</value>
+            <value>126.8</value>
           </Data>
           <Data name="UTM_Coordinates">
-            <value>44N 680023 2524658</value>
+            <value>44N 681764 2524539</value>
           </Data>
           <Data name="Latitude">
-            <value>22.819962</value>
+            <value>22.818694</value>
           </Data>
           <Data name="Longitude">
-            <value>82.754136</value>
+            <value>82.771074</value>
           </Data>
           <Data name="Verification_Status">
             <value>PENDING_FIELD_VERIFICATION</value>
@@ -196,12 +196,12 @@
         &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
             &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-003 | Deforestation Alert&lt;/h3&gt;
             &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.81 ha&lt;/b&gt; (2.0 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.409 ha&lt;/b&gt; (1.01 acres)&lt;/td&gt;&lt;/tr&gt;
                 &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
                 &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;251.1 t CO₂&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.81996°N, 82.75414°E&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 680023 2524658&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;126.8 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.81869°N, 82.77107°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 681764 2524539&lt;/td&gt;&lt;/tr&gt;
                 &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
             &lt;/table&gt;
             &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
@@ -213,389 +213,17 @@
           <altitudeMode>clampToGround</altitudeMode>
           <outerBoundaryIs>
             <LinearRing>
-              <coordinates>82.75457772620788,22.820282015565603,0 82.75457656898055,22.820191721610858,0 82.75467397302977,22.820190648829357,0 82.75467281574413,22.820100354878246,0 82.75340656348155,22.82011429633654,0 82.75340771993307,22.8202045903489,0 82.75301810339649,22.82020887802466,0 82.75301579101259,22.820028289961176,0 82.75321059903594,22.820026146261107,0 82.75320944272444,22.819935852237172,0 82.75281982691095,22.819940139380527,0 82.75281867086196,22.819849845336673,0 82.75398751725142,22.81983698110778,0 82.75398636043835,22.81974668711937,0 82.75427857171144,22.819743469737837,0 82.75427625771792,22.819562881786048,0 82.75437366133558,22.819561809215998,0 82.75437713252714,22.819832691127925,0 82.75447453633141,22.819831618484244,0 82.75447337919755,22.819741324519395,0 82.7545707829318,22.819740251820942,0 82.75456962573962,22.819649957859728,0 82.75466702940388,22.8196488851065,0 82.7546658721534,22.819558591148915,0 82.75476327574762,22.81955751834092,0 82.75476559038275,22.819738106245573,0 82.75496039781024,22.819735960432272,0 82.75496618514222,22.820187430127923,0 82.75506358916799,22.820186357108472,0 82.75506474671613,22.820276651039652,0 82.75457772620788,22.820282015565603,0</coordinates>
+              <coordinates>82.77100955118473,22.819333943082494,0 82.77100333853234,22.81885366688801,0 82.77091855539814,22.818854609322432,0 82.77091752002184,22.818774563283377,0 82.77083273693266,22.818775505669063,0 82.77083480759087,22.818935597753665,0 82.77075002439823,22.818936540101628,0 82.77074381277636,22.81845626381563,0 82.77082859567201,22.81845532148969,0 82.77082756036846,22.818375275442726,0 82.77091234321011,22.818374333075393,0 82.77091337856316,22.818454379118684,0 82.77099816144984,22.81845343670261,0 82.77099712604728,22.818373390662988,0 82.77108190887998,22.81837244820552,0 82.77108397978874,22.81853254027658,0 82.77116876271596,22.8185315977667,0 82.77116669170819,22.818371505702988,0 82.77125147453192,22.818370563155387,0 82.7712504389855,22.818290517125927,0 82.77116565621127,22.818291459669858,0 82.77116358523138,22.818131367601055,0 82.7712483679066,22.818130425064464,0 82.77124940344372,22.81821047109562,0 82.77133418616395,22.8182095285103,0 82.77134039978135,22.81868980465739,0 82.77125561676408,22.818690747264743,0 82.77125665233375,22.818770793289957,0 82.77134143540052,22.818769850678937,0 82.77134454228592,22.81900998873848,0 82.77125975907063,22.819010931360523,0 82.77125872348702,22.818930885337853,0 82.77117394031676,22.818931827911147,0 82.77117497585087,22.819011873937487,0 82.7710901926266,22.81901281646939,0 82.77109226360976,22.819172908526873,0 82.77117704693302,22.819171965987636,0 82.77117808248107,22.819252012011432,0 82.7710932991083,22.819252954554347,0 82.77109433461149,22.81933300058098,0 82.77100955118473,22.819333943082494,0</coordinates>
             </LinearRing>
           </outerBoundaryIs>
         </Polygon>
       </Placemark>
       <Placemark>
-        <name>ISRO-HAS-004 (0.68 ha)</name>
+        <name>ISRO-HAS-004 (0.37 ha)</name>
         <styleUrl>#moderate_alert</styleUrl>
         <ExtendedData>
           <Data name="Incident_ID">
             <value>ISRO-HAS-004</value>
-          </Data>
-          <Data name="Cleared_Area_Hectares">
-            <value>0.68</value>
-          </Data>
-          <Data name="Cleared_Area_Acres">
-            <value>1.68</value>
-          </Data>
-          <Data name="Severity_Level">
-            <value>MODERATE (Encroachment/Clear-cut)</value>
-          </Data>
-          <Data name="Urgency_Code">
-            <value>MONITORING</value>
-          </Data>
-          <Data name="Estimated_CO2_Loss_Tonnes">
-            <value>210.8</value>
-          </Data>
-          <Data name="UTM_Coordinates">
-            <value>44N 682652 2524471</value>
-          </Data>
-          <Data name="Latitude">
-            <value>22.817985</value>
-          </Data>
-          <Data name="Longitude">
-            <value>82.77972</value>
-          </Data>
-          <Data name="Verification_Status">
-            <value>PENDING_FIELD_VERIFICATION</value>
-          </Data>
-        </ExtendedData>
-        <description>
-        &lt;![CDATA[
-        &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
-            &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-004 | Deforestation Alert&lt;/h3&gt;
-            &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.68 ha&lt;/b&gt; (1.68 acres)&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;210.8 t CO₂&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.81799°N, 82.77972°E&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 682652 2524471&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
-            &lt;/table&gt;
-            &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
-        &lt;/div&gt;
-        ]]&gt;
-        </description>
-        <Polygon>
-          <extrude>1</extrude>
-          <altitudeMode>clampToGround</altitudeMode>
-          <outerBoundaryIs>
-            <LinearRing>
-              <coordinates>82.77911281623042,22.81919715726247,0 82.77911164288821,22.819106864493964,0 82.7790142408976,22.819107952163257,0 82.77901306762548,22.81901765938888,0 82.77911046955197,22.81901657172436,0 82.77910812289726,22.818835986181938,0 82.77940032825613,22.818832722860165,0 82.77939915474522,22.81874243010167,0 82.77949655645548,22.81874134221357,0 82.77949773003053,22.81883163496729,0 82.77959513179898,22.818830547014922,0 82.77959278452653,22.81864996151597,0 82.77930057958824,22.818653225165942,0 82.77930175302905,22.818743517930294,0 82.7792043513069,22.81874460569944,0 82.77920200455955,22.81856402016009,0 82.77968901246928,22.818558580767366,0 82.77969018616074,22.81864887351369,0 82.77988498941133,22.818646697330685,0 82.7798450828736,22.81557674367529,0 82.77994248230895,22.81557565565712,0 82.77998708662287,22.81900678006706,0 82.77988968474988,22.819007868266905,0 82.77989085859937,22.819098160998262,0 82.77959865275227,22.819101425255262,0 82.77959630544413,22.818920839762782,0 82.77940150177297,22.81892301561759,0 82.77940267529574,22.819013308373915,0 82.7793052733871,22.819014396216883,0 82.77930644685166,22.81910468897692,0 82.77920904487291,22.819105776765177,0 82.77921021827927,22.819196069528914,0 82.77911281623042,22.81919715726247,0</coordinates>
-            </LinearRing>
-          </outerBoundaryIs>
-        </Polygon>
-      </Placemark>
-      <Placemark>
-        <name>ISRO-HAS-005 (0.63 ha)</name>
-        <styleUrl>#moderate_alert</styleUrl>
-        <ExtendedData>
-          <Data name="Incident_ID">
-            <value>ISRO-HAS-005</value>
-          </Data>
-          <Data name="Cleared_Area_Hectares">
-            <value>0.63</value>
-          </Data>
-          <Data name="Cleared_Area_Acres">
-            <value>1.56</value>
-          </Data>
-          <Data name="Severity_Level">
-            <value>MODERATE (Encroachment/Clear-cut)</value>
-          </Data>
-          <Data name="Urgency_Code">
-            <value>MONITORING</value>
-          </Data>
-          <Data name="Estimated_CO2_Loss_Tonnes">
-            <value>195.3</value>
-          </Data>
-          <Data name="UTM_Coordinates">
-            <value>44N 679732 2524675</value>
-          </Data>
-          <Data name="Latitude">
-            <value>22.82014</value>
-          </Data>
-          <Data name="Longitude">
-            <value>82.751297</value>
-          </Data>
-          <Data name="Verification_Status">
-            <value>PENDING_FIELD_VERIFICATION</value>
-          </Data>
-        </ExtendedData>
-        <description>
-        &lt;![CDATA[
-        &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
-            &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-005 | Deforestation Alert&lt;/h3&gt;
-            &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.63 ha&lt;/b&gt; (1.56 acres)&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;195.3 t CO₂&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.82014°N, 82.75130°E&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 679732 2524675&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
-            &lt;/table&gt;
-            &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
-        &lt;/div&gt;
-        ]]&gt;
-        </description>
-        <Polygon>
-          <extrude>1</extrude>
-          <altitudeMode>clampToGround</altitudeMode>
-          <outerBoundaryIs>
-            <LinearRing>
-              <coordinates>82.75068155687123,22.820324878234462,0 82.7506804022104,22.820234584091413,0 82.7501933807059,22.820239935209134,0 82.75019222637174,22.820149641041485,0 82.75028963062017,22.820148570941623,0 82.75028847622768,22.820058276777598,0 82.75077549706133,22.82005292540946,0 82.75077434235389,22.819962631267874,0 82.75106655459142,22.819959419747246,0 82.75106770949135,22.82004971387473,0 82.75116511362299,22.82004864324418,0 82.75116395865889,22.819958349121404,0 82.7513587667763,22.81995620769125,0 82.75135992186874,22.82004650180461,0 82.75145732598283,22.8200454309956,0 82.75145617082624,22.819955136886943,0 82.75165097890857,22.819952995099868,0 82.7516498236295,22.81986270099953,0 82.7518446315601,22.81986055898392,0 82.75184578696748,22.819950853074843,0 82.752040595003,22.81994871081187,0 82.75204175054455,22.820039004892298,0 82.75213915461768,22.820037933666878,0 82.75214031022925,22.82012822774153,0 82.7518480977998,22.82013144125345,0 82.75184925322472,22.820221735341132,0 82.75233627423204,22.82021637916697,0 82.75233742998364,22.820306673230043,0 82.75068155687123,22.820324878234462,0</coordinates>
-            </LinearRing>
-          </outerBoundaryIs>
-        </Polygon>
-      </Placemark>
-      <Placemark>
-        <name>ISRO-HAS-006 (0.61 ha)</name>
-        <styleUrl>#moderate_alert</styleUrl>
-        <ExtendedData>
-          <Data name="Incident_ID">
-            <value>ISRO-HAS-006</value>
-          </Data>
-          <Data name="Cleared_Area_Hectares">
-            <value>0.61</value>
-          </Data>
-          <Data name="Cleared_Area_Acres">
-            <value>1.51</value>
-          </Data>
-          <Data name="Severity_Level">
-            <value>MODERATE (Encroachment/Clear-cut)</value>
-          </Data>
-          <Data name="Urgency_Code">
-            <value>MONITORING</value>
-          </Data>
-          <Data name="Estimated_CO2_Loss_Tonnes">
-            <value>189.1</value>
-          </Data>
-          <Data name="UTM_Coordinates">
-            <value>44N 679416 2524677</value>
-          </Data>
-          <Data name="Latitude">
-            <value>22.820191</value>
-          </Data>
-          <Data name="Longitude">
-            <value>82.748224</value>
-          </Data>
-          <Data name="Verification_Status">
-            <value>PENDING_FIELD_VERIFICATION</value>
-          </Data>
-        </ExtendedData>
-        <description>
-        &lt;![CDATA[
-        &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
-            &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-006 | Deforestation Alert&lt;/h3&gt;
-            &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.61 ha&lt;/b&gt; (1.51 acres)&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;189.1 t CO₂&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.82019°N, 82.74822°E&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 679416 2524677&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
-            &lt;/table&gt;
-            &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
-        &lt;/div&gt;
-        ]]&gt;
-        </description>
-        <Polygon>
-          <extrude>1</extrude>
-          <altitudeMode>clampToGround</altitudeMode>
-          <outerBoundaryIs>
-            <LinearRing>
-              <coordinates>82.74951270424496,22.82033771847492,0 82.7495115503541,22.82024742427546,0 82.74600498973888,22.82028589342999,0 82.74600383816373,22.82019559906044,0 82.74746490504361,22.820179579685806,0 82.74746375251186,22.820089285385553,0 82.74756115685969,22.820088216956037,0 82.7475623094556,22.820178511251594,0 82.74775711826206,22.82017637420471,0 82.7477559655378,22.820086079918536,0 82.74834039143207,22.820079667378334,0 82.7483415445413,22.820169961636335,0 82.74843894890074,22.82016889266673,0 82.74843779572736,22.820078598413428,0 82.7495092425899,22.82006683587329,0 82.74951039646908,22.82015713007491,0 82.74980260931957,22.82015392084608,0 82.7498014552479,22.82006362665856,0 82.74989885945556,22.82006255680134,0 82.74990116773306,22.82024314516591,0 82.74970635905527,22.82024528483966,0 82.74970751307447,22.820335579029727,0 82.74951270424496,22.82033771847492,0</coordinates>
-            </LinearRing>
-          </outerBoundaryIs>
-        </Polygon>
-      </Placemark>
-      <Placemark>
-        <name>ISRO-HAS-007 (0.6 ha)</name>
-        <styleUrl>#moderate_alert</styleUrl>
-        <ExtendedData>
-          <Data name="Incident_ID">
-            <value>ISRO-HAS-007</value>
-          </Data>
-          <Data name="Cleared_Area_Hectares">
-            <value>0.6</value>
-          </Data>
-          <Data name="Cleared_Area_Acres">
-            <value>1.48</value>
-          </Data>
-          <Data name="Severity_Level">
-            <value>MODERATE (Encroachment/Clear-cut)</value>
-          </Data>
-          <Data name="Urgency_Code">
-            <value>MONITORING</value>
-          </Data>
-          <Data name="Estimated_CO2_Loss_Tonnes">
-            <value>186.0</value>
-          </Data>
-          <Data name="UTM_Coordinates">
-            <value>44N 684113 2524670</value>
-          </Data>
-          <Data name="Latitude">
-            <value>22.819621</value>
-          </Data>
-          <Data name="Longitude">
-            <value>82.793968</value>
-          </Data>
-          <Data name="Verification_Status">
-            <value>PENDING_FIELD_VERIFICATION</value>
-          </Data>
-        </ExtendedData>
-        <description>
-        &lt;![CDATA[
-        &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
-            &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-007 | Deforestation Alert&lt;/h3&gt;
-            &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.6 ha&lt;/b&gt; (1.48 acres)&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;186.0 t CO₂&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.81962°N, 82.79397°E&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 684113 2524670&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
-            &lt;/table&gt;
-            &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
-        &lt;/div&gt;
-        ]]&gt;
-        </description>
-        <Polygon>
-          <extrude>1</extrude>
-          <altitudeMode>clampToGround</altitudeMode>
-          <outerBoundaryIs>
-            <LinearRing>
-              <coordinates>82.7925637004401,22.819768824574712,0 82.79256251819677,22.8196785324768,0 82.7930495265111,22.81967305200427,0 82.79304716140086,22.819492467853344,0 82.79411857775393,22.81948040568545,0 82.79411976101174,22.81957069770846,0 82.79431456403546,22.819568503804142,0 82.79431338064933,22.81947821179077,0 82.7953847961455,22.81946614111719,0 82.79538598023733,22.81955643307753,0 82.79499637442966,22.819560823265387,0 82.79499874211805,22.81974140722141,0 82.79490134052284,22.819742504629318,0 82.79489897296276,22.81956192066365,0 82.79480157148986,22.81956301800243,0 82.79480393892162,22.81974360197774,0 82.7925637004401,22.819768824574712,0</coordinates>
-            </LinearRing>
-          </outerBoundaryIs>
-        </Polygon>
-      </Placemark>
-      <Placemark>
-        <name>ISRO-HAS-008 (0.48 ha)</name>
-        <styleUrl>#moderate_alert</styleUrl>
-        <ExtendedData>
-          <Data name="Incident_ID">
-            <value>ISRO-HAS-008</value>
-          </Data>
-          <Data name="Cleared_Area_Hectares">
-            <value>0.48</value>
-          </Data>
-          <Data name="Cleared_Area_Acres">
-            <value>1.19</value>
-          </Data>
-          <Data name="Severity_Level">
-            <value>MODERATE (Encroachment/Clear-cut)</value>
-          </Data>
-          <Data name="Urgency_Code">
-            <value>MONITORING</value>
-          </Data>
-          <Data name="Estimated_CO2_Loss_Tonnes">
-            <value>148.8</value>
-          </Data>
-          <Data name="UTM_Coordinates">
-            <value>44N 685233 2523794</value>
-          </Data>
-          <Data name="Latitude">
-            <value>22.811594</value>
-          </Data>
-          <Data name="Longitude">
-            <value>82.804779</value>
-          </Data>
-          <Data name="Verification_Status">
-            <value>PENDING_FIELD_VERIFICATION</value>
-          </Data>
-        </ExtendedData>
-        <description>
-        &lt;![CDATA[
-        &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
-            &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-008 | Deforestation Alert&lt;/h3&gt;
-            &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.48 ha&lt;/b&gt; (1.19 acres)&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;148.8 t CO₂&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.81159°N, 82.80478°E&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 685233 2523794&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
-            &lt;/table&gt;
-            &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
-        &lt;/div&gt;
-        ]]&gt;
-        </description>
-        <Polygon>
-          <extrude>1</extrude>
-          <altitudeMode>clampToGround</altitudeMode>
-          <outerBoundaryIs>
-            <LinearRing>
-              <coordinates>82.80475891359836,22.81376131359296,0 82.80470180351746,22.80942731751923,0 82.8047991972523,22.809426214592104,0 82.80485631041117,22.813760210433163,0 82.80475891359836,22.81376131359296,0</coordinates>
-            </LinearRing>
-          </outerBoundaryIs>
-        </Polygon>
-      </Placemark>
-      <Placemark>
-        <name>ISRO-HAS-009 (0.4 ha)</name>
-        <styleUrl>#moderate_alert</styleUrl>
-        <ExtendedData>
-          <Data name="Incident_ID">
-            <value>ISRO-HAS-009</value>
-          </Data>
-          <Data name="Cleared_Area_Hectares">
-            <value>0.4</value>
-          </Data>
-          <Data name="Cleared_Area_Acres">
-            <value>0.99</value>
-          </Data>
-          <Data name="Severity_Level">
-            <value>MODERATE (Encroachment/Clear-cut)</value>
-          </Data>
-          <Data name="Urgency_Code">
-            <value>MONITORING</value>
-          </Data>
-          <Data name="Estimated_CO2_Loss_Tonnes">
-            <value>124.0</value>
-          </Data>
-          <Data name="UTM_Coordinates">
-            <value>44N 680852 2522105</value>
-          </Data>
-          <Data name="Latitude">
-            <value>22.796821</value>
-          </Data>
-          <Data name="Longitude">
-            <value>82.761911</value>
-          </Data>
-          <Data name="Verification_Status">
-            <value>PENDING_FIELD_VERIFICATION</value>
-          </Data>
-        </ExtendedData>
-        <description>
-        &lt;![CDATA[
-        &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
-            &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-009 | Deforestation Alert&lt;/h3&gt;
-            &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.4 ha&lt;/b&gt; (0.99 acres)&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;124.0 t CO₂&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.79682°N, 82.76191°E&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 680852 2522105&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
-            &lt;/table&gt;
-            &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
-        &lt;/div&gt;
-        ]]&gt;
-        </description>
-        <Polygon>
-          <extrude>1</extrude>
-          <altitudeMode>clampToGround</altitudeMode>
-          <outerBoundaryIs>
-            <LinearRing>
-              <coordinates>82.76138979340782,22.796998052593565,0 82.76138747261457,22.796817464818268,0 82.76129008553086,22.796818540662187,0 82.76129124586046,22.796908834555108,0 82.76119385870678,22.796909910344333,0 82.76119269844126,22.796819616446683,0 82.76099792424442,22.79682176783743,0 82.76099676411293,22.79673147392924,0 82.76128892520714,22.796728246768186,0 82.7612877648893,22.79663795287311,0 82.76138515184486,22.796636877038658,0 82.76138631222679,22.796727170929,0 82.76158108624843,22.79672501907237,0 82.76157992573836,22.796634725191485,0 82.76177469960835,22.796632573106645,0 82.76177586024657,22.796722866978065,0 82.76167847325044,22.796723943054925,0 82.76167963383047,22.79681423693,0 82.76226395610347,22.796807779549166,0 82.76226279513898,22.796717485702484,0 82.76216540817227,22.79671856207644,0 82.76216424727774,22.796628268223945,0 82.76245640796802,22.79662503893803,0 82.76245756905477,22.796715332776326,0 82.7629445037413,22.796709949421103,0 82.76294566515432,22.796800243234657,0 82.76236134312838,22.796806703111066,0 82.76236366520317,22.79698729079173,0 82.76138979340782,22.796998052593565,0</coordinates>
-            </LinearRing>
-          </outerBoundaryIs>
-        </Polygon>
-      </Placemark>
-      <Placemark>
-        <name>ISRO-HAS-010 (0.37 ha)</name>
-        <styleUrl>#moderate_alert</styleUrl>
-        <ExtendedData>
-          <Data name="Incident_ID">
-            <value>ISRO-HAS-010</value>
           </Data>
           <Data name="Cleared_Area_Hectares">
             <value>0.37</value>
@@ -613,13 +241,385 @@
             <value>114.7</value>
           </Data>
           <Data name="UTM_Coordinates">
-            <value>44N 684746 2524671</value>
+            <value>44N 684435 2526537</value>
           </Data>
           <Data name="Latitude">
-            <value>22.819563</value>
+            <value>22.836445</value>
           </Data>
           <Data name="Longitude">
-            <value>82.80014</value>
+            <value>82.797325</value>
+          </Data>
+          <Data name="Verification_Status">
+            <value>PENDING_FIELD_VERIFICATION</value>
+          </Data>
+        </ExtendedData>
+        <description>
+        &lt;![CDATA[
+        &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
+            &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-004 | Deforestation Alert&lt;/h3&gt;
+            &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.37 ha&lt;/b&gt; (0.91 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;114.7 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.83645°N, 82.79733°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 684435 2526537&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
+        &lt;/div&gt;
+        ]]&gt;
+        </description>
+        <Polygon>
+          <extrude>1</extrude>
+          <altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs>
+            <LinearRing>
+              <coordinates>82.79659076608745,22.83665999015512,0 82.79658866350547,22.836499900678344,0 82.79667345637974,22.836498943890042,0 82.79667135371753,22.83633885441732,0 82.79675614648814,22.836337897591363,0 82.79675719786643,22.83641794232443,0 82.79701157629961,22.836415071564772,0 82.79701052477267,22.836335026842885,0 82.7975192812189,22.836329284128134,0 82.79751822939934,22.836249239427744,0 82.79802698538445,22.836243495111635,0 82.79802803750131,22.83632353978967,0 82.79794324479894,22.836324497292168,0 82.7979453489477,22.836484586653125,0 82.79777576333113,22.836486501537728,0 82.79777681531348,22.836566546224386,0 82.79735285094465,22.836571332665212,0 82.79735179921006,22.83649128795992,0 82.79718221352978,22.83649320221307,0 82.79718326516527,22.836573246925816,0 82.79709847226874,22.836574203988462,0 82.79709952385942,22.836654248704075,0 82.79676035202964,22.836658076518518,0 82.79675930063719,22.836578031788008,0 82.79667450771791,22.83657898862514,0 82.79667555906082,22.83665903335937,0 82.79659076608745,22.83665999015512,0</coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>ISRO-HAS-005 (0.34 ha)</name>
+        <styleUrl>#moderate_alert</styleUrl>
+        <ExtendedData>
+          <Data name="Incident_ID">
+            <value>ISRO-HAS-005</value>
+          </Data>
+          <Data name="Cleared_Area_Hectares">
+            <value>0.34</value>
+          </Data>
+          <Data name="Cleared_Area_Acres">
+            <value>0.84</value>
+          </Data>
+          <Data name="Severity_Level">
+            <value>MODERATE (Encroachment/Clear-cut)</value>
+          </Data>
+          <Data name="Urgency_Code">
+            <value>MONITORING</value>
+          </Data>
+          <Data name="Estimated_CO2_Loss_Tonnes">
+            <value>105.4</value>
+          </Data>
+          <Data name="UTM_Coordinates">
+            <value>44N 677340 2527574</value>
+          </Data>
+          <Data name="Latitude">
+            <value>22.846573</value>
+          </Data>
+          <Data name="Longitude">
+            <value>82.728335</value>
+          </Data>
+          <Data name="Verification_Status">
+            <value>PENDING_FIELD_VERIFICATION</value>
+          </Data>
+        </ExtendedData>
+        <description>
+        &lt;![CDATA[
+        &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
+            &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-005 | Deforestation Alert&lt;/h3&gt;
+            &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.34 ha&lt;/b&gt; (0.84 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;105.4 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.84657°N, 82.72834°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 677340 2527574&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
+        &lt;/div&gt;
+        ]]&gt;
+        </description>
+        <Polygon>
+          <extrude>1</extrude>
+          <altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs>
+            <LinearRing>
+              <coordinates>82.72828680899832,22.84734332481889,0 82.72828579713475,22.847263277237683,0 82.72837059980655,22.84726235640336,0 82.72836958789794,22.847182308824898,0 82.72828478527572,22.84718322965564,0 82.72828377342123,22.847103182072733,0 82.72836857599387,22.84710226124557,0 82.72836756409434,22.847022213665422,0 82.72828276157128,22.847023134488992,0 82.72828174972588,22.846943086904393,0 82.72819694724804,22.846944007679255,0 82.72819290011014,22.846623817318086,0 82.72827770238963,22.84662289655756,0 82.72827669056693,22.84654284896873,0 82.72819188833704,22.846543769725677,0 82.72818480605225,22.845983436555095,0 82.72826960793506,22.845982515823238,0 82.72826859614867,22.84590246822763,0 82.7283533979775,22.84590154745422,0 82.72835440981348,22.845981595046236,0 82.72843921168752,22.845980674224116,0 82.72845034272838,22.84686119764101,0 82.7285351451435,22.84686027673434,0 82.72853615713314,22.846940324309028,0 82.72845135466842,22.846941245219277,0 82.72845641443675,22.847341483097946,0 82.72828680899832,22.84734332481889,0</coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>ISRO-HAS-006 (0.286 ha)</name>
+        <styleUrl>#moderate_alert</styleUrl>
+        <ExtendedData>
+          <Data name="Incident_ID">
+            <value>ISRO-HAS-006</value>
+          </Data>
+          <Data name="Cleared_Area_Hectares">
+            <value>0.286</value>
+          </Data>
+          <Data name="Cleared_Area_Acres">
+            <value>0.71</value>
+          </Data>
+          <Data name="Severity_Level">
+            <value>MODERATE (Encroachment/Clear-cut)</value>
+          </Data>
+          <Data name="Urgency_Code">
+            <value>MONITORING</value>
+          </Data>
+          <Data name="Estimated_CO2_Loss_Tonnes">
+            <value>88.7</value>
+          </Data>
+          <Data name="UTM_Coordinates">
+            <value>44N 683965 2522491</value>
+          </Data>
+          <Data name="Latitude">
+            <value>22.799966</value>
+          </Data>
+          <Data name="Longitude">
+            <value>82.792272</value>
+          </Data>
+          <Data name="Verification_Status">
+            <value>PENDING_FIELD_VERIFICATION</value>
+          </Data>
+        </ExtendedData>
+        <description>
+        &lt;![CDATA[
+        &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
+            &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-006 | Deforestation Alert&lt;/h3&gt;
+            &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.286 ha&lt;/b&gt; (0.71 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;88.7 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.79997°N, 82.79227°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 683965 2522491&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
+        &lt;/div&gt;
+        ]]&gt;
+        </description>
+        <Polygon>
+          <extrude>1</extrude>
+          <altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs>
+            <LinearRing>
+              <coordinates>82.79221870351226,22.8006836591025,0 82.79221242220173,22.80020338734238,0 82.79212765158793,22.80020434032416,0 82.79212451114451,22.799964204421503,0 82.79220928160994,22.799963251450855,0 82.79220823475542,22.799883206151986,0 82.79212346433943,22.799884159118925,0 82.79212137074339,22.79972406851121,0 82.79220614106048,22.7997231155517,0 82.79219986008847,22.79924284373048,0 82.79228463010432,22.79924189074823,0 82.79228672384176,22.799401981351277,0 82.79237149395198,22.79940102831658,0 82.79238510434654,22.80044161710531,0 82.79230033359346,22.800442570188295,0 82.79230138053035,22.80052261547751,0 82.79238615133288,22.800521662390814,0 82.79238719832392,22.800601707675465,0 82.79230242747194,22.800602660765875,0 82.79230347441823,22.800682706053394,0 82.79221870351226,22.8006836591025,0</coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>ISRO-HAS-007 (0.278 ha)</name>
+        <styleUrl>#moderate_alert</styleUrl>
+        <ExtendedData>
+          <Data name="Incident_ID">
+            <value>ISRO-HAS-007</value>
+          </Data>
+          <Data name="Cleared_Area_Hectares">
+            <value>0.278</value>
+          </Data>
+          <Data name="Cleared_Area_Acres">
+            <value>0.69</value>
+          </Data>
+          <Data name="Severity_Level">
+            <value>MODERATE (Encroachment/Clear-cut)</value>
+          </Data>
+          <Data name="Urgency_Code">
+            <value>MONITORING</value>
+          </Data>
+          <Data name="Estimated_CO2_Loss_Tonnes">
+            <value>86.2</value>
+          </Data>
+          <Data name="UTM_Coordinates">
+            <value>44N 684127 2528814</value>
+          </Data>
+          <Data name="Latitude">
+            <value>22.857035</value>
+          </Data>
+          <Data name="Longitude">
+            <value>82.794597</value>
+          </Data>
+          <Data name="Verification_Status">
+            <value>PENDING_FIELD_VERIFICATION</value>
+          </Data>
+        </ExtendedData>
+        <description>
+        &lt;![CDATA[
+        &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
+            &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-007 | Deforestation Alert&lt;/h3&gt;
+            &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.278 ha&lt;/b&gt; (0.69 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;86.2 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.85703°N, 82.79460°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 684127 2528814&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
+        &lt;/div&gt;
+        ]]&gt;
+        </description>
+        <Polygon>
+          <extrude>1</extrude>
+          <altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs>
+            <LinearRing>
+              <coordinates>82.79465930838728,22.857496479201348,0 82.79465720593105,22.85733638997311,0 82.79457240004294,22.85733734651082,0 82.79457029770478,22.85717725727174,0 82.79423107450374,22.857181082941313,0 82.79423002354018,22.857101038305622,0 82.79448444079897,22.857098169132318,0 82.79448338969128,22.857018124506933,0 82.79439858399252,22.857019080939466,0 82.79439753293916,22.856939036309505,0 82.79431272728544,22.856939992693164,0 82.79431167628641,22.856859948058638,0 82.79439648189052,22.856858991678696,0 82.79439437980739,22.85669890241453,0 82.79447918530772,22.856697945996878,0 82.79447708314423,22.856537856736754,0 82.7945618885408,22.856536900281405,0 82.79456293966979,22.85661694490817,0 82.79464774511143,22.856615988403945,0 82.79464879629475,22.85669603302614,0 82.79473360178146,22.856695076473052,0 82.7947346530191,22.856775121090678,0 82.79456504194194,22.85677703415915,0 82.79456714423293,22.856937123406738,0 82.79465194987301,22.856936166887635,0 82.79465300107519,22.857016211506433,0 82.79473780676032,22.857015254938453,0 82.79473675550852,22.856935210323385,0 82.7948215611395,22.856934253713973,0 82.79482366374702,22.857094342935834,0 82.79490846947267,22.857093386273842,0 82.7949095208331,22.857173430879776,0 82.79482471505784,22.85717438754549,0 82.79482576637339,22.857254432154292,0 82.79474096054398,22.85725538877858,0 82.79474201181463,22.85733543339025,0 82.79482681769365,22.857334476762247,0 82.79482892034832,22.8574945659756,0 82.79465930838728,22.857496479201348,0</coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>ISRO-HAS-008 (0.278 ha)</name>
+        <styleUrl>#moderate_alert</styleUrl>
+        <ExtendedData>
+          <Data name="Incident_ID">
+            <value>ISRO-HAS-008</value>
+          </Data>
+          <Data name="Cleared_Area_Hectares">
+            <value>0.278</value>
+          </Data>
+          <Data name="Cleared_Area_Acres">
+            <value>0.69</value>
+          </Data>
+          <Data name="Severity_Level">
+            <value>MODERATE (Encroachment/Clear-cut)</value>
+          </Data>
+          <Data name="Urgency_Code">
+            <value>MONITORING</value>
+          </Data>
+          <Data name="Estimated_CO2_Loss_Tonnes">
+            <value>86.2</value>
+          </Data>
+          <Data name="UTM_Coordinates">
+            <value>44N 684037 2526543</value>
+          </Data>
+          <Data name="Latitude">
+            <value>22.836542</value>
+          </Data>
+          <Data name="Longitude">
+            <value>82.793454</value>
+          </Data>
+          <Data name="Verification_Status">
+            <value>PENDING_FIELD_VERIFICATION</value>
+          </Data>
+        </ExtendedData>
+        <description>
+        &lt;![CDATA[
+        &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
+            &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-008 | Deforestation Alert&lt;/h3&gt;
+            &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.278 ha&lt;/b&gt; (0.69 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;86.2 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.83654°N, 82.79345°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 684037 2526543&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
+        &lt;/div&gt;
+        ]]&gt;
+        </description>
+        <Polygon>
+          <extrude>1</extrude>
+          <altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs>
+            <LinearRing>
+              <coordinates>82.79302945710184,22.83670013484745,0 82.79302735868227,22.83654004505816,0 82.79294256561263,22.836540999906987,0 82.79294046731103,22.836380910106865,0 82.79302526028155,22.836379955265468,0 82.79302630947956,22.836460000162237,0 82.7931958955061,22.836458090336695,0 82.79319379691658,22.836298000557164,0 82.79327858982394,22.836297045584175,0 82.79328068851257,22.836457135356266,0 82.79336548151448,22.83645618033074,0 82.79336443211827,22.836376135448834,0 82.79344922506611,22.836375180381925,0 82.79344817562504,22.83629513550288,0 82.79361776140799,22.836293225241167,0 82.7936209100426,22.836533359853426,0 82.7937904961047,22.836531449388993,0 82.7937915457581,22.836611494250604,0 82.79404592496584,22.83660862820452,0 82.79404487516378,22.83652858335406,0 82.79412966817439,22.836527627918876,0 82.79413176788232,22.836687717611508,0 82.79353821601894,22.83669440476267,0 82.79353611700476,22.836534315017982,0 82.79345132396236,22.83653527013744,0 82.79345342287745,22.83669535988956,0 82.79302945710184,22.83670013484745,0</coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>ISRO-HAS-009 (0.278 ha)</name>
+        <styleUrl>#moderate_alert</styleUrl>
+        <ExtendedData>
+          <Data name="Incident_ID">
+            <value>ISRO-HAS-009</value>
+          </Data>
+          <Data name="Cleared_Area_Hectares">
+            <value>0.278</value>
+          </Data>
+          <Data name="Cleared_Area_Acres">
+            <value>0.69</value>
+          </Data>
+          <Data name="Severity_Level">
+            <value>MODERATE (Encroachment/Clear-cut)</value>
+          </Data>
+          <Data name="Urgency_Code">
+            <value>MONITORING</value>
+          </Data>
+          <Data name="Estimated_CO2_Loss_Tonnes">
+            <value>86.2</value>
+          </Data>
+          <Data name="UTM_Coordinates">
+            <value>44N 681777 2524433</value>
+          </Data>
+          <Data name="Latitude">
+            <value>22.817735</value>
+          </Data>
+          <Data name="Longitude">
+            <value>82.771187</value>
+          </Data>
+          <Data name="Verification_Status">
+            <value>PENDING_FIELD_VERIFICATION</value>
+          </Data>
+        </ExtendedData>
+        <description>
+        &lt;![CDATA[
+        &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
+            &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-009 | Deforestation Alert&lt;/h3&gt;
+            &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.278 ha&lt;/b&gt; (0.69 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;86.2 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.81773°N, 82.77119°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 681777 2524433&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
+        &lt;/div&gt;
+        ]]&gt;
+        </description>
+        <Polygon>
+          <extrude>1</extrude>
+          <altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs>
+            <LinearRing>
+              <coordinates>82.77099505525611,22.8182132985812,0 82.77098780763347,22.817652976268214,0 82.77107259002062,22.817652033843782,0 82.77107155461505,22.81757198779935,0 82.77115633694822,22.817571045333526,0 82.7711553014978,22.817490999291913,0 82.77107051921412,22.81749194175407,0 82.77106948381784,22.81741189570794,0 82.77115426605201,22.817410953249457,0 82.77115323061088,22.81733090720615,0 82.771407577138,22.81732807957133,0 82.77141068392086,22.817568217665666,0 82.77132590160113,22.817569160266686,0 82.77132797271395,22.817729252332672,0 82.77141275513267,22.817728309724313,0 82.77141379074556,22.81780835575237,0 82.77132900827732,22.817809298364402,0 82.77133107941803,22.8179693904253,0 82.7712462968463,22.81797033299961,0 82.77124733237413,22.818050379032467,0 82.77116254974841,22.818051321565385,0 82.77116358523138,22.818131367601055,0 82.77107880255168,22.818132310092576,0 82.7710798379898,22.818212356131074,0 82.77099505525611,22.8182132985812,0</coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>ISRO-HAS-010 (0.231 ha)</name>
+        <styleUrl>#moderate_alert</styleUrl>
+        <ExtendedData>
+          <Data name="Incident_ID">
+            <value>ISRO-HAS-010</value>
+          </Data>
+          <Data name="Cleared_Area_Hectares">
+            <value>0.231</value>
+          </Data>
+          <Data name="Cleared_Area_Acres">
+            <value>0.57</value>
+          </Data>
+          <Data name="Severity_Level">
+            <value>MODERATE (Encroachment/Clear-cut)</value>
+          </Data>
+          <Data name="Urgency_Code">
+            <value>MONITORING</value>
+          </Data>
+          <Data name="Estimated_CO2_Loss_Tonnes">
+            <value>71.6</value>
+          </Data>
+          <Data name="UTM_Coordinates">
+            <value>44N 677350 2527145</value>
+          </Data>
+          <Data name="Latitude">
+            <value>22.842699</value>
+          </Data>
+          <Data name="Longitude">
+            <value>82.728384</value>
           </Data>
           <Data name="Verification_Status">
             <value>PENDING_FIELD_VERIFICATION</value>
@@ -630,12 +630,12 @@
         &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
             &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-010 | Deforestation Alert&lt;/h3&gt;
             &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.37 ha&lt;/b&gt; (0.91 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.231 ha&lt;/b&gt; (0.57 acres)&lt;/td&gt;&lt;/tr&gt;
                 &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
                 &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;114.7 t CO₂&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.81956°N, 82.80014°E&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 684746 2524671&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;71.6 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.84270°N, 82.72838°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 677350 2527145&lt;/td&gt;&lt;/tr&gt;
                 &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
             &lt;/table&gt;
             &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
@@ -647,23 +647,23 @@
           <altitudeMode>clampToGround</altitudeMode>
           <outerBoundaryIs>
             <LinearRing>
-              <coordinates>82.79908960369961,22.819695262378215,0 82.79908841715792,22.81960497060347,0 82.79938062095886,22.819601670542802,0 82.79937943423073,22.819511378781474,0 82.80006124244014,22.81950367659195,0 82.80006005526894,22.819413384863385,0 82.8002548574321,22.81941118371216,0 82.80025604473158,22.819501475431057,0 82.80054824812366,22.819498173243616,0 82.8005470606317,22.819407881539227,0 82.80093666481366,22.819403477809274,0 82.80093785256224,22.819493769494315,0 82.80123005582801,22.8194904660578,0 82.80123124377506,22.819580757727252,0 82.8002572320371,22.819591767148875,0 82.80025841934862,22.819682058865613,0 82.79908960369961,22.819695262378215,0</coordinates>
+              <coordinates>82.72832102162306,22.84334002406248,0 82.72832000993688,22.84325997644252,0 82.72823520974424,22.843260897097696,0 82.72823318648467,22.84310080184806,0 82.72831798657815,22.843099881200057,0 82.72831191661089,22.842619595452327,0 82.72839671640254,22.842618674780688,0 82.72839570470764,22.842538627156692,0 82.72831090496557,22.842539547824742,0 82.72830382357542,22.841979214407942,0 82.7284734223611,22.841977373076883,0 82.72847544579105,22.842137468328726,0 82.72839064630124,22.842138389023976,0 82.72839368133145,22.842378531906153,0 82.72847848096998,22.842377611200142,0 82.72848758675198,22.84309803976867,0 82.72840278666725,22.84309896050692,0 82.72840379839391,22.843179008125,0 82.72848859852823,22.84317808738316,0 82.72848961030901,22.843258134996805,0 82.72840481012513,22.84325905574223,0 82.72840582186089,22.843339103358606,0 82.72832102162306,22.84334002406248,0</coordinates>
             </LinearRing>
           </outerBoundaryIs>
         </Polygon>
       </Placemark>
       <Placemark>
-        <name>ISRO-HAS-011 (0.31 ha)</name>
+        <name>ISRO-HAS-011 (0.224 ha)</name>
         <styleUrl>#moderate_alert</styleUrl>
         <ExtendedData>
           <Data name="Incident_ID">
             <value>ISRO-HAS-011</value>
           </Data>
           <Data name="Cleared_Area_Hectares">
-            <value>0.31</value>
+            <value>0.224</value>
           </Data>
           <Data name="Cleared_Area_Acres">
-            <value>0.77</value>
+            <value>0.55</value>
           </Data>
           <Data name="Severity_Level">
             <value>MODERATE (Encroachment/Clear-cut)</value>
@@ -672,16 +672,16 @@
             <value>MONITORING</value>
           </Data>
           <Data name="Estimated_CO2_Loss_Tonnes">
-            <value>96.1</value>
+            <value>69.4</value>
           </Data>
           <Data name="UTM_Coordinates">
-            <value>44N 683862 2524674</value>
+            <value>44N 681783 2528946</value>
           </Data>
           <Data name="Latitude">
-            <value>22.819686</value>
+            <value>22.858483</value>
           </Data>
           <Data name="Longitude">
-            <value>82.791524</value>
+            <value>82.771775</value>
           </Data>
           <Data name="Verification_Status">
             <value>PENDING_FIELD_VERIFICATION</value>
@@ -692,12 +692,12 @@
         &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
             &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-011 | Deforestation Alert&lt;/h3&gt;
             &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.31 ha&lt;/b&gt; (0.77 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.224 ha&lt;/b&gt; (0.55 acres)&lt;/td&gt;&lt;/tr&gt;
                 &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
                 &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;96.1 t CO₂&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.81969°N, 82.79152°E&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 683862 2524674&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;69.4 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.85848°N, 82.77178°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 681783 2528946&lt;/td&gt;&lt;/tr&gt;
                 &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
             &lt;/table&gt;
             &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
@@ -709,23 +709,23 @@
           <altitudeMode>clampToGround</altitudeMode>
           <outerBoundaryIs>
             <LinearRing>
-              <coordinates>82.79042086066816,22.819792921093764,0 82.79041967983625,22.819702628889978,0 82.79178330458257,22.819687298139815,0 82.79178212285848,22.8195970060023,0 82.7911977127814,22.81960357772248,0 82.79119653144824,22.81951328555502,0 82.79187834273478,22.81950561837364,0 82.79187952451704,22.819595910507417,0 82.79197692616962,22.819594814953057,0 82.79197810802204,22.819685107080943,0 82.79236771482913,22.819680724249437,0 82.79236653272012,22.819590432140807,0 82.79246393434276,22.819589336289035,0 82.7924662986951,22.81976992049559,0 82.79042086066816,22.819792921093764,0</coordinates>
+              <coordinates>82.77186086551224,22.8588728007661,0 82.77185982756227,22.858792755169784,0 82.7716902118631,22.858794644019067,0 82.77168917401701,22.85871459841455,0 82.77177398181922,22.85871365401616,0 82.77177294392816,22.858633608414475,0 82.77168813617557,22.858634552809193,0 82.77168502267918,22.858394415988016,0 82.77151540745822,22.85839630461994,0 82.7715133320157,22.85823621338688,0 82.77142852449774,22.85823715762777,0 82.77142748683306,22.858157112006293,0 82.77151229430142,22.85815616776908,0 82.77151021888682,22.857996076530924,0 82.77159502625146,22.8579951322559,0 82.77159917729773,22.858315314714122,0 82.77176879241048,22.858313425999235,0 82.77176671667956,22.858153334786508,0 82.77185152412996,22.858152390368684,0 82.77185359996011,22.858312481574057,0 82.77193840750526,22.858311537103727,0 82.77193944547692,22.858391582701465,0 82.77185463788216,22.858392527175464,0 82.77185671374023,22.858552618375743,0 82.77202632912373,22.858550729367884,0 82.77203048129269,22.858870911728854,0 82.77186086551224,22.8588728007661,0</coordinates>
             </LinearRing>
           </outerBoundaryIs>
         </Polygon>
       </Placemark>
       <Placemark>
-        <name>ISRO-HAS-012 (0.29 ha)</name>
+        <name>ISRO-HAS-012 (0.216 ha)</name>
         <styleUrl>#moderate_alert</styleUrl>
         <ExtendedData>
           <Data name="Incident_ID">
             <value>ISRO-HAS-012</value>
           </Data>
           <Data name="Cleared_Area_Hectares">
-            <value>0.29</value>
+            <value>0.216</value>
           </Data>
           <Data name="Cleared_Area_Acres">
-            <value>0.72</value>
+            <value>0.53</value>
           </Data>
           <Data name="Severity_Level">
             <value>MODERATE (Encroachment/Clear-cut)</value>
@@ -734,16 +734,16 @@
             <value>MONITORING</value>
           </Data>
           <Data name="Estimated_CO2_Loss_Tonnes">
-            <value>89.9</value>
+            <value>67.0</value>
           </Data>
           <Data name="UTM_Coordinates">
-            <value>44N 682203 2524676</value>
+            <value>44N 681814 2528789</value>
           </Data>
           <Data name="Latitude">
-            <value>22.819885</value>
+            <value>22.857064</value>
           </Data>
           <Data name="Longitude">
-            <value>82.775364</value>
+            <value>82.772056</value>
           </Data>
           <Data name="Verification_Status">
             <value>PENDING_FIELD_VERIFICATION</value>
@@ -754,12 +754,12 @@
         &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
             &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-012 | Deforestation Alert&lt;/h3&gt;
             &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.29 ha&lt;/b&gt; (0.72 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.216 ha&lt;/b&gt; (0.53 acres)&lt;/td&gt;&lt;/tr&gt;
                 &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
                 &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;89.9 t CO₂&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.81988°N, 82.77536°E&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 682203 2524676&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;67.0 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.85706°N, 82.77206°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 681814 2528789&lt;/td&gt;&lt;/tr&gt;
                 &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
             &lt;/table&gt;
             &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
@@ -771,23 +771,23 @@
           <altitudeMode>clampToGround</altitudeMode>
           <outerBoundaryIs>
             <LinearRing>
-              <coordinates>82.77425206750767,22.81997381211947,0 82.77425089732584,22.81988351912098,0 82.77532232774094,22.819871583128197,0 82.77531998598356,22.81969099723287,0 82.77541738858469,22.819689911795248,0 82.77541855952455,22.819780204738684,0 82.77610037801547,22.81977260497644,0 82.7761015494104,22.819862897885418,0 82.77619895209239,22.819861811962394,0 82.77620012355739,22.819952104865507,0 82.77425206750767,22.81997381211947,0</coordinates>
+              <coordinates>82.77167049358324,22.857273777388098,0 82.77166738032423,22.857033640523603,0 82.77183699384037,22.85703175183595,0 82.77183595599745,22.856951706220094,0 82.77192076269917,22.856950761812218,0 82.77191972481128,22.856870716199193,0 82.7720045314589,22.856869771749835,0 82.77200349352609,22.85678972613963,0 82.77217310670864,22.856787837112815,0 82.77217518277739,22.856947928317677,0 82.77200556939638,22.85694981735919,0 82.77200660733853,22.857029862967693,0 82.77234583428101,22.85702608468937,0 82.77234479614043,22.856946039095558,0 82.77242960281521,22.856945094416773,0 82.77243064100541,22.857025140006904,0 82.77251544772533,22.8570241952793,0 82.7725175242189,22.857184286449662,0 82.77226310374803,22.85718712051909,0 82.77226206564777,22.857107074923306,0 82.77217725886477,22.85710801951914,0 82.77217829691544,22.857188065118592,0 82.77209349007835,22.85718900967295,0 82.77209245207729,22.85710896406982,0 82.77192283848888,22.857110853035728,0 82.7719249142972,22.857270944255834,0 82.77167049358324,22.857273777388098,0</coordinates>
             </LinearRing>
           </outerBoundaryIs>
         </Polygon>
       </Placemark>
       <Placemark>
-        <name>ISRO-HAS-013 (0.25 ha)</name>
+        <name>ISRO-HAS-013 (0.208 ha)</name>
         <styleUrl>#moderate_alert</styleUrl>
         <ExtendedData>
           <Data name="Incident_ID">
             <value>ISRO-HAS-013</value>
           </Data>
           <Data name="Cleared_Area_Hectares">
-            <value>0.25</value>
+            <value>0.208</value>
           </Data>
           <Data name="Cleared_Area_Acres">
-            <value>0.62</value>
+            <value>0.51</value>
           </Data>
           <Data name="Severity_Level">
             <value>MODERATE (Encroachment/Clear-cut)</value>
@@ -796,16 +796,16 @@
             <value>MONITORING</value>
           </Data>
           <Data name="Estimated_CO2_Loss_Tonnes">
-            <value>77.5</value>
+            <value>64.5</value>
           </Data>
           <Data name="UTM_Coordinates">
-            <value>44N 682673 2525319</value>
+            <value>44N 684248 2522028</value>
           </Data>
           <Data name="Latitude">
-            <value>22.825644</value>
+            <value>22.795753</value>
           </Data>
           <Data name="Longitude">
-            <value>82.780025</value>
+            <value>82.794976</value>
           </Data>
           <Data name="Verification_Status">
             <value>PENDING_FIELD_VERIFICATION</value>
@@ -816,12 +816,12 @@
         &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
             &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-013 | Deforestation Alert&lt;/h3&gt;
             &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.25 ha&lt;/b&gt; (0.62 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.208 ha&lt;/b&gt; (0.51 acres)&lt;/td&gt;&lt;/tr&gt;
                 &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
                 &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;77.5 t CO₂&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.82564°N, 82.78002°E&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 682673 2525319&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;64.5 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.79575°N, 82.79498°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 684248 2522028&lt;/td&gt;&lt;/tr&gt;
                 &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
             &lt;/table&gt;
             &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
@@ -833,23 +833,23 @@
           <altitudeMode>clampToGround</altitudeMode>
           <outerBoundaryIs>
             <LinearRing>
-              <coordinates>82.7799906575353,22.82677303921664,0 82.77996130044814,22.82451572290354,0 82.78005870623515,22.82451463441204,0 82.78008806492677,22.826771950605615,0 82.7799906575353,22.82677303921664,0</coordinates>
+              <coordinates>82.79435986296885,22.795856152014153,0 82.79435881506868,22.795776106768624,0 82.7942740472923,22.795777060716528,0 82.79427299944626,22.795697015466438,0 82.79588358548182,22.795678882829446,0 82.7958846342672,22.795758928008848,0 82.7951217248518,22.795767519211825,0 82.79512277319692,22.795847564423884,0 82.79486846982842,22.795850427359102,0 82.79486742163161,22.79577038213589,0 82.79478265388245,22.79577133635388,0 82.79478370202983,22.795851381580814,0 82.79435986296885,22.795856152014153,0</coordinates>
             </LinearRing>
           </outerBoundaryIs>
         </Polygon>
       </Placemark>
       <Placemark>
-        <name>ISRO-HAS-014 (0.06 ha)</name>
+        <name>ISRO-HAS-014 (0.193 ha)</name>
         <styleUrl>#moderate_alert</styleUrl>
         <ExtendedData>
           <Data name="Incident_ID">
             <value>ISRO-HAS-014</value>
           </Data>
           <Data name="Cleared_Area_Hectares">
-            <value>0.06</value>
+            <value>0.193</value>
           </Data>
           <Data name="Cleared_Area_Acres">
-            <value>0.15</value>
+            <value>0.48</value>
           </Data>
           <Data name="Severity_Level">
             <value>MODERATE (Encroachment/Clear-cut)</value>
@@ -858,16 +858,16 @@
             <value>MONITORING</value>
           </Data>
           <Data name="Estimated_CO2_Loss_Tonnes">
-            <value>18.6</value>
+            <value>59.8</value>
           </Data>
           <Data name="UTM_Coordinates">
-            <value>44N 680740 2522108</value>
+            <value>44N 684028 2522062</value>
           </Data>
           <Data name="Latitude">
-            <value>22.796854</value>
+            <value>22.796086</value>
           </Data>
           <Data name="Longitude">
-            <value>82.76082</value>
+            <value>82.792835</value>
           </Data>
           <Data name="Verification_Status">
             <value>PENDING_FIELD_VERIFICATION</value>
@@ -878,12 +878,12 @@
         &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
             &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-014 | Deforestation Alert&lt;/h3&gt;
             &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.06 ha&lt;/b&gt; (0.15 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.193 ha&lt;/b&gt; (0.48 acres)&lt;/td&gt;&lt;/tr&gt;
                 &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
                 &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;18.6 t CO₂&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.79685°N, 82.76082°E&lt;/td&gt;&lt;/tr&gt;
-                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 680740 2522108&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;59.8 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.79609°N, 82.79283°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 684028 2522062&lt;/td&gt;&lt;/tr&gt;
                 &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
             &lt;/table&gt;
             &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
@@ -895,7 +895,627 @@
           <altitudeMode>clampToGround</altitudeMode>
           <outerBoundaryIs>
             <LinearRing>
-              <coordinates>82.76070808280122,22.797005582319418,0 82.76070460296582,22.796734700555525,0 82.76089937706976,22.79673254953076,0 82.76090053713718,22.796822843443675,0 82.76099792424442,22.79682176783743,0 82.76099908438178,22.796912061744536,0 82.76080431003328,22.796914212907062,0 82.76080547004837,22.79700450682255,0 82.76070808280122,22.797005582319418,0</coordinates>
+              <coordinates>82.79267183410212,22.79643553970907,0 82.79266974021822,22.796275449080383,0 82.79258497205448,22.796276402150284,0 82.79258392516903,22.796196356830947,0 82.7926686932833,22.79619540376476,0 82.79266555250682,22.795955267812815,0 82.79275032046824,22.795954314712755,0 82.79274822654187,22.795794224081316,0 82.79291776225337,22.795792317761016,0 82.79291880931308,22.795872363069737,0 82.79317311299464,22.79586950324053,0 82.79317416020737,22.79594954853725,0 82.79308939226861,22.795950501862382,0 82.79309043943661,22.79603054716197,0 82.79292090344661,22.796032453684617,0 82.79292299759895,22.796192544296105,0 82.79275346139305,22.796194450653562,0 82.79275450837741,22.796274495965466,0 82.79283927653206,22.79627354280553,0 82.79284032357054,22.796353588112872,0 82.79292509177012,22.79635263490421,0 82.79292613886274,22.796432680206976,0 82.79267183410212,22.79643553970907,0</coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>ISRO-HAS-015 (0.185 ha)</name>
+        <styleUrl>#moderate_alert</styleUrl>
+        <ExtendedData>
+          <Data name="Incident_ID">
+            <value>ISRO-HAS-015</value>
+          </Data>
+          <Data name="Cleared_Area_Hectares">
+            <value>0.185</value>
+          </Data>
+          <Data name="Cleared_Area_Acres">
+            <value>0.46</value>
+          </Data>
+          <Data name="Severity_Level">
+            <value>MODERATE (Encroachment/Clear-cut)</value>
+          </Data>
+          <Data name="Urgency_Code">
+            <value>MONITORING</value>
+          </Data>
+          <Data name="Estimated_CO2_Loss_Tonnes">
+            <value>57.4</value>
+          </Data>
+          <Data name="UTM_Coordinates">
+            <value>44N 684825 2526541</value>
+          </Data>
+          <Data name="Latitude">
+            <value>22.836439</value>
+          </Data>
+          <Data name="Longitude">
+            <value>82.801125</value>
+          </Data>
+          <Data name="Verification_Status">
+            <value>PENDING_FIELD_VERIFICATION</value>
+          </Data>
+        </ExtendedData>
+        <description>
+        &lt;![CDATA[
+        &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
+            &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-015 | Deforestation Alert&lt;/h3&gt;
+            &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.185 ha&lt;/b&gt; (0.46 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;57.4 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.83644°N, 82.80112°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 684825 2526541&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
+        &lt;/div&gt;
+        ]]&gt;
+        </description>
+        <Polygon>
+          <extrude>1</extrude>
+          <altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs>
+            <LinearRing>
+              <coordinates>82.80083040917972,22.836612095115505,0 82.80082830164255,22.836452006011587,0 82.80074350899142,22.836452965009954,0 82.80074245527946,22.836372920452988,0 82.80091204047808,22.83637100241861,0 82.80091098667178,22.83629095786826,0 82.80099577921469,22.83628999878715,0 82.80099472536355,22.836209954239678,0 82.80116431033662,22.83620803594962,0 82.80116641824182,22.836368125028777,0 82.80133600339484,22.836366206543378,0 82.80133705745365,22.836446251074214,0 82.80167622790319,22.83644241354724,0 82.80167728216492,22.836522458062287,0 82.80116852616594,22.836528214104536,0 82.80116958013511,22.836608258641135,0 82.80083040917972,22.836612095115505,0</coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>ISRO-HAS-016 (0.139 ha)</name>
+        <styleUrl>#moderate_alert</styleUrl>
+        <ExtendedData>
+          <Data name="Incident_ID">
+            <value>ISRO-HAS-016</value>
+          </Data>
+          <Data name="Cleared_Area_Hectares">
+            <value>0.139</value>
+          </Data>
+          <Data name="Cleared_Area_Acres">
+            <value>0.34</value>
+          </Data>
+          <Data name="Severity_Level">
+            <value>MODERATE (Encroachment/Clear-cut)</value>
+          </Data>
+          <Data name="Urgency_Code">
+            <value>MONITORING</value>
+          </Data>
+          <Data name="Estimated_CO2_Loss_Tonnes">
+            <value>43.1</value>
+          </Data>
+          <Data name="UTM_Coordinates">
+            <value>44N 681845 2524291</value>
+          </Data>
+          <Data name="Latitude">
+            <value>22.816447</value>
+          </Data>
+          <Data name="Longitude">
+            <value>82.771834</value>
+          </Data>
+          <Data name="Verification_Status">
+            <value>PENDING_FIELD_VERIFICATION</value>
+          </Data>
+        </ExtendedData>
+        <description>
+        &lt;![CDATA[
+        &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
+            &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-016 | Deforestation Alert&lt;/h3&gt;
+            &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.139 ha&lt;/b&gt; (0.34 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;43.1 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.81645°N, 82.77183°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 681845 2524291&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
+        &lt;/div&gt;
+        ]]&gt;
+        </description>
+        <Polygon>
+          <extrude>1</extrude>
+          <altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs>
+            <LinearRing>
+              <coordinates>82.77190694730068,22.816602008954447,0 82.77190591146054,22.816521962935706,0 82.7714820031691,22.81652667660339,0 82.77147993199776,22.816366584526644,0 82.77139515042502,22.816367527117652,0 82.77139411489583,22.816287481074337,0 82.77147889641907,22.816286538487,0 82.77147786084501,22.816206492446508,0 82.77156264231428,22.816205549817777,0 82.77156574919886,22.8164456879257,0 82.77190487562505,22.81644191691612,0 82.77190383979422,22.81636187089568,0 82.77207340288142,22.816359985127857,0 82.77207443881126,22.81644003114095,0 82.77232878355692,22.81643720214024,0 82.77232981963989,22.81651724814147,0 82.77207547474573,22.816520077153196,0 82.77207651068488,22.816600123164594,0 82.77190694730068,22.816602008954447,0</coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>ISRO-HAS-017 (0.131 ha)</name>
+        <styleUrl>#moderate_alert</styleUrl>
+        <ExtendedData>
+          <Data name="Incident_ID">
+            <value>ISRO-HAS-017</value>
+          </Data>
+          <Data name="Cleared_Area_Hectares">
+            <value>0.131</value>
+          </Data>
+          <Data name="Cleared_Area_Acres">
+            <value>0.32</value>
+          </Data>
+          <Data name="Severity_Level">
+            <value>MODERATE (Encroachment/Clear-cut)</value>
+          </Data>
+          <Data name="Urgency_Code">
+            <value>MONITORING</value>
+          </Data>
+          <Data name="Estimated_CO2_Loss_Tonnes">
+            <value>40.6</value>
+          </Data>
+          <Data name="UTM_Coordinates">
+            <value>44N 684233 2526538</value>
+          </Data>
+          <Data name="Latitude">
+            <value>22.836474</value>
+          </Data>
+          <Data name="Longitude">
+            <value>82.795359</value>
+          </Data>
+          <Data name="Verification_Status">
+            <value>PENDING_FIELD_VERIFICATION</value>
+          </Data>
+        </ExtendedData>
+        <description>
+        &lt;![CDATA[
+        &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
+            &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-017 | Deforestation Alert&lt;/h3&gt;
+            &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.131 ha&lt;/b&gt; (0.32 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;40.6 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.83647°N, 82.79536°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 684233 2526538&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
+        &lt;/div&gt;
+        ]]&gt;
+        </description>
+        <Polygon>
+          <extrude>1</extrude>
+          <altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs>
+            <LinearRing>
+              <coordinates>82.79531887094133,22.836674336678843,0 82.79531782039128,22.836594291885042,0 82.79506344138798,22.83659715996081,0 82.79506239099128,22.836517115154994,0 82.79514718394738,22.836516159178558,0 82.79514613350585,22.836436114375616,0 82.79531571930531,22.83643420229488,0 82.79531361823818,22.836274112701314,0 82.79556799660597,22.836271244264275,0 82.79557009797038,22.836431333835502,0 82.79548530508656,22.836432290033734,0 82.79548845701991,22.836672424395363,0 82.79531887094133,22.836674336678843,0</coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>ISRO-HAS-018 (0.131 ha)</name>
+        <styleUrl>#moderate_alert</styleUrl>
+        <ExtendedData>
+          <Data name="Incident_ID">
+            <value>ISRO-HAS-018</value>
+          </Data>
+          <Data name="Cleared_Area_Hectares">
+            <value>0.131</value>
+          </Data>
+          <Data name="Cleared_Area_Acres">
+            <value>0.32</value>
+          </Data>
+          <Data name="Severity_Level">
+            <value>MODERATE (Encroachment/Clear-cut)</value>
+          </Data>
+          <Data name="Urgency_Code">
+            <value>MONITORING</value>
+          </Data>
+          <Data name="Estimated_CO2_Loss_Tonnes">
+            <value>40.6</value>
+          </Data>
+          <Data name="UTM_Coordinates">
+            <value>44N 684532 2526531</value>
+          </Data>
+          <Data name="Latitude">
+            <value>22.83638</value>
+          </Data>
+          <Data name="Longitude">
+            <value>82.798276</value>
+          </Data>
+          <Data name="Verification_Status">
+            <value>PENDING_FIELD_VERIFICATION</value>
+          </Data>
+        </ExtendedData>
+        <description>
+        &lt;![CDATA[
+        &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
+            &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-018 | Deforestation Alert&lt;/h3&gt;
+            &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.131 ha&lt;/b&gt; (0.32 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;40.6 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.83638°N, 82.79828°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 684532 2526531&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
+        &lt;/div&gt;
+        ]]&gt;
+        </description>
+        <Polygon>
+          <extrude>1</extrude>
+          <altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs>
+            <LinearRing>
+              <coordinates>82.79811598672666,22.836562716259863,0 82.79811493454608,22.836482671588104,0 82.79803014174917,22.83648362914317,0 82.79802803750131,22.83632353978967,0 82.79811283019912,22.836322582242058,0 82.79811072587103,22.83616249289261,0 82.79819551846519,22.83616153530735,0 82.79819762289237,22.83632162464935,0 82.79828241558107,22.83632066701154,0 82.79828136331557,22.836240622344686,0 82.79845094858021,22.836238706941216,0 82.79845200094482,22.836318751600608,0 82.79853679361986,22.836317793827483,0 82.79853889846234,22.836477883136254,0 82.79828452012624,22.836480756342677,0 82.7982855724059,22.836560801006975,0 82.79811598672666,22.836562716259863,0</coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>ISRO-HAS-019 (0.131 ha)</name>
+        <styleUrl>#moderate_alert</styleUrl>
+        <ExtendedData>
+          <Data name="Incident_ID">
+            <value>ISRO-HAS-019</value>
+          </Data>
+          <Data name="Cleared_Area_Hectares">
+            <value>0.131</value>
+          </Data>
+          <Data name="Cleared_Area_Acres">
+            <value>0.32</value>
+          </Data>
+          <Data name="Severity_Level">
+            <value>MODERATE (Encroachment/Clear-cut)</value>
+          </Data>
+          <Data name="Urgency_Code">
+            <value>MONITORING</value>
+          </Data>
+          <Data name="Estimated_CO2_Loss_Tonnes">
+            <value>40.6</value>
+          </Data>
+          <Data name="UTM_Coordinates">
+            <value>44N 684070 2524355</value>
+          </Data>
+          <Data name="Latitude">
+            <value>22.816782</value>
+          </Data>
+          <Data name="Longitude">
+            <value>82.793519</value>
+          </Data>
+          <Data name="Verification_Status">
+            <value>PENDING_FIELD_VERIFICATION</value>
+          </Data>
+        </ExtendedData>
+        <description>
+        &lt;![CDATA[
+        &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
+            &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-019 | Deforestation Alert&lt;/h3&gt;
+            &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.131 ha&lt;/b&gt; (0.32 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;40.6 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.81678°N, 82.79352°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 684070 2524355&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
+        &lt;/div&gt;
+        ]]&gt;
+        </description>
+        <Polygon>
+          <extrude>1</extrude>
+          <altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs>
+            <LinearRing>
+              <coordinates>82.79362035092903,22.817079568432778,0 82.79361825382583,22.816919478301568,0 82.79336391114056,22.816922341333328,0 82.79336076596653,22.8166822060967,0 82.79327598521085,22.81668316033935,0 82.79327493687842,22.816603115255045,0 82.79369884036392,22.816598343609797,0 82.79369988894382,22.81667838867551,0 82.79361510820631,22.816679343098404,0 82.79361720528128,22.816839433234694,0 82.7937019861178,22.816838478804367,0 82.79370513191405,22.8170786139913,0 82.79362035092903,22.817079568432778,0</coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>ISRO-HAS-020 (0.116 ha)</name>
+        <styleUrl>#moderate_alert</styleUrl>
+        <ExtendedData>
+          <Data name="Incident_ID">
+            <value>ISRO-HAS-020</value>
+          </Data>
+          <Data name="Cleared_Area_Hectares">
+            <value>0.116</value>
+          </Data>
+          <Data name="Cleared_Area_Acres">
+            <value>0.29</value>
+          </Data>
+          <Data name="Severity_Level">
+            <value>MODERATE (Encroachment/Clear-cut)</value>
+          </Data>
+          <Data name="Urgency_Code">
+            <value>MONITORING</value>
+          </Data>
+          <Data name="Estimated_CO2_Loss_Tonnes">
+            <value>36.0</value>
+          </Data>
+          <Data name="UTM_Coordinates">
+            <value>44N 684160 2526526</value>
+          </Data>
+          <Data name="Latitude">
+            <value>22.836375</value>
+          </Data>
+          <Data name="Longitude">
+            <value>82.794645</value>
+          </Data>
+          <Data name="Verification_Status">
+            <value>PENDING_FIELD_VERIFICATION</value>
+          </Data>
+        </ExtendedData>
+        <description>
+        &lt;![CDATA[
+        &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
+            &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-020 | Deforestation Alert&lt;/h3&gt;
+            &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.116 ha&lt;/b&gt; (0.29 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;36.0 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.83638°N, 82.79465°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 684160 2526526&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
+        &lt;/div&gt;
+        ]]&gt;
+        </description>
+        <Polygon>
+          <extrude>1</extrude>
+          <altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs>
+            <LinearRing>
+              <coordinates>82.79446989022122,22.836603850558962,0 82.7944688401714,22.8365238057271,0 82.79455363315931,22.836522850066398,0 82.79455258306466,22.836442805237404,0 82.7944677901263,22.836443760894387,0 82.79446464001924,22.83620362639115,0 82.79471901837469,22.836200759318366,0 82.79472006855431,22.836280804142465,0 82.79480486137993,22.836279848357616,0 82.79480381115076,22.836199803537234,0 82.79488860392227,22.836198847710996,0 82.79489070448444,22.83635893734347,0 82.79480591161382,22.836359893177153,0 82.79480696185243,22.836439937995827,0 82.7947221689277,22.836440893788122,0 82.79472321912148,22.836520938609677,0 82.79463842614265,22.836521894360587,0 82.7946394762916,22.83660193918502,0 82.79446989022122,22.836603850558962,0</coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>ISRO-HAS-021 (0.108 ha)</name>
+        <styleUrl>#moderate_alert</styleUrl>
+        <ExtendedData>
+          <Data name="Incident_ID">
+            <value>ISRO-HAS-021</value>
+          </Data>
+          <Data name="Cleared_Area_Hectares">
+            <value>0.108</value>
+          </Data>
+          <Data name="Cleared_Area_Acres">
+            <value>0.27</value>
+          </Data>
+          <Data name="Severity_Level">
+            <value>MODERATE (Encroachment/Clear-cut)</value>
+          </Data>
+          <Data name="Urgency_Code">
+            <value>MONITORING</value>
+          </Data>
+          <Data name="Estimated_CO2_Loss_Tonnes">
+            <value>33.5</value>
+          </Data>
+          <Data name="UTM_Coordinates">
+            <value>44N 681774 2524233</value>
+          </Data>
+          <Data name="Latitude">
+            <value>22.815936</value>
+          </Data>
+          <Data name="Longitude">
+            <value>82.771135</value>
+          </Data>
+          <Data name="Verification_Status">
+            <value>PENDING_FIELD_VERIFICATION</value>
+          </Data>
+        </ExtendedData>
+        <description>
+        &lt;![CDATA[
+        &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
+            &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-021 | Deforestation Alert&lt;/h3&gt;
+            &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.108 ha&lt;/b&gt; (0.27 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;33.5 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.81594°N, 82.77114°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 681774 2524233&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
+        &lt;/div&gt;
+        ]]&gt;
+        </description>
+        <Polygon>
+          <extrude>1</extrude>
+          <altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs>
+            <LinearRing>
+              <coordinates>82.77105291810958,22.816131158854514,0 82.77104981217177,22.81589102067032,0 82.77096503087361,22.815891963013996,0 82.7709619251261,22.81565182481117,0 82.77104670627577,22.815650882478508,0 82.77104877686844,22.815810974607235,0 82.77121833935233,22.815809089792047,0 82.77121937475464,22.81588913584779,0 82.77130415603935,22.815888193368934,0 82.77130726242265,22.816128331520087,0 82.77105291810958,22.816131158854514,0</coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>ISRO-HAS-022 (0.108 ha)</name>
+        <styleUrl>#moderate_alert</styleUrl>
+        <ExtendedData>
+          <Data name="Incident_ID">
+            <value>ISRO-HAS-022</value>
+          </Data>
+          <Data name="Cleared_Area_Hectares">
+            <value>0.108</value>
+          </Data>
+          <Data name="Cleared_Area_Acres">
+            <value>0.27</value>
+          </Data>
+          <Data name="Severity_Level">
+            <value>MODERATE (Encroachment/Clear-cut)</value>
+          </Data>
+          <Data name="Urgency_Code">
+            <value>MONITORING</value>
+          </Data>
+          <Data name="Estimated_CO2_Loss_Tonnes">
+            <value>33.5</value>
+          </Data>
+          <Data name="UTM_Coordinates">
+            <value>44N 684098 2522025</value>
+          </Data>
+          <Data name="Latitude">
+            <value>22.795746</value>
+          </Data>
+          <Data name="Longitude">
+            <value>82.793511</value>
+          </Data>
+          <Data name="Verification_Status">
+            <value>PENDING_FIELD_VERIFICATION</value>
+          </Data>
+        </ExtendedData>
+        <description>
+        &lt;![CDATA[
+        &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
+            &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-022 | Deforestation Alert&lt;/h3&gt;
+            &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.108 ha&lt;/b&gt; (0.27 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;33.5 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.79575°N, 82.79351°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 684098 2522025&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
+        &lt;/div&gt;
+        ]]&gt;
+        </description>
+        <Polygon>
+          <extrude>1</extrude>
+          <altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs>
+            <LinearRing>
+              <coordinates>82.79291776225337,22.795792317761016,0 82.79291671519837,22.79571227245146,0 82.79410346397879,22.795698923219764,0 82.79410451172593,22.795778968477293,0 82.79291776225337,22.795792317761016,0</coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>ISRO-HAS-023 (0.077 ha)</name>
+        <styleUrl>#moderate_alert</styleUrl>
+        <ExtendedData>
+          <Data name="Incident_ID">
+            <value>ISRO-HAS-023</value>
+          </Data>
+          <Data name="Cleared_Area_Hectares">
+            <value>0.077</value>
+          </Data>
+          <Data name="Cleared_Area_Acres">
+            <value>0.19</value>
+          </Data>
+          <Data name="Severity_Level">
+            <value>MODERATE (Encroachment/Clear-cut)</value>
+          </Data>
+          <Data name="Urgency_Code">
+            <value>MONITORING</value>
+          </Data>
+          <Data name="Estimated_CO2_Loss_Tonnes">
+            <value>23.9</value>
+          </Data>
+          <Data name="UTM_Coordinates">
+            <value>44N 681872 2524256</value>
+          </Data>
+          <Data name="Latitude">
+            <value>22.816128</value>
+          </Data>
+          <Data name="Longitude">
+            <value>82.772096</value>
+          </Data>
+          <Data name="Verification_Status">
+            <value>PENDING_FIELD_VERIFICATION</value>
+          </Data>
+        </ExtendedData>
+        <description>
+        &lt;![CDATA[
+        &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
+            &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-023 | Deforestation Alert&lt;/h3&gt;
+            &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.077 ha&lt;/b&gt; (0.19 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;23.9 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.81613°N, 82.77210°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 681872 2524256&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
+        &lt;/div&gt;
+        ]]&gt;
+        </description>
+        <Polygon>
+          <extrude>1</extrude>
+          <altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs>
+            <LinearRing>
+              <coordinates>82.77207340288142,22.816359985127857,0 82.7720702951198,22.816119847083492,0 82.77198551372695,22.816120789978914,0 82.77198447786522,22.816040743958755,0 82.77189969651737,22.816041686805445,0 82.77189866070978,22.815961640780763,0 82.77215300459137,22.815958812116534,0 82.7721550765082,22.816118904143007,0 82.77223985789209,22.816117961157463,0 82.7722419299265,22.816278053173203,0 82.77215714844361,22.81627899616609,0 82.77215818441829,22.81635904217636,0 82.77207340288142,22.816359985127857,0</coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>ISRO-HAS-024 (0.054 ha)</name>
+        <styleUrl>#moderate_alert</styleUrl>
+        <ExtendedData>
+          <Data name="Incident_ID">
+            <value>ISRO-HAS-024</value>
+          </Data>
+          <Data name="Cleared_Area_Hectares">
+            <value>0.054</value>
+          </Data>
+          <Data name="Cleared_Area_Acres">
+            <value>0.13</value>
+          </Data>
+          <Data name="Severity_Level">
+            <value>MODERATE (Encroachment/Clear-cut)</value>
+          </Data>
+          <Data name="Urgency_Code">
+            <value>MONITORING</value>
+          </Data>
+          <Data name="Estimated_CO2_Loss_Tonnes">
+            <value>16.7</value>
+          </Data>
+          <Data name="UTM_Coordinates">
+            <value>44N 677315 2527665</value>
+          </Data>
+          <Data name="Latitude">
+            <value>22.847397</value>
+          </Data>
+          <Data name="Longitude">
+            <value>82.7281</value>
+          </Data>
+          <Data name="Verification_Status">
+            <value>PENDING_FIELD_VERIFICATION</value>
+          </Data>
+        </ExtendedData>
+        <description>
+        &lt;![CDATA[
+        &lt;div style="font-family: Arial, sans-serif; padding: 8px;"&gt;
+            &lt;h3 style="color: #b71c1c; margin-bottom: 4px;"&gt;ISRO-HAS-024 | Deforestation Alert&lt;/h3&gt;
+            &lt;table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;"&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Cleared Area:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.054 ha&lt;/b&gt; (0.13 acres)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Severity:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;MODERATE (Encroachment/Clear-cut)&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Urgency:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;span style="color: red; font-weight: bold;"&gt;MONITORING&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;Biomass Carbon:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;16.7 t CO₂&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Centroid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;22.84740°N, 82.72810°E&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr&gt;&lt;td&gt;&lt;b&gt;UTM Grid:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;44N 677315 2527665&lt;/td&gt;&lt;/tr&gt;
+                &lt;tr bgcolor="#f5f5f5"&gt;&lt;td&gt;&lt;b&gt;Division:&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Hasdeo Arand, Surguja (C.G.)&lt;/td&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;p style="margin-top: 8px; font-size: 11px; color: #666;"&gt;ISRO NRSC Bhuvan Integration Standard&lt;/p&gt;
+        &lt;/div&gt;
+        ]]&gt;
+        </description>
+        <Polygon>
+          <extrude>1</extrude>
+          <altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs>
+            <LinearRing>
+              <coordinates>82.72794962141296,22.84750710290771,0 82.72794759806891,22.84734700771918,0 82.72803240080782,22.847346087061805,0 82.72803138909303,22.847266039469854,0 82.72811619177799,22.847265118770927,0 82.72811720354237,22.847345166359304,0 82.72828680899832,22.84734332481889,0 82.72828782086643,22.847423372399252,0 82.72820301809105,22.847424293195605,0 82.7282040299141,22.8475043407787,0 82.72811922708476,22.8475052615335,0 82.7281182153113,22.847425213946828,0 82.72803341252717,22.847426134652913,0 82.72803442425104,22.847506182243173,0 82.72794962141296,22.84750710290771,0</coordinates>
             </LinearRing>
           </outerBoundaryIs>
         </Polygon>

@@ -67,7 +67,7 @@ def build_isro_geospatial_workstation(
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <!-- Leaflet Side-by-Side (Split Swipe Slider) -->
-    <script src="https://unpkg.com/leaflet-side-by-side@2.2.0/leaflet-side-by-side.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/digidem/leaflet-side-by-side/leaflet-side-by-side.min.js"></script>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <!-- Inter & JetBrains Mono Fonts -->
@@ -76,8 +76,8 @@ def build_isro_geospatial_workstation(
     
     <style>
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-        body, html {{ width: 100%; height: 100%; overflow: hidden; font-family: 'Inter', sans-serif; background: #070a10; color: #f3f4f6; }}
-        #map {{ width: 100vw; height: 100vh; position: absolute; top: 0; left: 0; z-index: 1; }}
+        body, html {{ width: 100%; height: 100%; min-height: 720px; margin: 0; padding: 0; overflow: hidden; font-family: 'Inter', sans-serif; background: #070a10; color: #f3f4f6; }}
+        #map {{ width: 100%; height: 100%; min-height: 720px; position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; background: #0b0f19; }}
 
         /* Top Header Bar */
         .isro-header {{
@@ -406,26 +406,52 @@ def build_isro_geospatial_workstation(
             preferCanvas: true
         }});
 
-        L.control.zoom({{ position: 'bottomright' }}).add_to(map);
+        // Zoom Control
+        L.control.zoom({{ position: 'bottomright' }}).addTo(map);
 
-        // 2. Base Layers for Split-Screen Slider
-        // Left Layer: Pre-clearing Baseline (Esri Clarity Archive)
-        const leftLayer = L.tileLayer('https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{{z}}/{{y}}/{{x}}', {{
-            maxZoom: 19,
-            attribution: 'Esri Clarity Archive'
-        }}).addTo(map);
-
-        // Right Layer: Recent Monitoring (Esri World Imagery High-Res)
-        const rightLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{{z}}/{{y}}/{{x}}', {{
+        // 2. High-Resolution Online Satellite Basemaps
+        // Primary Base: Esri World Imagery (High-Resolution Satellite - Sub-meter)
+        const baseSatellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{{z}}/{{y}}/{{x}}', {{
             maxZoom: 19,
             attribution: 'Tiles &copy; Esri &mdash; Sentinel-2 & Maxar'
         }}).addTo(map);
 
-        // 3. Attach Side-by-Side Swipe Controller
+        // Dark Canvas Basemap
+        const baseDark = L.tileLayer('https://{{s}}.basemaps.cartocdn.com/dark_all/{{z}}/{{x}}/{{y}}{{r}}.png', {{
+            maxZoom: 19,
+            subdomains: 'abcd',
+            attribution: '&copy; CARTO &copy; OpenStreetMap'
+        }});
+
+        // Secondary Baseline for Split-Screen Slider
+        const leftLayer = L.tileLayer('https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{{z}}/{{y}}/{{x}}', {{
+            maxZoom: 19,
+            attribution: 'Esri Clarity Archive (2021 Pre-clearing)'
+        }});
+
+        // 3. Attach Side-by-Side Swipe Controller safely
         let sideBySideControl = null;
-        if (typeof L.control.sideBySide === 'function') {{
-            sideBySideControl = L.control.sideBySide(leftLayer, rightLayer).addTo(map);
+        try {{
+            if (typeof L.control.sideBySide === 'function') {{
+                leftLayer.addTo(map);
+                sideBySideControl = L.control.sideBySide(leftLayer, baseSatellite).addTo(map);
+            }}
+        }} catch (err) {{
+            console.warn("Split-screen slider initialization notice:", err);
         }}
+
+        // Ensure tiles render immediately inside iframe
+        function forceMapRedraw() {{
+            if (map) {{
+                map.invalidateSize();
+            }}
+        }}
+        setTimeout(forceMapRedraw, 100);
+        setTimeout(forceMapRedraw, 300);
+        setTimeout(forceMapRedraw, 700);
+        setTimeout(forceMapRedraw, 1500);
+        window.addEventListener('resize', forceMapRedraw);
+        window.addEventListener('load', forceMapRedraw);
 
         // 4. Deforestation Alert Polygons (Vector Layer)
         const rawGeojsonData = {geojson_json_str};

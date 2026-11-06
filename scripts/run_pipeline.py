@@ -19,6 +19,7 @@ import rasterio
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from src.data.synthetic_data import generate_synthetic_study_area
+from src.data.real_data_fetcher import build_real_sentinel_dataset
 from src.data.tiling import tile_raster_and_mask, spatial_block_split, compute_band_statistics
 from src.data.dataset import SatellitePatchDataset, get_transforms
 from src.baseline.ndvi_baseline import NDVIBaseline
@@ -78,10 +79,16 @@ def run_pipeline(
     mask_t2_path = os.path.join(data_dir, "dynamic_world_t2.tif")
 
     if force_data or not all(os.path.exists(p) for p in [s2_t1_path, s2_t2_path, mask_t1_path, mask_t2_path]):
-        print(f"\n[Step 1] Synthesizing accurate geographic landscape for {region_cfg['name']}...")
-        generate_synthetic_study_area(output_dir=data_dir, region_key=region, random_seed=seed)
+        print(f"\n[Step 1] Ingesting real-world Sentinel-2 satellite data for {region_cfg['name']}...")
+        build_real_sentinel_dataset(
+            output_dir=data_dir,
+            center_lat=region_cfg["center_lat"],
+            center_lon=region_cfg["center_lon"],
+            zoom=14,
+            grid_size=4,
+        )
     else:
-        print("\n[Step 1] Verified raw Sentinel-2 and Dynamic World GeoTIFFs.")
+        print("\n[Step 1] Verified real-world Sentinel-2 and Dynamic World GeoTIFFs.")
 
     # -------------------------------------------------------------
     # Step 2: Tiling and Geographic Block Splitting
