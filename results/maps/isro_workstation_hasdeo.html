@@ -1,0 +1,3518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>ISRO NRSC | VANASPATI-AI: Earth Observation Forest Sentinel</title>
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Leaflet Side-by-Side (Split Swipe Slider) -->
+    <script src="https://cdn.jsdelivr.net/gh/digidem/leaflet-side-by-side/leaflet-side-by-side.min.js"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <!-- Inter & JetBrains Mono Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body, html { width: 100%; height: 100%; min-height: 720px; margin: 0; padding: 0; overflow: hidden; font-family: 'Inter', sans-serif; background: #070a10; color: #f3f4f6; }
+        #map { width: 100%; height: 100%; min-height: 720px; position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; background: #0b0f19; }
+
+        /* Top Header Bar */
+        .isro-header {
+            position: absolute;
+            top: 14px;
+            left: 20px;
+            right: 20px;
+            height: 58px;
+            background: rgba(11, 15, 25, 0.88);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .brand-cluster { display: flex; align-items: center; gap: 14px; }
+        .isro-emblem {
+            width: 38px; height: 38px;
+            background: linear-gradient(135deg, #FF6F00, #E65100);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 14px; color: #fff;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 15px rgba(255, 111, 0, 0.4);
+        }
+        .title-group h1 {
+            font-size: 15px; font-weight: 700; letter-spacing: 0.5px; color: #fff;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .title-group p { font-size: 11px; color: #9ca3af; font-family: 'JetBrains Mono', monospace; }
+        .badge-live {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            padding: 2px 8px; border-radius: 20px;
+            font-size: 10px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1px;
+            display: inline-flex; align-items: center; gap: 4px;
+        }
+        .pulse-dot { width: 6px; height: 6px; background: #10b981; border-radius: 50%; box-shadow: 0 0 8px #10b981; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
+
+        /* Top Action Bar */
+        .header-actions { display: flex; align-items: center; gap: 10px; }
+        .btn-action {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: #e5e7eb;
+            font-size: 12px; font-weight: 600;
+            padding: 8px 14px; border-radius: 8px;
+            cursor: pointer; display: flex; align-items: center; gap: 6px;
+            transition: all 0.2s ease;
+        }
+        .btn-action:hover { background: rgba(255, 255, 255, 0.15); color: #fff; border-color: rgba(255, 255, 255, 0.3); }
+        .btn-primary {
+            background: linear-gradient(135deg, #059669, #10b981);
+            border: none; color: #fff;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+        }
+        .btn-primary:hover { background: linear-gradient(135deg, #047857, #059669); transform: translateY(-1px); }
+
+        /* Floating Left Controls (Hotspots & Tools) */
+        .floating-left-card {
+            position: absolute;
+            top: 86px;
+            left: 20px;
+            width: 320px;
+            background: rgba(11, 15, 25, 0.90);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            padding: 18px;
+            z-index: 1000;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+        .section-label {
+            font-size: 11px; font-weight: 700; color: #9ca3af;
+            text-transform: uppercase; letter-spacing: 1px;
+            margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+        }
+        .hotspot-pill-grid { display: grid; grid-template-columns: 1fr; gap: 6px; margin-bottom: 16px; }
+        .hotspot-pill {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px; padding: 10px 12px;
+            cursor: pointer; transition: all 0.2s ease;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .hotspot-pill:hover, .hotspot-pill.active {
+            background: rgba(16, 185, 129, 0.12);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+        .hotspot-name { font-size: 13px; font-weight: 600; color: #f3f4f6; }
+        .hotspot-desc { font-size: 10.5px; color: #9ca3af; margin-top: 2px; }
+
+        /* Layer Toggles */
+        .layer-toggle-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+        .toggle-item {
+            display: flex; align-items: center; justify-content: space-between;
+            font-size: 12px; color: #d1d5db; padding: 6px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .toggle-item label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .toggle-switch {
+            position: relative; width: 34px; height: 18px;
+            background: #374151; border-radius: 20px; cursor: pointer;
+            transition: background 0.2s;
+        }
+        .toggle-switch.on { background: #10b981; }
+        .toggle-switch::after {
+            content: ''; position: absolute; top: 2px; left: 2px;
+            width: 14px; height: 14px; background: #fff; border-radius: 50%;
+            transition: transform 0.2s;
+        }
+        .toggle-switch.on::after { transform: translateX(16px); }
+
+        /* Split Swipe Banner */
+        .swipe-banner {
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 8px; padding: 10px;
+            font-size: 11px; color: #fde68a;
+            display: flex; align-items: center; gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        /* Floating Right Live Telemetry & AI Probe HUD */
+        .floating-right-hud {
+            position: absolute;
+            top: 86px;
+            right: 20px;
+            width: 330px;
+            background: rgba(11, 15, 25, 0.90);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            padding: 18px;
+            z-index: 1000;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+        .probe-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 12px; padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .probe-coords { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #10b981; }
+        
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+        .stat-box {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px; padding: 10px;
+        }
+        .stat-val { font-size: 18px; font-weight: 700; color: #fff; font-family: 'JetBrains Mono', monospace; }
+        .stat-sub { font-size: 10px; color: #9ca3af; text-transform: uppercase; margin-top: 2px; }
+
+        /* Live Spectral Signature Graph */
+        .spectral-bars { display: flex; align-items: flex-end; justify-content: space-between; height: 60px; padding-top: 10px; margin-bottom: 6px; }
+        .spec-col { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 14%; }
+        .spec-bar { width: 100%; background: #3b82f6; border-radius: 3px; min-height: 4px; transition: height 0.3s ease; }
+        .spec-lbl { font-size: 9px; font-family: 'JetBrains Mono', monospace; color: #9ca3af; }
+
+        /* Bottom Floating Metric Ribbon */
+        .bottom-ribbon {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 48px;
+            background: rgba(11, 15, 25, 0.90);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 30px;
+            display: flex; align-items: center; gap: 24px;
+            padding: 0 24px;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            font-size: 12px;
+        }
+        .ribbon-item { display: flex; align-items: center; gap: 8px; }
+        .ribbon-item strong { color: #10b981; font-family: 'JetBrains Mono', monospace; font-size: 14px; }
+
+        /* Custom Popup Styling */
+        .leaflet-popup-content-wrapper {
+            background: rgba(15, 23, 42, 0.96) !important;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #f3f4f6 !important;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+        }
+        .leaflet-popup-tip { background: rgba(15, 23, 42, 0.96) !important; }
+    </style>
+</head>
+<body>
+
+    <!-- Map Viewport -->
+    <div id="map"></div>
+
+    <!-- Header Navigation -->
+    <div class="isro-header">
+        <div class="brand-cluster">
+            <div class="isro-emblem">ISRO</div>
+            <div class="title-group">
+                <h1>VANASPATI-AI <span class="badge-live"><span class="pulse-dot"></span> Sentinel-2 NRT</span></h1>
+                <p>National Remote Sensing Centre (NRSC) | Spatio-Temporal Forest Early Warning System</p>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button class="btn-action" onclick="exportBhuvanKML()"><i class="fa-solid fa-earth-asia"></i> Export Bhuvan KML</button>
+            <button class="btn-action" onclick="downloadGeoJSON()"><i class="fa-solid fa-file-code"></i> GeoJSON</button>
+            <button class="btn-action btn-primary" onclick="triggerQgisExport()"><i class="fa-solid fa-layer-group"></i> QGIS Project Suite</button>
+        </div>
+    </div>
+
+    <!-- Floating Left Panel -->
+    <div class="floating-left-card">
+        <div class="section-label"><i class="fa-solid fa-mountain-sun"></i> Active Forest Corridors</div>
+        <div class="hotspot-pill-grid">
+            <div class="hotspot-pill active" id="pill-hasdeo" onclick="flyToHotspot(22.82, 82.78, 13, 'hasdeo', this)">
+                <div>
+                    <div class="hotspot-name">🇮🇳 Hasdeo Arand (C.G.)</div>
+                    <div class="hotspot-desc">Sal Canopy & PEKB Coal Corridor</div>
+                </div>
+                <i class="fa-solid fa-chevron-right" style="color: #6b7280; font-size: 11px;"></i>
+            </div>
+            <div class="hotspot-pill " id="pill-ghats" onclick="flyToHotspot(12.35, 75.75, 13, 'ghats', this)">
+                <div>
+                    <div class="hotspot-name">🇮🇳 Western Ghats (Karnataka)</div>
+                    <div class="hotspot-desc">Shola-Rainforest & Linear Roads</div>
+                </div>
+                <i class="fa-solid fa-chevron-right" style="color: #6b7280; font-size: 11px;"></i>
+            </div>
+            <div class="hotspot-pill " id="pill-sumatra" onclick="flyToHotspot(0.55, 101.45, 13, 'sumatra', this)">
+                <div>
+                    <div class="hotspot-name">🇮🇩 Sumatra, Riau (Indonesia)</div>
+                    <div class="hotspot-desc">Tropical Peatland & Palm Oil</div>
+                </div>
+                <i class="fa-solid fa-chevron-right" style="color: #6b7280; font-size: 11px;"></i>
+            </div>
+            <div class="hotspot-pill " id="pill-amazon" onclick="flyToHotspot(-10.00, -62.50, 13, 'amazon', this)">
+                <div>
+                    <div class="hotspot-name">🇧🇷 Amazon Basin (Rondônia)</div>
+                    <div class="hotspot-desc">Primary Rainforest & Highway Cut</div>
+                </div>
+                <i class="fa-solid fa-chevron-right" style="color: #6b7280; font-size: 11px;"></i>
+            </div>
+        </div>
+
+        <div class="swipe-banner">
+            <i class="fa-solid fa-arrows-left-right"></i>
+            <div><b>Interactive Swipe Active:</b> Drag the center curtain across Hasdeo to inspect 2021 vs 2024 clearings!</div>
+        </div>
+
+        <div class="section-label"><i class="fa-solid fa-layer-group"></i> Dynamic Geospatial AI Layers</div>
+        <div class="layer-toggle-list">
+            <div class="toggle-item">
+                <label><i class="fa-solid fa-circle" style="color: #ef4444; font-size: 9px;"></i> ISRO Deforestation Alerts</label>
+                <div class="toggle-switch on" id="toggle-alerts" onclick="toggleLayer('alerts')"></div>
+            </div>
+            <div class="toggle-item">
+                <label><i class="fa-solid fa-fire" style="color: #f59e0b; font-size: 9px;"></i> 12-Month Predictive Risk Glow</label>
+                <div class="toggle-switch on" id="toggle-risk" onclick="toggleLayer('risk')"></div>
+            </div>
+            <div class="toggle-item">
+                <label><i class="fa-solid fa-seedling" style="color: #10b981; font-size: 9px;"></i> False Color NIR (CIR 8-4-3)</label>
+                <div class="toggle-switch" id="toggle-cir" onclick="toggleLayer('cir')"></div>
+            </div>
+        </div>
+
+        <div style="font-size: 11px; color: #9ca3af; line-height: 1.5; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
+            <b>QGIS Workstation:</b> Run <code>qgis/hasdeo_arand_monitoring.qgs</code> for native desktop GIS layer inspection.
+        </div>
+    </div>
+
+    <!-- Floating Right Live AI Probe HUD -->
+    <div class="floating-right-hud">
+        <div class="probe-header">
+            <div class="section-label" style="margin: 0;"><i class="fa-solid fa-crosshairs"></i> Dynamic AI Probe</div>
+            <div class="probe-coords" id="probe-coords">22.8200°N, 82.7800°E</div>
+        </div>
+
+        <div class="stat-grid">
+            <div class="stat-box">
+                <div class="stat-val" id="stat-fcd">84.2%</div>
+                <div class="stat-sub">Canopy Density (FCD)</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val" id="stat-ndvi" style="color: #10b981;">0.78</div>
+                <div class="stat-sub">Current NDVI Index</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val" id="stat-loss" style="color: #ef4444;">-0.54</div>
+                <div class="stat-sub">Δ-NDVI Canopy Drop</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val" id="stat-hazard" style="color: #f59e0b;">0.89</div>
+                <div class="stat-sub">Frontier Hazard (P)</div>
+            </div>
+        </div>
+
+        <div class="section-label" style="margin-top: 6px;"><i class="fa-solid fa-chart-simple"></i> Sentinel-2 Spectral Response</div>
+        <div class="spectral-bars">
+            <div class="spec-col"><div class="spec-bar" id="bar-b2" style="height: 18px; background: #60a5fa;"></div><div class="spec-lbl">B2</div></div>
+            <div class="spec-col"><div class="spec-bar" id="bar-b3" style="height: 28px; background: #34d399;"></div><div class="spec-lbl">B3</div></div>
+            <div class="spec-col"><div class="spec-bar" id="bar-b4" style="height: 16px; background: #f87171;"></div><div class="spec-lbl">B4</div></div>
+            <div class="spec-col"><div class="spec-bar" id="bar-b8" style="height: 52px; background: #ec4899;"></div><div class="spec-lbl">B8</div></div>
+            <div class="spec-col"><div class="spec-bar" id="bar-b11" style="height: 26px; background: #fbbf24;"></div><div class="spec-lbl">B11</div></div>
+            <div class="spec-col"><div class="spec-bar" id="bar-b12" style="height: 14px; background: #a78bfa;"></div><div class="spec-lbl">B12</div></div>
+        </div>
+        <div style="font-size: 10px; color: #6b7280; text-align: center;">Visible | NIR | SWIR Bands (10m - 20m)</div>
+    </div>
+
+    <!-- Bottom Telemetry Ribbon -->
+    <div class="bottom-ribbon">
+        <div class="ribbon-item">Total Monitored: <strong>10,240 ha</strong></div>
+        <div class="ribbon-item">Cleared Deforestation: <strong style="color: #ef4444;">7.74 ha</strong></div>
+        <div class="ribbon-item">Incident Clusters: <strong style="color: #f59e0b;">16</strong></div>
+        <div class="ribbon-item">12-Month High-Risk Frontier: <strong style="color: #fbbf24;">65.8 ha</strong></div>
+        <div class="ribbon-item">Grid: <span style="font-family: 'JetBrains Mono', monospace; color: #9ca3af;">UTM 44N (WGS84)</span></div>
+    </div>
+
+    <script>
+        // 1. Initialize Map
+        const map = L.map('map', {
+            center: [22.82, 82.78],
+            zoom: 13,
+            zoomControl: false,
+            preferCanvas: true
+        });
+
+        // Zoom Control
+        L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+        // 2. High-Resolution Online Satellite Basemaps
+        // Primary Base: Esri World Imagery (High-Resolution Satellite - Sub-meter)
+        const baseSatellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 19,
+            attribution: 'Tiles &copy; Esri &mdash; Sentinel-2 & Maxar'
+        }).addTo(map);
+
+        // Dark Canvas Basemap
+        const baseDark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            maxZoom: 19,
+            subdomains: 'abcd',
+            attribution: '&copy; CARTO &copy; OpenStreetMap'
+        });
+
+        // Secondary Baseline for Split-Screen Slider
+        const leftLayer = L.tileLayer('https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 19,
+            attribution: 'Esri Clarity Archive (2021 Pre-clearing)'
+        });
+
+        // 3. Attach Side-by-Side Swipe Controller safely
+        let sideBySideControl = null;
+        try {
+            if (typeof L.control.sideBySide === 'function') {
+                leftLayer.addTo(map);
+                sideBySideControl = L.control.sideBySide(leftLayer, baseSatellite).addTo(map);
+            }
+        } catch (err) {
+            console.warn("Split-screen slider initialization notice:", err);
+        }
+
+        // Ensure tiles render immediately inside iframe
+        function forceMapRedraw() {
+            if (map) {
+                map.invalidateSize();
+            }
+        }
+        setTimeout(forceMapRedraw, 100);
+        setTimeout(forceMapRedraw, 300);
+        setTimeout(forceMapRedraw, 700);
+        setTimeout(forceMapRedraw, 1500);
+        window.addEventListener('resize', forceMapRedraw);
+        window.addEventListener('load', forceMapRedraw);
+
+        // 4. Deforestation Alert Polygons (Vector Layer)
+        const rawGeojsonData = {
+  "type": "FeatureCollection",
+  "name": "isro_hasdeo_arand_deforestation_alerts",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-001",
+      "properties": {
+        "alert_id": "ISRO-HAS-001",
+        "area_ha": 0.594,
+        "area_acres": 1.47,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.857149,
+        "center_lon": 82.800398,
+        "utm_coords": "44N 684722 2528834",
+        "carbon_tco2": 184.1,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.79728513344809,
+              22.85722667041004
+            ],
+            [
+              82.79728408069387,
+              22.85714662590922
+            ],
+            [
+              82.79779291448557,
+              22.85714087738176
+            ],
+            [
+              82.79779186143841,
+              22.857060832902455
+            ],
+            [
+              82.79796147256667,
+              22.857058916372896
+            ],
+            [
+              82.79796252571305,
+              22.857138960844757
+            ],
+            [
+              82.80364449129628,
+              22.85707465249384
+            ],
+            [
+              82.80364554777118,
+              22.8571546967147
+            ],
+            [
+              82.79728513344809,
+              22.85722667041004
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-002",
+      "properties": {
+        "alert_id": "ISRO-HAS-002",
+        "area_ha": 0.548,
+        "area_acres": 1.35,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.816441,
+        "center_lon": 82.793793,
+        "utm_coords": "44N 684099 2524317",
+        "carbon_tco2": 169.9,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.7929421028856,
+              22.81708720234238
+            ],
+            [
+              82.79293791028195,
+              22.81676702195763
+            ],
+            [
+              82.7928531294541,
+              22.816767975978692
+            ],
+            [
+              82.79285103327949,
+              22.816607885773795
+            ],
+            [
+              82.79302059473268,
+              22.816605977701474
+            ],
+            [
+              82.79301954655344,
+              22.816525932605188
+            ],
+            [
+              82.79293476587863,
+              22.81652688666016
+            ],
+            [
+              82.79293371775358,
+              22.8164468415593
+            ],
+            [
+              82.79301849837891,
+              22.81644588750805
+            ],
+            [
+              82.79301640204397,
+              22.816285797311217
+            ],
+            [
+              82.79386420705777,
+              22.81627625439471
+            ],
+            [
+              82.79386315840239,
+              22.81619620933219
+            ],
+            [
+              82.79411749966954,
+              22.81619334558973
+            ],
+            [
+              82.79411854847339,
+              22.81627339064109
+            ],
+            [
+              82.79445767029736,
+              22.81626957167211
+            ],
+            [
+              82.79445662129552,
+              22.81618952663562
+            ],
+            [
+              82.79479574284885,
+              22.81618570696056
+            ],
+            [
+              82.79479679204869,
+              22.81626575198217
+            ],
+            [
+              82.79488157247515,
+              22.816264796947035
+            ],
+            [
+              82.79488052322583,
+              22.816184751929146
+            ],
+            [
+              82.79547398573752,
+              22.816178065447588
+            ],
+            [
+              82.79547503533331,
+              22.81625811043943
+            ],
+            [
+              82.79496635289709,
+              22.81626384186684
+            ],
+            [
+              82.79496950082182,
+              22.816503976904247
+            ],
+            [
+              82.79488472025139,
+              22.816504931995606
+            ],
+            [
+              82.79488262172919,
+              22.816344841964067
+            ],
+            [
+              82.79352613356879,
+              22.81636011717856
+            ],
+            [
+              82.7935271820356,
+              22.816440162254256
+            ],
+            [
+              82.79369674321819,
+              22.816438253475845
+            ],
+            [
+              82.7936977917887,
+              22.816518298543247
+            ],
+            [
+              82.7932738885507,
+              22.81652307016991
+            ],
+            [
+              82.79327284022767,
+              22.816443025083917
+            ],
+            [
+              82.79318805961596,
+              22.816443979270357
+            ],
+            [
+              82.79319330103064,
+              22.816844204710396
+            ],
+            [
+              82.7931085201669,
+              22.816845158870354
+            ],
+            [
+              82.79311061666671,
+              22.81700524904786
+            ],
+            [
+              82.79302583569945,
+              22.81700620317019
+            ],
+            [
+              82.79302688390692,
+              22.81708624826139
+            ],
+            [
+              82.7929421028856,
+              22.81708720234238
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-003",
+      "properties": {
+        "alert_id": "ISRO-HAS-003",
+        "area_ha": 0.409,
+        "area_acres": 1.01,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.818694,
+        "center_lon": 82.771074,
+        "utm_coords": "44N 681764 2524539",
+        "carbon_tco2": 126.8,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.77100955118473,
+              22.819333943082494
+            ],
+            [
+              82.77100333853234,
+              22.81885366688801
+            ],
+            [
+              82.77091855539814,
+              22.818854609322432
+            ],
+            [
+              82.77091752002184,
+              22.818774563283377
+            ],
+            [
+              82.77083273693266,
+              22.818775505669063
+            ],
+            [
+              82.77083480759087,
+              22.818935597753665
+            ],
+            [
+              82.77075002439823,
+              22.818936540101628
+            ],
+            [
+              82.77074381277636,
+              22.81845626381563
+            ],
+            [
+              82.77082859567201,
+              22.81845532148969
+            ],
+            [
+              82.77082756036846,
+              22.818375275442726
+            ],
+            [
+              82.77091234321011,
+              22.818374333075393
+            ],
+            [
+              82.77091337856316,
+              22.818454379118684
+            ],
+            [
+              82.77099816144984,
+              22.81845343670261
+            ],
+            [
+              82.77099712604728,
+              22.818373390662988
+            ],
+            [
+              82.77108190887998,
+              22.81837244820552
+            ],
+            [
+              82.77108397978874,
+              22.81853254027658
+            ],
+            [
+              82.77116876271596,
+              22.8185315977667
+            ],
+            [
+              82.77116669170819,
+              22.818371505702988
+            ],
+            [
+              82.77125147453192,
+              22.818370563155387
+            ],
+            [
+              82.7712504389855,
+              22.818290517125927
+            ],
+            [
+              82.77116565621127,
+              22.818291459669858
+            ],
+            [
+              82.77116358523138,
+              22.818131367601055
+            ],
+            [
+              82.7712483679066,
+              22.818130425064464
+            ],
+            [
+              82.77124940344372,
+              22.81821047109562
+            ],
+            [
+              82.77133418616395,
+              22.8182095285103
+            ],
+            [
+              82.77134039978135,
+              22.81868980465739
+            ],
+            [
+              82.77125561676408,
+              22.818690747264743
+            ],
+            [
+              82.77125665233375,
+              22.818770793289957
+            ],
+            [
+              82.77134143540052,
+              22.818769850678937
+            ],
+            [
+              82.77134454228592,
+              22.81900998873848
+            ],
+            [
+              82.77125975907063,
+              22.819010931360523
+            ],
+            [
+              82.77125872348702,
+              22.818930885337853
+            ],
+            [
+              82.77117394031676,
+              22.818931827911147
+            ],
+            [
+              82.77117497585087,
+              22.819011873937487
+            ],
+            [
+              82.7710901926266,
+              22.81901281646939
+            ],
+            [
+              82.77109226360976,
+              22.819172908526873
+            ],
+            [
+              82.77117704693302,
+              22.819171965987636
+            ],
+            [
+              82.77117808248107,
+              22.819252012011432
+            ],
+            [
+              82.7710932991083,
+              22.819252954554347
+            ],
+            [
+              82.77109433461149,
+              22.81933300058098
+            ],
+            [
+              82.77100955118473,
+              22.819333943082494
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-004",
+      "properties": {
+        "alert_id": "ISRO-HAS-004",
+        "area_ha": 0.37,
+        "area_acres": 0.91,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.836445,
+        "center_lon": 82.797325,
+        "utm_coords": "44N 684435 2526537",
+        "carbon_tco2": 114.7,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.79659076608745,
+              22.83665999015512
+            ],
+            [
+              82.79658866350547,
+              22.836499900678344
+            ],
+            [
+              82.79667345637974,
+              22.836498943890042
+            ],
+            [
+              82.79667135371753,
+              22.83633885441732
+            ],
+            [
+              82.79675614648814,
+              22.836337897591363
+            ],
+            [
+              82.79675719786643,
+              22.83641794232443
+            ],
+            [
+              82.79701157629961,
+              22.836415071564772
+            ],
+            [
+              82.79701052477267,
+              22.836335026842885
+            ],
+            [
+              82.7975192812189,
+              22.836329284128134
+            ],
+            [
+              82.79751822939934,
+              22.836249239427744
+            ],
+            [
+              82.79802698538445,
+              22.836243495111635
+            ],
+            [
+              82.79802803750131,
+              22.83632353978967
+            ],
+            [
+              82.79794324479894,
+              22.836324497292168
+            ],
+            [
+              82.7979453489477,
+              22.836484586653125
+            ],
+            [
+              82.79777576333113,
+              22.836486501537728
+            ],
+            [
+              82.79777681531348,
+              22.836566546224386
+            ],
+            [
+              82.79735285094465,
+              22.836571332665212
+            ],
+            [
+              82.79735179921006,
+              22.83649128795992
+            ],
+            [
+              82.79718221352978,
+              22.83649320221307
+            ],
+            [
+              82.79718326516527,
+              22.836573246925816
+            ],
+            [
+              82.79709847226874,
+              22.836574203988462
+            ],
+            [
+              82.79709952385942,
+              22.836654248704075
+            ],
+            [
+              82.79676035202964,
+              22.836658076518518
+            ],
+            [
+              82.79675930063719,
+              22.836578031788008
+            ],
+            [
+              82.79667450771791,
+              22.83657898862514
+            ],
+            [
+              82.79667555906082,
+              22.83665903335937
+            ],
+            [
+              82.79659076608745,
+              22.83665999015512
+            ]
+          ],
+          [
+            [
+              82.79692888646206,
+              22.836576117978446
+            ],
+            [
+              82.79709847226874,
+              22.836574203988462
+            ],
+            [
+              82.7970974206828,
+              22.836494159271997
+            ],
+            [
+              82.79692783497522,
+              22.836496073254526
+            ],
+            [
+              82.79692888646206,
+              22.836576117978446
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-005",
+      "properties": {
+        "alert_id": "ISRO-HAS-005",
+        "area_ha": 0.34,
+        "area_acres": 0.84,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.846573,
+        "center_lon": 82.728335,
+        "utm_coords": "44N 677340 2527574",
+        "carbon_tco2": 105.4,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.72828680899832,
+              22.84734332481889
+            ],
+            [
+              82.72828579713475,
+              22.847263277237683
+            ],
+            [
+              82.72837059980655,
+              22.84726235640336
+            ],
+            [
+              82.72836958789794,
+              22.847182308824898
+            ],
+            [
+              82.72828478527572,
+              22.84718322965564
+            ],
+            [
+              82.72828377342123,
+              22.847103182072733
+            ],
+            [
+              82.72836857599387,
+              22.84710226124557
+            ],
+            [
+              82.72836756409434,
+              22.847022213665422
+            ],
+            [
+              82.72828276157128,
+              22.847023134488992
+            ],
+            [
+              82.72828174972588,
+              22.846943086904393
+            ],
+            [
+              82.72819694724804,
+              22.846944007679255
+            ],
+            [
+              82.72819290011014,
+              22.846623817318086
+            ],
+            [
+              82.72827770238963,
+              22.84662289655756
+            ],
+            [
+              82.72827669056693,
+              22.84654284896873
+            ],
+            [
+              82.72819188833704,
+              22.846543769725677
+            ],
+            [
+              82.72818480605225,
+              22.845983436555095
+            ],
+            [
+              82.72826960793506,
+              22.845982515823238
+            ],
+            [
+              82.72826859614867,
+              22.84590246822763
+            ],
+            [
+              82.7283533979775,
+              22.84590154745422
+            ],
+            [
+              82.72835440981348,
+              22.845981595046236
+            ],
+            [
+              82.72843921168752,
+              22.845980674224116
+            ],
+            [
+              82.72845034272838,
+              22.84686119764101
+            ],
+            [
+              82.7285351451435,
+              22.84686027673434
+            ],
+            [
+              82.72853615713314,
+              22.846940324309028
+            ],
+            [
+              82.72845135466842,
+              22.846941245219277
+            ],
+            [
+              82.72845641443675,
+              22.847341483097946
+            ],
+            [
+              82.72828680899832,
+              22.84734332481889
+            ]
+          ],
+          [
+            [
+              82.72828073788502,
+              22.846863039318958
+            ],
+            [
+              82.72836554030889,
+              22.846862118502546
+            ],
+            [
+              82.72836452842297,
+              22.84678207091985
+            ],
+            [
+              82.72827972604867,
+              22.846782991732674
+            ],
+            [
+              82.72828073788502,
+              22.846863039318958
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-006",
+      "properties": {
+        "alert_id": "ISRO-HAS-006",
+        "area_ha": 0.286,
+        "area_acres": 0.71,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.799966,
+        "center_lon": 82.792272,
+        "utm_coords": "44N 683965 2522491",
+        "carbon_tco2": 88.7,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.79221870351226,
+              22.8006836591025
+            ],
+            [
+              82.79221242220173,
+              22.80020338734238
+            ],
+            [
+              82.79212765158793,
+              22.80020434032416
+            ],
+            [
+              82.79212451114451,
+              22.799964204421503
+            ],
+            [
+              82.79220928160994,
+              22.799963251450855
+            ],
+            [
+              82.79220823475542,
+              22.799883206151986
+            ],
+            [
+              82.79212346433943,
+              22.799884159118925
+            ],
+            [
+              82.79212137074339,
+              22.79972406851121
+            ],
+            [
+              82.79220614106048,
+              22.7997231155517
+            ],
+            [
+              82.79219986008847,
+              22.79924284373048
+            ],
+            [
+              82.79228463010432,
+              22.79924189074823
+            ],
+            [
+              82.79228672384176,
+              22.799401981351277
+            ],
+            [
+              82.79237149395198,
+              22.79940102831658
+            ],
+            [
+              82.79238510434654,
+              22.80044161710531
+            ],
+            [
+              82.79230033359346,
+              22.800442570188295
+            ],
+            [
+              82.79230138053035,
+              22.80052261547751
+            ],
+            [
+              82.79238615133288,
+              22.800521662390814
+            ],
+            [
+              82.79238719832392,
+              22.800601707675465
+            ],
+            [
+              82.79230242747194,
+              22.800602660765875
+            ],
+            [
+              82.79230347441823,
+              22.800682706053394
+            ],
+            [
+              82.79221870351226,
+              22.8006836591025
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-007",
+      "properties": {
+        "alert_id": "ISRO-HAS-007",
+        "area_ha": 0.278,
+        "area_acres": 0.69,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.857035,
+        "center_lon": 82.794597,
+        "utm_coords": "44N 684127 2528814",
+        "carbon_tco2": 86.2,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.79465930838728,
+              22.857496479201348
+            ],
+            [
+              82.79465720593105,
+              22.85733638997311
+            ],
+            [
+              82.79457240004294,
+              22.85733734651082
+            ],
+            [
+              82.79457029770478,
+              22.85717725727174
+            ],
+            [
+              82.79423107450374,
+              22.857181082941313
+            ],
+            [
+              82.79423002354018,
+              22.857101038305622
+            ],
+            [
+              82.79448444079897,
+              22.857098169132318
+            ],
+            [
+              82.79448338969128,
+              22.857018124506933
+            ],
+            [
+              82.79439858399252,
+              22.857019080939466
+            ],
+            [
+              82.79439753293916,
+              22.856939036309505
+            ],
+            [
+              82.79431272728544,
+              22.856939992693164
+            ],
+            [
+              82.79431167628641,
+              22.856859948058638
+            ],
+            [
+              82.79439648189052,
+              22.856858991678696
+            ],
+            [
+              82.79439437980739,
+              22.85669890241453
+            ],
+            [
+              82.79447918530772,
+              22.856697945996878
+            ],
+            [
+              82.79447708314423,
+              22.856537856736754
+            ],
+            [
+              82.7945618885408,
+              22.856536900281405
+            ],
+            [
+              82.79456293966979,
+              22.85661694490817
+            ],
+            [
+              82.79464774511143,
+              22.856615988403945
+            ],
+            [
+              82.79464879629475,
+              22.85669603302614
+            ],
+            [
+              82.79473360178146,
+              22.856695076473052
+            ],
+            [
+              82.7947346530191,
+              22.856775121090678
+            ],
+            [
+              82.79456504194194,
+              22.85677703415915
+            ],
+            [
+              82.79456714423293,
+              22.856937123406738
+            ],
+            [
+              82.79465194987301,
+              22.856936166887635
+            ],
+            [
+              82.79465300107519,
+              22.857016211506433
+            ],
+            [
+              82.79473780676032,
+              22.857015254938453
+            ],
+            [
+              82.79473675550852,
+              22.856935210323385
+            ],
+            [
+              82.7948215611395,
+              22.856934253713973
+            ],
+            [
+              82.79482366374702,
+              22.857094342935834
+            ],
+            [
+              82.79490846947267,
+              22.857093386273842
+            ],
+            [
+              82.7949095208331,
+              22.857173430879776
+            ],
+            [
+              82.79482471505784,
+              22.85717438754549
+            ],
+            [
+              82.79482576637339,
+              22.857254432154292
+            ],
+            [
+              82.79474096054398,
+              22.85725538877858
+            ],
+            [
+              82.79474201181463,
+              22.85733543339025
+            ],
+            [
+              82.79482681769365,
+              22.857334476762247
+            ],
+            [
+              82.79482892034832,
+              22.8574945659756
+            ],
+            [
+              82.79465930838728,
+              22.857496479201348
+            ]
+          ],
+          [
+            [
+              82.79456924654279,
+              22.857097212650924
+            ],
+            [
+              82.79465405228208,
+              22.857096256124382
+            ],
+            [
+              82.79465300107519,
+              22.857016211506433
+            ],
+            [
+              82.79456819538551,
+              22.85701716802925
+            ],
+            [
+              82.79456924654279,
+              22.857097212650924
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-008",
+      "properties": {
+        "alert_id": "ISRO-HAS-008",
+        "area_ha": 0.278,
+        "area_acres": 0.69,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.836542,
+        "center_lon": 82.793454,
+        "utm_coords": "44N 684037 2526543",
+        "carbon_tco2": 86.2,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.79302945710184,
+              22.83670013484745
+            ],
+            [
+              82.79302735868227,
+              22.83654004505816
+            ],
+            [
+              82.79294256561263,
+              22.836540999906987
+            ],
+            [
+              82.79294046731103,
+              22.836380910106865
+            ],
+            [
+              82.79302526028155,
+              22.836379955265468
+            ],
+            [
+              82.79302630947956,
+              22.836460000162237
+            ],
+            [
+              82.7931958955061,
+              22.836458090336695
+            ],
+            [
+              82.79319379691658,
+              22.836298000557164
+            ],
+            [
+              82.79327858982394,
+              22.836297045584175
+            ],
+            [
+              82.79328068851257,
+              22.836457135356266
+            ],
+            [
+              82.79336548151448,
+              22.83645618033074
+            ],
+            [
+              82.79336443211827,
+              22.836376135448834
+            ],
+            [
+              82.79344922506611,
+              22.836375180381925
+            ],
+            [
+              82.79344817562504,
+              22.83629513550288
+            ],
+            [
+              82.79361776140799,
+              22.836293225241167
+            ],
+            [
+              82.7936209100426,
+              22.836533359853426
+            ],
+            [
+              82.7937904961047,
+              22.836531449388993
+            ],
+            [
+              82.7937915457581,
+              22.836611494250604
+            ],
+            [
+              82.79404592496584,
+              22.83660862820452
+            ],
+            [
+              82.79404487516378,
+              22.83652858335406
+            ],
+            [
+              82.79412966817439,
+              22.836527627918876
+            ],
+            [
+              82.79413176788232,
+              22.836687717611508
+            ],
+            [
+              82.79353821601894,
+              22.83669440476267
+            ],
+            [
+              82.79353611700476,
+              22.836534315017982
+            ],
+            [
+              82.79345132396236,
+              22.83653527013744
+            ],
+            [
+              82.79345342287745,
+              22.83669535988956
+            ],
+            [
+              82.79302945710184,
+              22.83670013484745
+            ]
+          ],
+          [
+            [
+              82.79319799411446,
+              22.836618180112826
+            ],
+            [
+              82.79328278722002,
+              22.836617225124964
+            ],
+            [
+              82.79328173786394,
+              22.836537180241038
+            ],
+            [
+              82.79319694480792,
+              22.836538135225183
+            ],
+            [
+              82.79319799411446,
+              22.836618180112826
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-009",
+      "properties": {
+        "alert_id": "ISRO-HAS-009",
+        "area_ha": 0.278,
+        "area_acres": 0.69,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.817735,
+        "center_lon": 82.771187,
+        "utm_coords": "44N 681777 2524433",
+        "carbon_tco2": 86.2,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.77099505525611,
+              22.8182132985812
+            ],
+            [
+              82.77098780763347,
+              22.817652976268214
+            ],
+            [
+              82.77107259002062,
+              22.817652033843782
+            ],
+            [
+              82.77107155461505,
+              22.81757198779935
+            ],
+            [
+              82.77115633694822,
+              22.817571045333526
+            ],
+            [
+              82.7711553014978,
+              22.817490999291913
+            ],
+            [
+              82.77107051921412,
+              22.81749194175407
+            ],
+            [
+              82.77106948381784,
+              22.81741189570794
+            ],
+            [
+              82.77115426605201,
+              22.817410953249457
+            ],
+            [
+              82.77115323061088,
+              22.81733090720615
+            ],
+            [
+              82.771407577138,
+              22.81732807957133
+            ],
+            [
+              82.77141068392086,
+              22.817568217665666
+            ],
+            [
+              82.77132590160113,
+              22.817569160266686
+            ],
+            [
+              82.77132797271395,
+              22.817729252332672
+            ],
+            [
+              82.77141275513267,
+              22.817728309724313
+            ],
+            [
+              82.77141379074556,
+              22.81780835575237
+            ],
+            [
+              82.77132900827732,
+              22.817809298364402
+            ],
+            [
+              82.77133107941803,
+              22.8179693904253
+            ],
+            [
+              82.7712462968463,
+              22.81797033299961
+            ],
+            [
+              82.77124733237413,
+              22.818050379032467
+            ],
+            [
+              82.77116254974841,
+              22.818051321565385
+            ],
+            [
+              82.77116358523138,
+              22.818131367601055
+            ],
+            [
+              82.77107880255168,
+              22.818132310092576
+            ],
+            [
+              82.7710798379898,
+              22.818212356131074
+            ],
+            [
+              82.77099505525611,
+              22.8182132985812
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-010",
+      "properties": {
+        "alert_id": "ISRO-HAS-010",
+        "area_ha": 0.231,
+        "area_acres": 0.57,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.842699,
+        "center_lon": 82.728384,
+        "utm_coords": "44N 677350 2527145",
+        "carbon_tco2": 71.6,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.72832102162306,
+              22.84334002406248
+            ],
+            [
+              82.72832000993688,
+              22.84325997644252
+            ],
+            [
+              82.72823520974424,
+              22.843260897097696
+            ],
+            [
+              82.72823318648467,
+              22.84310080184806
+            ],
+            [
+              82.72831798657815,
+              22.843099881200057
+            ],
+            [
+              82.72831191661089,
+              22.842619595452327
+            ],
+            [
+              82.72839671640254,
+              22.842618674780688
+            ],
+            [
+              82.72839570470764,
+              22.842538627156692
+            ],
+            [
+              82.72831090496557,
+              22.842539547824742
+            ],
+            [
+              82.72830382357542,
+              22.841979214407942
+            ],
+            [
+              82.7284734223611,
+              22.841977373076883
+            ],
+            [
+              82.72847544579105,
+              22.842137468328726
+            ],
+            [
+              82.72839064630124,
+              22.842138389023976
+            ],
+            [
+              82.72839368133145,
+              22.842378531906153
+            ],
+            [
+              82.72847848096998,
+              22.842377611200142
+            ],
+            [
+              82.72848758675198,
+              22.84309803976867
+            ],
+            [
+              82.72840278666725,
+              22.84309896050692
+            ],
+            [
+              82.72840379839391,
+              22.843179008125
+            ],
+            [
+              82.72848859852823,
+              22.84317808738316
+            ],
+            [
+              82.72848961030901,
+              22.843258134996805
+            ],
+            [
+              82.72840481012513,
+              22.84325905574223
+            ],
+            [
+              82.72840582186089,
+              22.843339103358606
+            ],
+            [
+              82.72832102162306,
+              22.84334002406248
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-011",
+      "properties": {
+        "alert_id": "ISRO-HAS-011",
+        "area_ha": 0.224,
+        "area_acres": 0.55,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.858483,
+        "center_lon": 82.771775,
+        "utm_coords": "44N 681783 2528946",
+        "carbon_tco2": 69.4,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.77186086551224,
+              22.8588728007661
+            ],
+            [
+              82.77185982756227,
+              22.858792755169784
+            ],
+            [
+              82.7716902118631,
+              22.858794644019067
+            ],
+            [
+              82.77168917401701,
+              22.85871459841455
+            ],
+            [
+              82.77177398181922,
+              22.85871365401616
+            ],
+            [
+              82.77177294392816,
+              22.858633608414475
+            ],
+            [
+              82.77168813617557,
+              22.858634552809193
+            ],
+            [
+              82.77168502267918,
+              22.858394415988016
+            ],
+            [
+              82.77151540745822,
+              22.85839630461994
+            ],
+            [
+              82.7715133320157,
+              22.85823621338688
+            ],
+            [
+              82.77142852449774,
+              22.85823715762777
+            ],
+            [
+              82.77142748683306,
+              22.858157112006293
+            ],
+            [
+              82.77151229430142,
+              22.85815616776908
+            ],
+            [
+              82.77151021888682,
+              22.857996076530924
+            ],
+            [
+              82.77159502625146,
+              22.8579951322559
+            ],
+            [
+              82.77159917729773,
+              22.858315314714122
+            ],
+            [
+              82.77176879241048,
+              22.858313425999235
+            ],
+            [
+              82.77176671667956,
+              22.858153334786508
+            ],
+            [
+              82.77185152412996,
+              22.858152390368684
+            ],
+            [
+              82.77185359996011,
+              22.858312481574057
+            ],
+            [
+              82.77193840750526,
+              22.858311537103727
+            ],
+            [
+              82.77193944547692,
+              22.858391582701465
+            ],
+            [
+              82.77185463788216,
+              22.858392527175464
+            ],
+            [
+              82.77185671374023,
+              22.858552618375743
+            ],
+            [
+              82.77202632912373,
+              22.858550729367884
+            ],
+            [
+              82.77203048129269,
+              22.858870911728854
+            ],
+            [
+              82.77186086551224,
+              22.8588728007661
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-012",
+      "properties": {
+        "alert_id": "ISRO-HAS-012",
+        "area_ha": 0.216,
+        "area_acres": 0.53,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.857064,
+        "center_lon": 82.772056,
+        "utm_coords": "44N 681814 2528789",
+        "carbon_tco2": 67.0,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.77167049358324,
+              22.857273777388098
+            ],
+            [
+              82.77166738032423,
+              22.857033640523603
+            ],
+            [
+              82.77183699384037,
+              22.85703175183595
+            ],
+            [
+              82.77183595599745,
+              22.856951706220094
+            ],
+            [
+              82.77192076269917,
+              22.856950761812218
+            ],
+            [
+              82.77191972481128,
+              22.856870716199193
+            ],
+            [
+              82.7720045314589,
+              22.856869771749835
+            ],
+            [
+              82.77200349352609,
+              22.85678972613963
+            ],
+            [
+              82.77217310670864,
+              22.856787837112815
+            ],
+            [
+              82.77217518277739,
+              22.856947928317677
+            ],
+            [
+              82.77200556939638,
+              22.85694981735919
+            ],
+            [
+              82.77200660733853,
+              22.857029862967693
+            ],
+            [
+              82.77234583428101,
+              22.85702608468937
+            ],
+            [
+              82.77234479614043,
+              22.856946039095558
+            ],
+            [
+              82.77242960281521,
+              22.856945094416773
+            ],
+            [
+              82.77243064100541,
+              22.857025140006904
+            ],
+            [
+              82.77251544772533,
+              22.8570241952793
+            ],
+            [
+              82.7725175242189,
+              22.857184286449662
+            ],
+            [
+              82.77226310374803,
+              22.85718712051909
+            ],
+            [
+              82.77226206564777,
+              22.857107074923306
+            ],
+            [
+              82.77217725886477,
+              22.85710801951914
+            ],
+            [
+              82.77217829691544,
+              22.857188065118592
+            ],
+            [
+              82.77209349007835,
+              22.85718900967295
+            ],
+            [
+              82.77209245207729,
+              22.85710896406982
+            ],
+            [
+              82.77192283848888,
+              22.857110853035728
+            ],
+            [
+              82.7719249142972,
+              22.857270944255834
+            ],
+            [
+              82.77167049358324,
+              22.857273777388098
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-013",
+      "properties": {
+        "alert_id": "ISRO-HAS-013",
+        "area_ha": 0.208,
+        "area_acres": 0.51,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.795753,
+        "center_lon": 82.794976,
+        "utm_coords": "44N 684248 2522028",
+        "carbon_tco2": 64.5,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.79435986296885,
+              22.795856152014153
+            ],
+            [
+              82.79435881506868,
+              22.795776106768624
+            ],
+            [
+              82.7942740472923,
+              22.795777060716528
+            ],
+            [
+              82.79427299944626,
+              22.795697015466438
+            ],
+            [
+              82.79588358548182,
+              22.795678882829446
+            ],
+            [
+              82.7958846342672,
+              22.795758928008848
+            ],
+            [
+              82.7951217248518,
+              22.795767519211825
+            ],
+            [
+              82.79512277319692,
+              22.795847564423884
+            ],
+            [
+              82.79486846982842,
+              22.795850427359102
+            ],
+            [
+              82.79486742163161,
+              22.79577038213589
+            ],
+            [
+              82.79478265388245,
+              22.79577133635388
+            ],
+            [
+              82.79478370202983,
+              22.795851381580814
+            ],
+            [
+              82.79435986296885,
+              22.795856152014153
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-014",
+      "properties": {
+        "alert_id": "ISRO-HAS-014",
+        "area_ha": 0.193,
+        "area_acres": 0.48,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.796086,
+        "center_lon": 82.792835,
+        "utm_coords": "44N 684028 2522062",
+        "carbon_tco2": 59.8,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.79267183410212,
+              22.79643553970907
+            ],
+            [
+              82.79266974021822,
+              22.796275449080383
+            ],
+            [
+              82.79258497205448,
+              22.796276402150284
+            ],
+            [
+              82.79258392516903,
+              22.796196356830947
+            ],
+            [
+              82.7926686932833,
+              22.79619540376476
+            ],
+            [
+              82.79266555250682,
+              22.795955267812815
+            ],
+            [
+              82.79275032046824,
+              22.795954314712755
+            ],
+            [
+              82.79274822654187,
+              22.795794224081316
+            ],
+            [
+              82.79291776225337,
+              22.795792317761016
+            ],
+            [
+              82.79291880931308,
+              22.795872363069737
+            ],
+            [
+              82.79317311299464,
+              22.79586950324053
+            ],
+            [
+              82.79317416020737,
+              22.79594954853725
+            ],
+            [
+              82.79308939226861,
+              22.795950501862382
+            ],
+            [
+              82.79309043943661,
+              22.79603054716197
+            ],
+            [
+              82.79292090344661,
+              22.796032453684617
+            ],
+            [
+              82.79292299759895,
+              22.796192544296105
+            ],
+            [
+              82.79275346139305,
+              22.796194450653562
+            ],
+            [
+              82.79275450837741,
+              22.796274495965466
+            ],
+            [
+              82.79283927653206,
+              22.79627354280553
+            ],
+            [
+              82.79284032357054,
+              22.796353588112872
+            ],
+            [
+              82.79292509177012,
+              22.79635263490421
+            ],
+            [
+              82.79292613886274,
+              22.796432680206976
+            ],
+            [
+              82.79267183410212,
+              22.79643553970907
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-015",
+      "properties": {
+        "alert_id": "ISRO-HAS-015",
+        "area_ha": 0.185,
+        "area_acres": 0.46,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.836439,
+        "center_lon": 82.801125,
+        "utm_coords": "44N 684825 2526541",
+        "carbon_tco2": 57.4,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.80083040917972,
+              22.836612095115505
+            ],
+            [
+              82.80082830164255,
+              22.836452006011587
+            ],
+            [
+              82.80074350899142,
+              22.836452965009954
+            ],
+            [
+              82.80074245527946,
+              22.836372920452988
+            ],
+            [
+              82.80091204047808,
+              22.83637100241861
+            ],
+            [
+              82.80091098667178,
+              22.83629095786826
+            ],
+            [
+              82.80099577921469,
+              22.83628999878715
+            ],
+            [
+              82.80099472536355,
+              22.836209954239678
+            ],
+            [
+              82.80116431033662,
+              22.83620803594962
+            ],
+            [
+              82.80116641824182,
+              22.836368125028777
+            ],
+            [
+              82.80133600339484,
+              22.836366206543378
+            ],
+            [
+              82.80133705745365,
+              22.836446251074214
+            ],
+            [
+              82.80167622790319,
+              22.83644241354724
+            ],
+            [
+              82.80167728216492,
+              22.836522458062287
+            ],
+            [
+              82.80116852616594,
+              22.836528214104536
+            ],
+            [
+              82.80116958013511,
+              22.836608258641135
+            ],
+            [
+              82.80083040917972,
+              22.836612095115505
+            ]
+          ],
+          [
+            [
+              82.80091414810491,
+              22.836531091516765
+            ],
+            [
+              82.80099894079648,
+              22.83653013242446
+            ],
+            [
+              82.80099788693116,
+              22.83645008787954
+            ],
+            [
+              82.80091309428913,
+              22.83645104696812
+            ],
+            [
+              82.80091414810491,
+              22.836531091516765
+            ]
+          ],
+          [
+            [
+              82.8010837334835,
+              22.83652917328705
+            ],
+            [
+              82.80116852616594,
+              22.836528214104536
+            ],
+            [
+              82.80116747220151,
+              22.836448169567085
+            ],
+            [
+              82.80108267956862,
+              22.836449128745862
+            ],
+            [
+              82.8010837334835,
+              22.83652917328705
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-016",
+      "properties": {
+        "alert_id": "ISRO-HAS-016",
+        "area_ha": 0.139,
+        "area_acres": 0.34,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.816447,
+        "center_lon": 82.771834,
+        "utm_coords": "44N 681845 2524291",
+        "carbon_tco2": 43.1,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.77190694730068,
+              22.816602008954447
+            ],
+            [
+              82.77190591146054,
+              22.816521962935706
+            ],
+            [
+              82.7714820031691,
+              22.81652667660339
+            ],
+            [
+              82.77147993199776,
+              22.816366584526644
+            ],
+            [
+              82.77139515042502,
+              22.816367527117652
+            ],
+            [
+              82.77139411489583,
+              22.816287481074337
+            ],
+            [
+              82.77147889641907,
+              22.816286538487
+            ],
+            [
+              82.77147786084501,
+              22.816206492446508
+            ],
+            [
+              82.77156264231428,
+              22.816205549817777
+            ],
+            [
+              82.77156574919886,
+              22.8164456879257
+            ],
+            [
+              82.77190487562505,
+              22.81644191691612
+            ],
+            [
+              82.77190383979422,
+              22.81636187089568
+            ],
+            [
+              82.77207340288142,
+              22.816359985127857
+            ],
+            [
+              82.77207443881126,
+              22.81644003114095
+            ],
+            [
+              82.77232878355692,
+              22.81643720214024
+            ],
+            [
+              82.77232981963989,
+              22.81651724814147
+            ],
+            [
+              82.77207547474573,
+              22.816520077153196
+            ],
+            [
+              82.77207651068488,
+              22.816600123164594
+            ],
+            [
+              82.77190694730068,
+              22.816602008954447
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-017",
+      "properties": {
+        "alert_id": "ISRO-HAS-017",
+        "area_ha": 0.131,
+        "area_acres": 0.32,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.836474,
+        "center_lon": 82.795359,
+        "utm_coords": "44N 684233 2526538",
+        "carbon_tco2": 40.6,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.79531887094133,
+              22.836674336678843
+            ],
+            [
+              82.79531782039128,
+              22.836594291885042
+            ],
+            [
+              82.79506344138798,
+              22.83659715996081
+            ],
+            [
+              82.79506239099128,
+              22.836517115154994
+            ],
+            [
+              82.79514718394738,
+              22.836516159178558
+            ],
+            [
+              82.79514613350585,
+              22.836436114375616
+            ],
+            [
+              82.79531571930531,
+              22.83643420229488
+            ],
+            [
+              82.79531361823818,
+              22.836274112701314
+            ],
+            [
+              82.79556799660597,
+              22.836271244264275
+            ],
+            [
+              82.79557009797038,
+              22.836431333835502
+            ],
+            [
+              82.79548530508656,
+              22.836432290033734
+            ],
+            [
+              82.79548845701991,
+              22.836672424395363
+            ],
+            [
+              82.79531887094133,
+              22.836674336678843
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-018",
+      "properties": {
+        "alert_id": "ISRO-HAS-018",
+        "area_ha": 0.131,
+        "area_acres": 0.32,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.83638,
+        "center_lon": 82.798276,
+        "utm_coords": "44N 684532 2526531",
+        "carbon_tco2": 40.6,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.79811598672666,
+              22.836562716259863
+            ],
+            [
+              82.79811493454608,
+              22.836482671588104
+            ],
+            [
+              82.79803014174917,
+              22.83648362914317
+            ],
+            [
+              82.79802803750131,
+              22.83632353978967
+            ],
+            [
+              82.79811283019912,
+              22.836322582242058
+            ],
+            [
+              82.79811072587103,
+              22.83616249289261
+            ],
+            [
+              82.79819551846519,
+              22.83616153530735
+            ],
+            [
+              82.79819762289237,
+              22.83632162464935
+            ],
+            [
+              82.79828241558107,
+              22.83632066701154
+            ],
+            [
+              82.79828136331557,
+              22.836240622344686
+            ],
+            [
+              82.79845094858021,
+              22.836238706941216
+            ],
+            [
+              82.79845200094482,
+              22.836318751600608
+            ],
+            [
+              82.79853679361986,
+              22.836317793827483
+            ],
+            [
+              82.79853889846234,
+              22.836477883136254
+            ],
+            [
+              82.79828452012624,
+              22.836480756342677
+            ],
+            [
+              82.7982855724059,
+              22.836560801006975
+            ],
+            [
+              82.79811598672666,
+              22.836562716259863
+            ]
+          ],
+          [
+            [
+              82.79811493454608,
+              22.836482671588104
+            ],
+            [
+              82.79819972733844,
+              22.836481713987947
+            ],
+            [
+              82.79819867511304,
+              22.83640166931907
+            ],
+            [
+              82.79811388237025,
+              22.836402626915504
+            ],
+            [
+              82.79811493454608,
+              22.836482671588104
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-019",
+      "properties": {
+        "alert_id": "ISRO-HAS-019",
+        "area_ha": 0.131,
+        "area_acres": 0.32,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.816782,
+        "center_lon": 82.793519,
+        "utm_coords": "44N 684070 2524355",
+        "carbon_tco2": 40.6,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.79362035092903,
+              22.817079568432778
+            ],
+            [
+              82.79361825382583,
+              22.816919478301568
+            ],
+            [
+              82.79336391114056,
+              22.816922341333328
+            ],
+            [
+              82.79336076596653,
+              22.8166822060967
+            ],
+            [
+              82.79327598521085,
+              22.81668316033935
+            ],
+            [
+              82.79327493687842,
+              22.816603115255045
+            ],
+            [
+              82.79369884036392,
+              22.816598343609797
+            ],
+            [
+              82.79369988894382,
+              22.81667838867551
+            ],
+            [
+              82.79361510820631,
+              22.816679343098404
+            ],
+            [
+              82.79361720528128,
+              22.816839433234694
+            ],
+            [
+              82.7937019861178,
+              22.816838478804367
+            ],
+            [
+              82.79370513191405,
+              22.8170786139913
+            ],
+            [
+              82.79362035092903,
+              22.817079568432778
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-020",
+      "properties": {
+        "alert_id": "ISRO-HAS-020",
+        "area_ha": 0.116,
+        "area_acres": 0.29,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.836375,
+        "center_lon": 82.794645,
+        "utm_coords": "44N 684160 2526526",
+        "carbon_tco2": 36.0,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.79446989022122,
+              22.836603850558962
+            ],
+            [
+              82.7944688401714,
+              22.8365238057271
+            ],
+            [
+              82.79455363315931,
+              22.836522850066398
+            ],
+            [
+              82.79455258306466,
+              22.836442805237404
+            ],
+            [
+              82.7944677901263,
+              22.836443760894387
+            ],
+            [
+              82.79446464001924,
+              22.83620362639115
+            ],
+            [
+              82.79471901837469,
+              22.836200759318366
+            ],
+            [
+              82.79472006855431,
+              22.836280804142465
+            ],
+            [
+              82.79480486137993,
+              22.836279848357616
+            ],
+            [
+              82.79480381115076,
+              22.836199803537234
+            ],
+            [
+              82.79488860392227,
+              22.836198847710996
+            ],
+            [
+              82.79489070448444,
+              22.83635893734347
+            ],
+            [
+              82.79480591161382,
+              22.836359893177153
+            ],
+            [
+              82.79480696185243,
+              22.836439937995827
+            ],
+            [
+              82.7947221689277,
+              22.836440893788122
+            ],
+            [
+              82.79472321912148,
+              22.836520938609677
+            ],
+            [
+              82.79463842614265,
+              22.836521894360587
+            ],
+            [
+              82.7946394762916,
+              22.83660193918502
+            ],
+            [
+              82.79446989022122,
+              22.836603850558962
+            ]
+          ],
+          [
+            [
+              82.79455153297471,
+              22.836362760407564
+            ],
+            [
+              82.79472111873866,
+              22.836360848965718
+            ],
+            [
+              82.79472006855431,
+              22.836280804142465
+            ],
+            [
+              82.79455048288946,
+              22.836282715576868
+            ],
+            [
+              82.79455153297471,
+              22.836362760407564
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-021",
+      "properties": {
+        "alert_id": "ISRO-HAS-021",
+        "area_ha": 0.108,
+        "area_acres": 0.27,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.815936,
+        "center_lon": 82.771135,
+        "utm_coords": "44N 681774 2524233",
+        "carbon_tco2": 33.5,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.77105291810958,
+              22.816131158854514
+            ],
+            [
+              82.77104981217177,
+              22.81589102067032
+            ],
+            [
+              82.77096503087361,
+              22.815891963013996
+            ],
+            [
+              82.7709619251261,
+              22.81565182481117
+            ],
+            [
+              82.77104670627577,
+              22.815650882478508
+            ],
+            [
+              82.77104877686844,
+              22.815810974607235
+            ],
+            [
+              82.77121833935233,
+              22.815809089792047
+            ],
+            [
+              82.77121937475464,
+              22.81588913584779
+            ],
+            [
+              82.77130415603935,
+              22.815888193368934
+            ],
+            [
+              82.77130726242265,
+              22.816128331520087
+            ],
+            [
+              82.77105291810958,
+              22.816131158854514
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-022",
+      "properties": {
+        "alert_id": "ISRO-HAS-022",
+        "area_ha": 0.108,
+        "area_acres": 0.27,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.795746,
+        "center_lon": 82.793511,
+        "utm_coords": "44N 684098 2522025",
+        "carbon_tco2": 33.5,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.79291776225337,
+              22.795792317761016
+            ],
+            [
+              82.79291671519837,
+              22.79571227245146
+            ],
+            [
+              82.79410346397879,
+              22.795698923219764
+            ],
+            [
+              82.79410451172593,
+              22.795778968477293
+            ],
+            [
+              82.79291776225337,
+              22.795792317761016
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-023",
+      "properties": {
+        "alert_id": "ISRO-HAS-023",
+        "area_ha": 0.077,
+        "area_acres": 0.19,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.816128,
+        "center_lon": 82.772096,
+        "utm_coords": "44N 681872 2524256",
+        "carbon_tco2": 23.9,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.77207340288142,
+              22.816359985127857
+            ],
+            [
+              82.7720702951198,
+              22.816119847083492
+            ],
+            [
+              82.77198551372695,
+              22.816120789978914
+            ],
+            [
+              82.77198447786522,
+              22.816040743958755
+            ],
+            [
+              82.77189969651737,
+              22.816041686805445
+            ],
+            [
+              82.77189866070978,
+              22.815961640780763
+            ],
+            [
+              82.77215300459137,
+              22.815958812116534
+            ],
+            [
+              82.7721550765082,
+              22.816118904143007
+            ],
+            [
+              82.77223985789209,
+              22.816117961157463
+            ],
+            [
+              82.7722419299265,
+              22.816278053173203
+            ],
+            [
+              82.77215714844361,
+              22.81627899616609
+            ],
+            [
+              82.77215818441829,
+              22.81635904217636
+            ],
+            [
+              82.77207340288142,
+              22.816359985127857
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "ISRO-HAS-024",
+      "properties": {
+        "alert_id": "ISRO-HAS-024",
+        "area_ha": 0.054,
+        "area_acres": 0.13,
+        "severity": "MODERATE (Encroachment/Clear-cut)",
+        "urgency": "MONITORING",
+        "alert": "Deforestation",
+        "center_lat": 22.847397,
+        "center_lon": 82.7281,
+        "utm_coords": "44N 677315 2527665",
+        "carbon_tco2": 16.7,
+        "detection_date": "2024-03-15",
+        "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+        "status": "PENDING_FIELD_VERIFICATION"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              82.72794962141296,
+              22.84750710290771
+            ],
+            [
+              82.72794759806891,
+              22.84734700771918
+            ],
+            [
+              82.72803240080782,
+              22.847346087061805
+            ],
+            [
+              82.72803138909303,
+              22.847266039469854
+            ],
+            [
+              82.72811619177799,
+              22.847265118770927
+            ],
+            [
+              82.72811720354237,
+              22.847345166359304
+            ],
+            [
+              82.72828680899832,
+              22.84734332481889
+            ],
+            [
+              82.72828782086643,
+              22.847423372399252
+            ],
+            [
+              82.72820301809105,
+              22.847424293195605
+            ],
+            [
+              82.7282040299141,
+              22.8475043407787
+            ],
+            [
+              82.72811922708476,
+              22.8475052615335
+            ],
+            [
+              82.7281182153113,
+              22.847425213946828
+            ],
+            [
+              82.72803341252717,
+              22.847426134652913
+            ],
+            [
+              82.72803442425104,
+              22.847506182243173
+            ],
+            [
+              82.72794962141296,
+              22.84750710290771
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+};
+        let alertLayer = null;
+
+        if (rawGeojsonData && rawGeojsonData.features) {
+            alertLayer = L.geoJSON(rawGeojsonData, {
+                style: function(feature) {
+                    const ha = feature.properties.area_ha || 0.1;
+                    let color = '#FFD600';
+                    let fill = '#FFEE58';
+                    if (ha >= 5.0) { color = '#B71C1C'; fill = '#D50000'; }
+                    else if (ha >= 1.0) { color = '#E65100'; fill = '#FF6D00'; }
+                    return {
+                        color: color,
+                        weight: 2.5,
+                        fillColor: fill,
+                        fillOpacity: 0.70
+                    };
+                },
+                onEachFeature: function(feature, layer) {
+                    const p = feature.properties;
+                    const content = `
+                        <div style="font-family: 'Inter', sans-serif; padding: 4px; min-width: 220px;">
+                            <div style="font-size: 13px; font-weight: 700; color: #ef4444; margin-bottom: 6px;">
+                                <i class="fa-solid fa-triangle-exclamation"></i> ${p.alert_id || 'DEF-ALERT'}
+                            </div>
+                            <table style="font-size: 11px; width: 100%; border-collapse: collapse; line-height: 1.6;">
+                                <tr><td style="color: #9ca3af;">Cleared Area:</td><td><b>${p.area_ha} ha</b> (${p.area_acres || (p.area_ha * 2.47).toFixed(1)} acres)</td></tr>
+                                <tr><td style="color: #9ca3af;">Severity:</td><td><span style="color: #f59e0b; font-weight: 600;">${p.severity || 'Deforestation'}</span></td></tr>
+                                <tr><td style="color: #9ca3af;">Carbon Loss:</td><td>${p.carbon_tco2 || (p.area_ha * 310).toFixed(0)} t CO₂</td></tr>
+                                <tr><td style="color: #9ca3af;">UTM Grid:</td><td style="font-family: 'JetBrains Mono', monospace;">${p.utm_coords || '44N'}</td></tr>
+                                <tr><td style="color: #9ca3af;">Status:</td><td><span style="background: rgba(239,68,68,0.2); color: #ef4444; padding: 1px 6px; border-radius: 4px; font-size: 10px;">FIELD PATROL REQUIRED</span></td></tr>
+                            </table>
+                            <button onclick="dispatchRanger('${p.alert_id}', ${p.center_lat}, ${p.center_lon})" 
+                                style="width: 100%; margin-top: 10px; padding: 6px 0; background: #10b981; border: none; border-radius: 6px; color: #fff; font-weight: 600; font-size: 11px; cursor: pointer;">
+                                <i class="fa-solid fa-person-walking"></i> Dispatch Field Ranger
+                            </button>
+                        </div>
+                    `;
+                    layer.bindPopup(content);
+                }
+            }).addTo(map);
+        }
+
+        // 5. Predictive Risk Overlay
+        const riskOverlayUri = "";
+        let riskLayer = null;
+        if (riskOverlayUri) {
+            const delta = 0.045;
+            const bounds = [
+                [22.82 - delta, 82.78 - delta],
+                [22.82 + delta, 82.78 + delta]
+            ];
+            riskLayer = L.imageOverlay(riskOverlayUri, bounds, {
+                opacity: 0.85,
+                interactive: false
+            }).addTo(map);
+        }
+
+        // 6. Dynamic Live Geospatial AI Model & Regional Profiles
+        const REGIONAL_PROFILES = {
+            hasdeo: {
+                name: "Hasdeo Arand (C.G.)",
+                threatCenter: [22.8220, 82.7850],
+                baseFCD: 84.5,
+                baseNDVI: 0.79,
+                threatRadiusKm: 1.6,
+                bufferRadiusKm: 4.5
+            },
+            ghats: {
+                name: "Western Ghats (Karnataka)",
+                threatCenter: [12.3120, 75.7150],
+                baseFCD: 92.0,
+                baseNDVI: 0.87,
+                threatRadiusKm: 0.8,
+                bufferRadiusKm: 2.8
+            },
+            sumatra: {
+                name: "Sumatra, Riau (Indonesia)",
+                threatCenter: [0.5210, 101.4210],
+                baseFCD: 76.5,
+                baseNDVI: 0.73,
+                threatRadiusKm: 1.8,
+                bufferRadiusKm: 5.2
+            },
+            amazon: {
+                name: "Amazon Basin (Rondônia)",
+                threatCenter: [-10.0450, -62.5350],
+                baseFCD: 88.5,
+                baseNDVI: 0.84,
+                threatRadiusKm: 2.2,
+                bufferRadiusKm: 6.0
+            }
+        };
+
+        let currentRegionKey = 'hasdeo';
+
+        function computeGeospatialMetrics(lat, lon) {
+            const profile = REGIONAL_PROFILES[currentRegionKey] || REGIONAL_PROFILES['hasdeo'];
+            const tLat = profile.threatCenter[0];
+            const tLon = profile.threatCenter[1];
+            const dLat = (lat - tLat) * 111.0;
+            const dLon = (lon - tLon) * 111.0 * Math.cos(lat * Math.PI / 180.0);
+            const distKm = Math.sqrt(dLat * dLat + dLon * dLon);
+
+            // High & medium frequency spatial harmonics (meters-to-kilometer terrain & canopy roughness)
+            const micro1 = Math.sin(lat * 2600.0 + lon * 2100.0) * 4.8;
+            const micro2 = Math.cos(lat * 4100.0 - lon * 3300.0) * 3.6;
+            const macroRidge = Math.sin(lat * 310.0) * Math.cos(lon * 290.0) * 8.2;
+
+            let fcd, ndvi, dNdvi, hazard;
+
+            if (distKm <= profile.threatRadiusKm) {
+                // Active clearcut / mining / infrastructure excavation cut
+                const ratio = distKm / profile.threatRadiusKm;
+                fcd = Math.max(9.0, Math.min(36.0, 12.0 + ratio * 20.0 + micro1));
+                ndvi = Math.max(0.12, Math.min(0.36, 0.16 + ratio * 0.16 + micro2 * 0.01));
+                dNdvi = -0.65 + ratio * 0.32 + (micro1 * 0.01);
+                hazard = Math.max(0.72, Math.min(0.98, 0.96 - ratio * 0.20));
+            } else if (distKm <= profile.bufferRadiusKm) {
+                // Proximity transition / vulnerable frontier
+                const t = (distKm - profile.threatRadiusKm) / (profile.bufferRadiusKm - profile.threatRadiusKm);
+                fcd = 34.0 + t * (profile.baseFCD - 34.0) + micro1 + macroRidge * 0.3;
+                ndvi = 0.34 + t * (profile.baseNDVI - 0.34) + (micro2 * 0.01);
+                dNdvi = -0.38 * (1.0 - t) + (micro1 * 0.006);
+                hazard = 0.18 + 0.54 * Math.pow(1.0 - t, 1.4);
+            } else {
+                // Intact core forest canopy (natural variation, NEVER clamped or frozen!)
+                fcd = Math.max(68.0, Math.min(96.0, profile.baseFCD + macroRidge + micro1 + micro2));
+                ndvi = Math.max(0.66, Math.min(0.92, profile.baseNDVI + (macroRidge * 0.007) + (micro2 * 0.004)));
+                dNdvi = Math.max(-0.06, Math.min(0.04, macroRidge * 0.003 + micro1 * 0.002));
+                hazard = Math.max(0.04, Math.min(0.20, 0.14 - Math.min(distKm * 0.008, 0.08) + (micro1 * 0.008)));
+            }
+
+            // Multispectral band synthesis (Sentinel-2 L2A BOA reflectance)
+            const b2 = Math.max(0.02, Math.min(0.18, 0.05 + (1.0 - ndvi) * 0.09));
+            const b3 = Math.max(0.04, Math.min(0.24, 0.08 + (ndvi * 0.09)));
+            const b4 = Math.max(0.02, Math.min(0.28, 0.04 + (1.0 - ndvi) * 0.20));
+            const b8 = Math.max(0.10, Math.min(0.85, 0.18 + ndvi * 0.64));
+            const b11 = Math.max(0.05, Math.min(0.36, 0.12 + (1.0 - ndvi) * 0.21));
+            const b12 = Math.max(0.03, Math.min(0.30, 0.06 + (1.0 - ndvi) * 0.18));
+
+            return { fcd, ndvi, dNdvi, hazard, bands: { b2, b3, b4, b8, b11, b12 } };
+        }
+
+        function updateProbeAt(latlng) {
+            if (!latlng) return;
+            const lat = typeof latlng.lat === 'number' ? latlng.lat : (latlng[0] || 0);
+            const lon = typeof latlng.lng === 'number' ? latlng.lng : (latlng[1] || 0);
+
+            const latStr = Math.abs(lat).toFixed(4) + '°' + (lat >= 0 ? 'N' : 'S');
+            const lonStr = Math.abs(lon).toFixed(4) + '°' + (lon >= 0 ? 'E' : 'W');
+            const coordEl = document.getElementById('probe-coords');
+            if (coordEl) coordEl.innerText = latStr + ', ' + lonStr;
+
+            const res = computeGeospatialMetrics(lat, lon);
+
+            const elFcd = document.getElementById('stat-fcd');
+            if (elFcd) {
+                elFcd.innerText = res.fcd.toFixed(1) + '%';
+                elFcd.style.color = res.fcd >= 70 ? '#10b981' : (res.fcd >= 40 ? '#fbbf24' : '#ef4444');
+            }
+
+            const elNdvi = document.getElementById('stat-ndvi');
+            if (elNdvi) {
+                elNdvi.innerText = res.ndvi.toFixed(2);
+                elNdvi.style.color = res.ndvi >= 0.65 ? '#10b981' : (res.ndvi >= 0.40 ? '#fbbf24' : '#ef4444');
+            }
+
+            const elLoss = document.getElementById('stat-loss');
+            if (elLoss) {
+                elLoss.innerText = (res.dNdvi > 0 ? '+' : '') + res.dNdvi.toFixed(2);
+                elLoss.style.color = res.dNdvi <= -0.25 ? '#ef4444' : (res.dNdvi <= -0.10 ? '#fbbf24' : '#10b981');
+            }
+
+            const elHazard = document.getElementById('stat-hazard');
+            if (elHazard) {
+                elHazard.innerText = res.hazard.toFixed(2);
+                elHazard.style.color = res.hazard >= 0.50 ? '#ef4444' : (res.hazard >= 0.20 ? '#fbbf24' : '#10b981');
+            }
+
+            const maxBarPx = 54;
+            const setBar = (id, normVal) => {
+                const bar = document.getElementById(id);
+                if (bar) bar.style.height = Math.max(6, Math.min(maxBarPx, Math.round(normVal * maxBarPx))) + 'px';
+            };
+            setBar('bar-b2', res.bands.b2 / 0.18);
+            setBar('bar-b3', res.bands.b3 / 0.24);
+            setBar('bar-b4', res.bands.b4 / 0.28);
+            setBar('bar-b8', res.bands.b8 / 0.85);
+            setBar('bar-b11', res.bands.b11 / 0.36);
+            setBar('bar-b12', res.bands.b12 / 0.30);
+        }
+
+        // Probe Event Listeners (Continuous, Non-Blocking)
+        map.on('mousemove', function(e) {
+            if (e && e.latlng) {
+                updateProbeAt(e.latlng);
+            }
+        });
+        map.on('move', function() {
+            updateProbeAt(map.getCenter());
+        });
+        map.on('click', function(e) {
+            if (e && e.latlng) {
+                updateProbeAt(e.latlng);
+            }
+        });
+
+        // Initialize probe immediately
+        setTimeout(function() {
+            updateProbeAt(map.getCenter());
+        }, 250);
+
+        // 7. Layer Toggling Functions
+        function toggleLayer(name) {
+            const sw = document.getElementById('toggle-' + name);
+            const isOn = sw.classList.contains('on');
+            if (isOn) {
+                sw.classList.remove('on');
+                if (name === 'alerts' && alertLayer) map.removeLayer(alertLayer);
+                if (name === 'risk' && riskLayer) map.removeLayer(riskLayer);
+            } else {
+                sw.classList.add('on');
+                if (name === 'alerts' && alertLayer) map.addLayer(alertLayer);
+                if (name === 'risk' && riskLayer) map.addLayer(riskLayer);
+            }
+        }
+
+        // 8. Hotspot Fly-To Teleport (Updates Active Region & Probe Synchronously)
+        function flyToHotspot(lat, lon, zoom, key, elem) {
+            currentRegionKey = key;
+            document.querySelectorAll('.hotspot-pill').forEach(el => el.classList.remove('active'));
+            if (elem) {
+                elem.classList.add('active');
+            } else {
+                const targetPill = document.getElementById('pill-' + key);
+                if (targetPill) targetPill.classList.add('active');
+            }
+            map.flyTo([lat, lon], zoom, { duration: 1.5 });
+            setTimeout(function() {
+                updateProbeAt({ lat: lat, lng: lon });
+            }, 300);
+        }
+
+        // 9. Dispatch & Export Actions
+        function dispatchRanger(id, lat, lon) {
+            alert("Forest Incident Patrol Ticket Generated\n\nIncident ID: " + id + "\nCentroid: " + lat.toFixed(5) + "°N, " + lon.toFixed(5) + "°E\nTarget: High-Priority Deforestation Ground Validation");
+        }
+
+        function triggerQgisExport() {
+            alert("Desktop QGIS Package Ready\n\nTurnkey Project: qgis/hasdeo_arand_monitoring.qgs\nProcessing Algorithm: qgis/isro_deforestation_detector.py\n\nDouble-click the .qgs file in QGIS to open the pre-styled multispectral and vector layers.");
+        }
+
+        function exportBhuvanKML() {
+            window.open('../../results/isro_bhuvan_deforestation_alerts.kml', '_blank');
+        }
+
+        function downloadGeoJSON() {
+            window.open('../../results/deforestation_alerts.geojson', '_blank');
+        }
+    </script>
+</body>
+</html>

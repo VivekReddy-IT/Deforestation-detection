@@ -241,6 +241,9 @@ HOTSPOTS = {
     "hasdeo_arand_india": {
         "name": "Hasdeo Arand, Chhattisgarh (India)",
         "coords": "22.82°N, 82.78°E (UTM 44N)",
+        "lat": 22.82,
+        "lon": 82.78,
+        "code": "hasdeo",
         "canopy": "Contiguous Sal (Shorea robusta) & Mixed Deciduous",
         "threat": "Open-cast coal mining concessions (PEKB block) & railway haul tracks",
         "division": "Surguja / Korba Forest Division",
@@ -248,6 +251,9 @@ HOTSPOTS = {
     "western_ghats_india": {
         "name": "Western Ghats, Karnataka (India)",
         "coords": "12.35°N, 75.75°E (UTM 43N)",
+        "lat": 12.35,
+        "lon": 75.75,
+        "code": "ghats",
         "canopy": "UNESCO World Heritage Shola-evergreen rainforest",
         "threat": "Linear road infrastructure & commercial estate expansion",
         "division": "Kodagu Forest Division",
@@ -255,6 +261,9 @@ HOTSPOTS = {
     "sumatra_indonesia": {
         "name": "Riau Province, Sumatra (Indonesia)",
         "coords": "0.55°N, 101.45°E (UTM 47N)",
+        "lat": 0.55,
+        "lon": 101.45,
+        "code": "sumatra",
         "canopy": "Tropical peat swamp forest",
         "threat": "Industrial oil palm concessions & drainage canal clearing",
         "division": "Riau Peat Conservation Zone",
@@ -262,6 +271,9 @@ HOTSPOTS = {
     "amazon_brazil": {
         "name": "Rondônia, Amazon Basin (Brazil)",
         "coords": "10.00°S, 62.50°W (UTM 20S)",
+        "lat": -10.00,
+        "lon": -62.50,
+        "code": "amazon",
         "canopy": "Primary Amazonian rainforest",
         "threat": "BR-364 highway colonization & cattle ranching frontiers",
         "division": "Porto Velho Sector",
@@ -414,9 +426,28 @@ with tab_map:
             horizontal=True,
             label_visibility="collapsed",
         )
+    target_lat = selected_hotspot.get("lat", 22.82)
+    target_lon = selected_hotspot.get("lon", 82.78)
+    target_code = selected_hotspot.get("code", "hasdeo")
+
+    workstation_html_path = f"results/maps/isro_workstation_{target_code}.html"
+    if not os.path.exists(workstation_html_path):
+        from src.visualization.interactive_workstation import build_isro_geospatial_workstation
+        build_isro_geospatial_workstation(
+            output_html_path=workstation_html_path,
+            center_lat=target_lat,
+            center_lon=target_lon,
+            zoom_start=13,
+            geojson_path="results/deforestation_alerts.geojson" if target_code == "hasdeo" else None,
+            risk_map=None,
+            stats=retro_stats,
+            risk_stats=risk_stats,
+            initial_region=target_code,
+        )
+
+    folium_map_path = "results/maps/deforestation_interactive_map.html"
+
     with col_act:
-        workstation_html_path = "results/maps/isro_geospatial_workstation.html"
-        folium_map_path = "results/maps/deforestation_interactive_map.html"
         c_act1, c_act2 = st.columns(2)
         with c_act1:
             active_html_path = workstation_html_path if "Split-Screen" in map_view_mode else folium_map_path
@@ -434,15 +465,15 @@ with tab_map:
                     st.download_button(
                         label="📥 Download Map",
                         data=f.read(),
-                        file_name="vanaspati_ai_interactive_map.html",
+                        file_name=f"vanaspati_ai_{target_code}_map.html",
                         mime="text/html",
                         use_container_width=True,
                     )
 
     if map_view_mode == "🛰️ Split-Screen Geospatial Workstation":
-        st.markdown("""
+        st.markdown(f"""
         <div style="font-size: 12.5px; color: #94A3B8; margin-bottom: 8px; background: rgba(14, 20, 36, 0.5); padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.06);">
-            <b>Interactive Controls:</b> &bull; Drag central slider across Hasdeo Arand to compare <b>2021 Pre-clearing Sal Canopy</b> vs <b>2024 Coal Pit & Haul Road Expansion</b> &bull; Move cursor across map to probe live <b>canopy density (FCD %)</b>, <b>NDVI loss</b>, and <b>6-band spectral bars</b> &bull; Click any red alert polygon to view carbon loss and dispatch field patrol.
+            <b>Active Landscape: {selected_hotspot['name']}</b> &bull; Drag center curtain to inspect pre-clearing vs recent canopy &bull; Hover over map to stream live <b>Canopy Density (FCD %)</b>, <b>NDVI Loss</b>, and <b>6-band spectral bars</b> in real time.
         </div>
         """, unsafe_allow_html=True)
 

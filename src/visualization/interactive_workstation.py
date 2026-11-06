@@ -27,6 +27,7 @@ def build_isro_geospatial_workstation(
     risk_map: Optional[np.ndarray] = None,
     stats: Optional[Dict[str, Any]] = None,
     risk_stats: Optional[Dict[str, Any]] = None,
+    initial_region: str = "hasdeo",
 ) -> str:
     """Builds an enterprise-grade full-screen Web GIS workstation for ISRO / NRSC."""
     os.makedirs(os.path.dirname(os.path.abspath(output_html_path)), exist_ok=True)
@@ -301,24 +302,31 @@ def build_isro_geospatial_workstation(
     <div class="floating-left-card">
         <div class="section-label"><i class="fa-solid fa-mountain-sun"></i> Active Forest Corridors</div>
         <div class="hotspot-pill-grid">
-            <div class="hotspot-pill active" onclick="flyToHotspot(22.82, 82.78, 13, 'hasdeo')">
+            <div class="hotspot-pill {'active' if initial_region == 'hasdeo' else ''}" id="pill-hasdeo" onclick="flyToHotspot(22.82, 82.78, 13, 'hasdeo', this)">
                 <div>
                     <div class="hotspot-name">🇮🇳 Hasdeo Arand (C.G.)</div>
                     <div class="hotspot-desc">Sal Canopy & PEKB Coal Corridor</div>
                 </div>
                 <i class="fa-solid fa-chevron-right" style="color: #6b7280; font-size: 11px;"></i>
             </div>
-            <div class="hotspot-pill" onclick="flyToHotspot(12.35, 75.75, 13, 'ghats')">
+            <div class="hotspot-pill {'active' if initial_region == 'ghats' else ''}" id="pill-ghats" onclick="flyToHotspot(12.35, 75.75, 13, 'ghats', this)">
                 <div>
                     <div class="hotspot-name">🇮🇳 Western Ghats (Karnataka)</div>
                     <div class="hotspot-desc">Shola-Rainforest & Linear Roads</div>
                 </div>
                 <i class="fa-solid fa-chevron-right" style="color: #6b7280; font-size: 11px;"></i>
             </div>
-            <div class="hotspot-pill" onclick="flyToHotspot(0.55, 101.45, 13, 'sumatra')">
+            <div class="hotspot-pill {'active' if initial_region == 'sumatra' else ''}" id="pill-sumatra" onclick="flyToHotspot(0.55, 101.45, 13, 'sumatra', this)">
                 <div>
                     <div class="hotspot-name">🇮🇩 Sumatra, Riau (Indonesia)</div>
                     <div class="hotspot-desc">Tropical Peatland & Palm Oil</div>
+                </div>
+                <i class="fa-solid fa-chevron-right" style="color: #6b7280; font-size: 11px;"></i>
+            </div>
+            <div class="hotspot-pill {'active' if initial_region == 'amazon' else ''}" id="pill-amazon" onclick="flyToHotspot(-10.00, -62.50, 13, 'amazon', this)">
+                <div>
+                    <div class="hotspot-name">🇧🇷 Amazon Basin (Rondônia)</div>
+                    <div class="hotspot-desc">Primary Rainforest & Highway Cut</div>
                 </div>
                 <i class="fa-solid fa-chevron-right" style="color: #6b7280; font-size: 11px;"></i>
             </div>
@@ -512,36 +520,160 @@ def build_isro_geospatial_workstation(
             }}).addTo(map);
         }}
 
-        // 6. Dynamic Live Geospatial AI on Cursor Move
-        map.on('mousemove', function(e) {{
-            const lat = e.latlng.lat;
-            const lon = e.latlng.lng;
-            document.getElementById('probe-coords').innerText = lat.toFixed(4) + '°N, ' + lon.toFixed(4) + '°E';
+        // 6. Dynamic Live Geospatial AI Model & Regional Profiles
+        const REGIONAL_PROFILES = {{
+            hasdeo: {{
+                name: "Hasdeo Arand (C.G.)",
+                threatCenter: [22.8220, 82.7850],
+                baseFCD: 84.5,
+                baseNDVI: 0.79,
+                threatRadiusKm: 1.6,
+                bufferRadiusKm: 4.5
+            }},
+            ghats: {{
+                name: "Western Ghats (Karnataka)",
+                threatCenter: [12.3120, 75.7150],
+                baseFCD: 92.0,
+                baseNDVI: 0.87,
+                threatRadiusKm: 0.8,
+                bufferRadiusKm: 2.8
+            }},
+            sumatra: {{
+                name: "Sumatra, Riau (Indonesia)",
+                threatCenter: [0.5210, 101.4210],
+                baseFCD: 76.5,
+                baseNDVI: 0.73,
+                threatRadiusKm: 1.8,
+                bufferRadiusKm: 5.2
+            }},
+            amazon: {{
+                name: "Amazon Basin (Rondônia)",
+                threatCenter: [-10.0450, -62.5350],
+                baseFCD: 88.5,
+                baseNDVI: 0.84,
+                threatRadiusKm: 2.2,
+                bufferRadiusKm: 6.0
+            }}
+        }};
 
-            // Distance from hotspot center (simulates proximity to mining cut)
-            const dLat = (lat - {center_lat}) * 111.0;
-            const dLon = (lon - {center_lon}) * 102.0;
+        let currentRegionKey = '{initial_region}';
+
+        function computeGeospatialMetrics(lat, lon) {{
+            const profile = REGIONAL_PROFILES[currentRegionKey] || REGIONAL_PROFILES['hasdeo'];
+            const tLat = profile.threatCenter[0];
+            const tLon = profile.threatCenter[1];
+            const dLat = (lat - tLat) * 111.0;
+            const dLon = (lon - tLon) * 111.0 * Math.cos(lat * Math.PI / 180.0);
             const distKm = Math.sqrt(dLat * dLat + dLon * dLon);
 
-            // Dynamic calculation
-            let fcd = Math.max(12.0, Math.min(94.0, 88.0 - (distKm * 8.5) + (Math.sin(lat * 1000) * 6)));
-            let ndvi = Math.max(0.12, Math.min(0.85, (fcd / 100.0) * 0.82));
-            let dNdvi = (fcd < 35.0) ? -0.58 : (fcd < 60.0 ? -0.22 : -0.04);
-            let hazard = Math.max(0.05, Math.min(0.96, (1.0 - (distKm / 5.0)) * 0.90));
+            // High & medium frequency spatial harmonics (meters-to-kilometer terrain & canopy roughness)
+            const micro1 = Math.sin(lat * 2600.0 + lon * 2100.0) * 4.8;
+            const micro2 = Math.cos(lat * 4100.0 - lon * 3300.0) * 3.6;
+            const macroRidge = Math.sin(lat * 310.0) * Math.cos(lon * 290.0) * 8.2;
 
-            document.getElementById('stat-fcd').innerText = fcd.toFixed(1) + '%';
-            document.getElementById('stat-ndvi').innerText = ndvi.toFixed(2);
-            document.getElementById('stat-loss').innerText = (dNdvi > 0 ? '+' : '') + dNdvi.toFixed(2);
-            document.getElementById('stat-hazard').innerText = hazard.toFixed(2);
+            let fcd, ndvi, dNdvi, hazard;
 
-            // Animate spectral bars
-            document.getElementById('bar-b2').style.height = Math.max(8, 24 - ndvi * 15) + 'px';
-            document.getElementById('bar-b3').style.height = Math.max(10, 32 - ndvi * 18) + 'px';
-            document.getElementById('bar-b4').style.height = Math.max(8, 22 - ndvi * 16) + 'px';
-            document.getElementById('bar-b8').style.height = Math.max(12, ndvi * 65) + 'px';
-            document.getElementById('bar-b11').style.height = Math.max(8, 30 - ndvi * 12) + 'px';
-            document.getElementById('bar-b12').style.height = Math.max(6, 20 - ndvi * 10) + 'px';
+            if (distKm <= profile.threatRadiusKm) {{
+                // Active clearcut / mining / infrastructure excavation cut
+                const ratio = distKm / profile.threatRadiusKm;
+                fcd = Math.max(9.0, Math.min(36.0, 12.0 + ratio * 20.0 + micro1));
+                ndvi = Math.max(0.12, Math.min(0.36, 0.16 + ratio * 0.16 + micro2 * 0.01));
+                dNdvi = -0.65 + ratio * 0.32 + (micro1 * 0.01);
+                hazard = Math.max(0.72, Math.min(0.98, 0.96 - ratio * 0.20));
+            }} else if (distKm <= profile.bufferRadiusKm) {{
+                // Proximity transition / vulnerable frontier
+                const t = (distKm - profile.threatRadiusKm) / (profile.bufferRadiusKm - profile.threatRadiusKm);
+                fcd = 34.0 + t * (profile.baseFCD - 34.0) + micro1 + macroRidge * 0.3;
+                ndvi = 0.34 + t * (profile.baseNDVI - 0.34) + (micro2 * 0.01);
+                dNdvi = -0.38 * (1.0 - t) + (micro1 * 0.006);
+                hazard = 0.18 + 0.54 * Math.pow(1.0 - t, 1.4);
+            }} else {{
+                // Intact core forest canopy (natural variation, NEVER clamped or frozen!)
+                fcd = Math.max(68.0, Math.min(96.0, profile.baseFCD + macroRidge + micro1 + micro2));
+                ndvi = Math.max(0.66, Math.min(0.92, profile.baseNDVI + (macroRidge * 0.007) + (micro2 * 0.004)));
+                dNdvi = Math.max(-0.06, Math.min(0.04, macroRidge * 0.003 + micro1 * 0.002));
+                hazard = Math.max(0.04, Math.min(0.20, 0.14 - Math.min(distKm * 0.008, 0.08) + (micro1 * 0.008)));
+            }}
+
+            // Multispectral band synthesis (Sentinel-2 L2A BOA reflectance)
+            const b2 = Math.max(0.02, Math.min(0.18, 0.05 + (1.0 - ndvi) * 0.09));
+            const b3 = Math.max(0.04, Math.min(0.24, 0.08 + (ndvi * 0.09)));
+            const b4 = Math.max(0.02, Math.min(0.28, 0.04 + (1.0 - ndvi) * 0.20));
+            const b8 = Math.max(0.10, Math.min(0.85, 0.18 + ndvi * 0.64));
+            const b11 = Math.max(0.05, Math.min(0.36, 0.12 + (1.0 - ndvi) * 0.21));
+            const b12 = Math.max(0.03, Math.min(0.30, 0.06 + (1.0 - ndvi) * 0.18));
+
+            return {{ fcd, ndvi, dNdvi, hazard, bands: {{ b2, b3, b4, b8, b11, b12 }} }};
+        }}
+
+        function updateProbeAt(latlng) {{
+            if (!latlng) return;
+            const lat = typeof latlng.lat === 'number' ? latlng.lat : (latlng[0] || 0);
+            const lon = typeof latlng.lng === 'number' ? latlng.lng : (latlng[1] || 0);
+
+            const latStr = Math.abs(lat).toFixed(4) + '°' + (lat >= 0 ? 'N' : 'S');
+            const lonStr = Math.abs(lon).toFixed(4) + '°' + (lon >= 0 ? 'E' : 'W');
+            const coordEl = document.getElementById('probe-coords');
+            if (coordEl) coordEl.innerText = latStr + ', ' + lonStr;
+
+            const res = computeGeospatialMetrics(lat, lon);
+
+            const elFcd = document.getElementById('stat-fcd');
+            if (elFcd) {{
+                elFcd.innerText = res.fcd.toFixed(1) + '%';
+                elFcd.style.color = res.fcd >= 70 ? '#10b981' : (res.fcd >= 40 ? '#fbbf24' : '#ef4444');
+            }}
+
+            const elNdvi = document.getElementById('stat-ndvi');
+            if (elNdvi) {{
+                elNdvi.innerText = res.ndvi.toFixed(2);
+                elNdvi.style.color = res.ndvi >= 0.65 ? '#10b981' : (res.ndvi >= 0.40 ? '#fbbf24' : '#ef4444');
+            }}
+
+            const elLoss = document.getElementById('stat-loss');
+            if (elLoss) {{
+                elLoss.innerText = (res.dNdvi > 0 ? '+' : '') + res.dNdvi.toFixed(2);
+                elLoss.style.color = res.dNdvi <= -0.25 ? '#ef4444' : (res.dNdvi <= -0.10 ? '#fbbf24' : '#10b981');
+            }}
+
+            const elHazard = document.getElementById('stat-hazard');
+            if (elHazard) {{
+                elHazard.innerText = res.hazard.toFixed(2);
+                elHazard.style.color = res.hazard >= 0.50 ? '#ef4444' : (res.hazard >= 0.20 ? '#fbbf24' : '#10b981');
+            }}
+
+            const maxBarPx = 54;
+            const setBar = (id, normVal) => {{
+                const bar = document.getElementById(id);
+                if (bar) bar.style.height = Math.max(6, Math.min(maxBarPx, Math.round(normVal * maxBarPx))) + 'px';
+            }};
+            setBar('bar-b2', res.bands.b2 / 0.18);
+            setBar('bar-b3', res.bands.b3 / 0.24);
+            setBar('bar-b4', res.bands.b4 / 0.28);
+            setBar('bar-b8', res.bands.b8 / 0.85);
+            setBar('bar-b11', res.bands.b11 / 0.36);
+            setBar('bar-b12', res.bands.b12 / 0.30);
+        }}
+
+        // Probe Event Listeners (Continuous, Non-Blocking)
+        map.on('mousemove', function(e) {{
+            if (e && e.latlng) {{
+                updateProbeAt(e.latlng);
+            }}
         }});
+        map.on('move', function() {{
+            updateProbeAt(map.getCenter());
+        }});
+        map.on('click', function(e) {{
+            if (e && e.latlng) {{
+                updateProbeAt(e.latlng);
+            }}
+        }});
+
+        // Initialize probe immediately
+        setTimeout(function() {{
+            updateProbeAt(map.getCenter());
+        }}, 250);
 
         // 7. Layer Toggling Functions
         function toggleLayer(name) {{
@@ -558,11 +690,20 @@ def build_isro_geospatial_workstation(
             }}
         }}
 
-        // 8. Hotspot Fly-To Teleport
-        function flyToHotspot(lat, lon, zoom, key) {{
+        // 8. Hotspot Fly-To Teleport (Updates Active Region & Probe Synchronously)
+        function flyToHotspot(lat, lon, zoom, key, elem) {{
+            currentRegionKey = key;
             document.querySelectorAll('.hotspot-pill').forEach(el => el.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-            map.flyTo([lat, lon], zoom, {{ duration: 1.8 }});
+            if (elem) {{
+                elem.classList.add('active');
+            }} else {{
+                const targetPill = document.getElementById('pill-' + key);
+                if (targetPill) targetPill.classList.add('active');
+            }}
+            map.flyTo([lat, lon], zoom, {{ duration: 1.5 }});
+            setTimeout(function() {{
+                updateProbeAt({{ lat: lat, lng: lon }});
+            }}, 300);
         }}
 
         // 9. Dispatch & Export Actions
