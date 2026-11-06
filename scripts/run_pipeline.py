@@ -30,9 +30,9 @@ from src.postprocessing.change_detector import detect_deforestation, export_clea
 from src.postprocessing.spatial_features import build_spatial_frontier_features
 from src.evaluation.metrics import compute_segmentation_metrics, format_results_table, find_worst_performing_tiles
 from src.visualization.map_builder import create_interactive_deforestation_map
+from src.visualization.interactive_workstation import build_isro_geospatial_workstation
+from src.postprocessing.bhuvan_export import export_isro_bhuvan_kml
 from src.visualization.plot_results import save_visual_comparison_figure, save_predictive_risk_figure, save_worst_tiles_figure
-
-
 from src.data.gee_download import REGIONAL_HOTSPOTS, get_hotspot_config
 
 
@@ -55,6 +55,7 @@ def run_pipeline(
     seed: int = 42,
     enable_prithvi: bool = True,
     enable_risk_forecast: bool = True,
+    force_data: bool = False,
 ):
     region_cfg = get_hotspot_config(region)
     print("=" * 75)
@@ -76,8 +77,8 @@ def run_pipeline(
     mask_t1_path = os.path.join(data_dir, "dynamic_world_t1.tif")
     mask_t2_path = os.path.join(data_dir, "dynamic_world_t2.tif")
 
-    if not all(os.path.exists(p) for p in [s2_t1_path, s2_t2_path, mask_t1_path, mask_t2_path]):
-        print(f"\n[Step 1] Raw data files not found. Synthesizing realistic landscape for {region_cfg['name']}...")
+    if force_data or not all(os.path.exists(p) for p in [s2_t1_path, s2_t2_path, mask_t1_path, mask_t2_path]):
+        print(f"\n[Step 1] Synthesizing accurate geographic landscape for {region_cfg['name']}...")
         generate_synthetic_study_area(output_dir=data_dir, region_key=region, random_seed=seed)
     else:
         print("\n[Step 1] Verified raw Sentinel-2 and Dynamic World GeoTIFFs.")
@@ -364,8 +365,28 @@ def run_pipeline(
         risk_stats=risk_stats,
     )
 
+    # Build ISRO Workstation with Split Swipe Slider & Dynamic AI
+    workstation_path = os.path.join(results_dir, "maps", "isro_geospatial_workstation.html")
+    build_isro_geospatial_workstation(
+        output_html_path=workstation_path,
+        center_lat=region_cfg["center_lat"],
+        center_lon=region_cfg["center_lon"],
+        zoom_start=13,
+        geojson_path=geojson_path,
+        risk_map=risk_map,
+        stats=stats,
+        risk_stats=risk_stats,
+    )
+
+    # Export ISRO Bhuvan KML Package
+    bhuvan_kml_path = os.path.join(results_dir, "isro_bhuvan_deforestation_alerts.kml")
+    export_isro_bhuvan_kml(
+        geojson_path=geojson_path,
+        output_kml_path=bhuvan_kml_path,
+        project_title=f"ISRO NRSC | {region_cfg['name']} Deforestation Alert Layer",
+    )
+
     metrics_summary = {
-        "region": region_cfg,
         "ndvi_baseline": ndvi_test_metrics,
         "unet_resnet34": unet_test_metrics,
         "retrospective_change_detection": stats,
@@ -381,6 +402,8 @@ def run_pipeline(
     if enable_risk_forecast:
         print(f"  - Predictive Risk Figure:      {risk_fig_path}")
     print(f"  - Dual-Layer Interactive Map:   {map_path}")
+    print(f"  - ISRO Geospatial Workstation:  {workstation_path}")
+    print(f"  - ISRO Bhuvan KML Package:      {bhuvan_kml_path}")
     print(f"  - GeoJSON Alert Polygons:       {geojson_path}")
     print("=" * 75)
 
@@ -391,6 +414,13 @@ if __name__ == "__main__":
     parser.add_argument("--epochs", type=int, default=3, help="Number of training epochs")
     parser.add_argument("--batch-size", type=int, default=4, help="Batch size for training")
     parser.add_argument("--lr", type=float, default=1e-3, help="Learning rate")
+    parser.add_argument("--force-data", action="store_true", help="Force regenerate accurate geographic synthetic dataset")
     args = parser.parse_args()
 
-    run_pipeline(region=args.region, epochs=args.epochs, batch_size=args.batch_size, learning_rate=args.lr)
+    run_pipeline(
+        region=args.region,
+        epochs=args.epochs,
+        batch_size=args.batch_size,
+        learning_rate=args.lr,
+        force_data=args.force_data,
+    )

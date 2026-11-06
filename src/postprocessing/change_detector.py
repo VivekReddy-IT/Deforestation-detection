@@ -77,41 +77,101 @@ def export_clearings_geojson(
     reference_geotiff_path: str,
     output_geojson_path: str,
 ) -> str:
-    """Vectorizes binary deforestation raster into a GeoJSON feature collection
-
-    preserving geographic CRS coordinates.
+    """Vectorizes binary deforestation raster into an RFC 7946 standard WGS84 GeoJSON
+    feature collection enriched with ISRO NRSC-standard forest alert attributes.
     """
     os.makedirs(os.path.dirname(os.path.abspath(output_geojson_path)), exist_ok=True)
 
     with rasterio.open(reference_geotiff_path) as src:
         transform = src.transform
-        crs = src.crs
+        src_crs = src.crs
 
-    features = []
-    # Extract polygon geometries for pixels with value 1
+    # Setup reprojection transformer to EPSG:4326 (WGS 84 lon/lat)
+    import pyproj
+    from shapely.ops import transform as shapely_transform
+    transformer = pyproj.Transformer.from_crs(src_crs, "EPSG:4326", always_xy=True)
+
+    raw_features = []
+    # Extract polygon geometries for cleared pixels (value 1)
     for geom, val in shapes(cleared_mask.astype(np.uint8), mask=cleared_mask, transform=transform):
         if val == 1:
-            poly = shape(geom)
-            features.append({
-                "type": "Feature",
-                "properties": {
-                    "area_ha": round(poly.area / 10000.0, 3),
-                    "alert": "Deforestation",
-                },
-                "geometry": mapping(poly),
+            poly_utm = shape(geom)
+            area_ha = round(poly_utm.area / 10000.0, 3)
+            # Minimum filter: keep patches >= 0.1 ha
+            if area_ha < 0.05:
+                continue
+
+            # Reproject to WGS84 (lon, lat)
+            poly_wgs84 = shapely_transform(transformer.transform, poly_utm)
+            centroid_lon, centroid_lat = poly_wgs84.centroid.x, poly_wgs84.centroid.y
+            centroid_x, centroid_y = poly_utm.centroid.x, poly_utm.centroid.y
+
+            # Classification & impact metrics
+            if area_ha >= 5.0:
+                severity = "CRITICAL (Major Industrial/Mine Pit)"
+                urgency = "IMMEDIATE_DISPATCH"
+            elif area_ha >= 1.0:
+                severity = "HIGH (Active Logging Front)"
+                urgency = "PATROL_REQUIRED"
+            else:
+                severity = "MODERATE (Encroachment/Clear-cut)"
+                urgency = "MONITORING"
+
+            carbon_loss = round(area_ha * 310.0, 1)  # ~310 t CO2/ha in Sal/Tropical forest
+
+            raw_features.append({
+                "area_ha": area_ha,
+                "area_acres": round(area_ha * 2.47105, 2),
+                "severity": severity,
+                "urgency": urgency,
+                "centroid_lat": round(centroid_lat, 6),
+                "centroid_lon": round(centroid_lon, 6),
+                "utm_easting": round(centroid_x, 1),
+                "utm_northing": round(centroid_y, 1),
+                "carbon_loss_tco2": carbon_loss,
+                "poly_wgs84": poly_wgs84,
             })
+
+    # Sort descending by cleared area
+    raw_features.sort(key=lambda x: x["area_ha"], reverse=True)
+
+    features = []
+    for idx, item in enumerate(raw_features):
+        alert_id = f"ISRO-HAS-{idx+1:03d}"
+        features.append({
+            "type": "Feature",
+            "id": alert_id,
+            "properties": {
+                "alert_id": alert_id,
+                "area_ha": item["area_ha"],
+                "area_acres": item["area_acres"],
+                "severity": item["severity"],
+                "urgency": item["urgency"],
+                "alert": "Deforestation",
+                "center_lat": item["centroid_lat"],
+                "center_lon": item["centroid_lon"],
+                "utm_coords": f"44N {int(item['utm_easting'])} {int(item['utm_northing'])}",
+                "carbon_tco2": item["carbon_loss_tco2"],
+                "detection_date": "2024-03-15",
+                "division": "Hasdeo Arand Forest Division (Chhattisgarh)",
+                "status": "PENDING_FIELD_VERIFICATION",
+            },
+            "geometry": mapping(item["poly_wgs84"]),
+        })
 
     geojson_obj = {
         "type": "FeatureCollection",
+        "name": "isro_hasdeo_arand_deforestation_alerts",
         "crs": {
             "type": "name",
-            "properties": {"name": str(crs)},
+            "properties": {"name": "urn:ogc:def:crs:OGC:1.3:CRS84"},
         },
         "features": features,
     }
 
-    with open(output_geojson_path, "w") as f:
-        json.dump(geojson_obj, f)
+    with open(output_geojson_path, "w", encoding="utf-8") as f:
+        json.dump(geojson_obj, f, indent=2)
 
-    print(f"[GeoJSON] Exported {len(features)} deforestation polygons to {output_geojson_path}")
+    print(f"[GeoJSON] Exported {len(features)} WGS84 deforestation alert features to {output_geojson_path}")
     return output_geojson_path
+

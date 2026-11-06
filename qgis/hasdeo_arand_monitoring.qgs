@@ -1,0 +1,167 @@
+<!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
+<qgis projectname="ISRO NRSC | Hasdeo Arand Forest Canopy Monitoring" version="3.34.0-Prizren">
+  <homePath path=""/>
+  <title>ISRO NRSC | Hasdeo Arand Sentinel-2 Deforestation Monitoring</title>
+  <autotransaction active="0"/>
+  <evaluateDefaultValues active="0"/>
+  <trust active="0"/>
+  <projectCrs>
+    <spatialrefsys nativeFormat="Wkt">
+      <wkt>PROJCRS["WGS 84 / UTM zone 44N",BASEGEOGCRS["WGS 84",DATUM["World Geodetic System 1984",ELLIPSOID["WGS 84",6378137,298.257223563,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],ID["EPSG",4326]],CONVERSION["UTM zone 44N",METHOD["Transverse Mercator",ID["EPSG",9807]],PARAMETER["Latitude of natural origin",0,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8801]],PARAMETER["Longitude of natural origin",81,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8802]],PARAMETER["Scale factor at natural origin",0.9996,SCALEUNIT["unity",1],ID["EPSG",8805]],PARAMETER["False easting",500000,LENGTHUNIT["metre",1],ID["EPSG",8806]],PARAMETER["False northing",0,LENGTHUNIT["metre",1],ID["EPSG",8807]]],CS[Cartesian,2],AXIS["(E)",east,ORDER[1],LENGTHUNIT["metre",1]],AXIS["(N)",north,ORDER[2],LENGTHUNIT["metre",1]],USAGE[SCOPE["Engineering survey, topographic mapping."],AREA["Between 78°E and 84°E, northern hemisphere between equator and 84°N, onshore and offshore. India."],BBOX[0,78,84,84]],ID["EPSG",32644]]</wkt>
+      <proj4>+proj=utm +zone=44 +datum=WGS84 +units=m +no_defs</proj4>
+      <srsid>3128</srsid>
+      <srid>32644</srid>
+      <authid>EPSG:32644</authid>
+      <description>WGS 84 / UTM zone 44N</description>
+      <projectionacronym>utm</projectionacronym>
+      <ellipsoidacronym>EPSG:7030</ellipsoidacronym>
+      <geographicflag>false</geographicflag>
+    </spatialrefsys>
+  </projectCrs>
+  <layer-tree-group>
+    <customproperties>
+      <Option/>
+    </customproperties>
+    <layer-tree-layer source="../results/deforestation_alerts.geojson" id="deforestation_alerts_vector" name="🔴 ISRO Deforestation Alerts (Polygons)" checked="Qt::Checked" expanded="1">
+      <customproperties>
+        <Option/>
+      </customproperties>
+    </layer-tree-layer>
+    <layer-tree-layer source="../data/raw/sentinel2_t2.tif" id="sentinel2_t2_raster" name="🛰️ Sentinel-2 T2 Monitoring (False Color NIR 8-4-3)" checked="Qt::Checked" expanded="0">
+      <customproperties>
+        <Option/>
+      </customproperties>
+    </layer-tree-layer>
+    <layer-tree-layer source="../data/raw/sentinel2_t1.tif" id="sentinel2_t1_raster" name="🛰️ Sentinel-2 T1 Baseline (False Color NIR 8-4-3)" checked="Qt::Unchecked" expanded="0">
+      <customproperties>
+        <Option/>
+      </customproperties>
+    </layer-tree-layer>
+    <layer-tree-layer source="type=xyz&amp;url=https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}&amp;zmax=19&amp;zmin=0" id="esri_satellite_basemap" name="🌍 Esri High-Resolution Satellite Basemap" checked="Qt::Checked" expanded="0">
+      <customproperties>
+        <Option/>
+      </customproperties>
+    </layer-tree-layer>
+  </layer-tree-group>
+  <projectlayers>
+    <!-- Esri Satellite Basemap Layer -->
+    <maplayer type="raster" minScale="1e+08" maxScale="0" autoRefreshTime="0" hasScaleBasedVisibilityFlag="0" refreshOnNotifyEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" refreshOnNotifyMessage="">
+      <id>esri_satellite_basemap</id>
+      <datasource>type=xyz&amp;url=https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}&amp;zmax=19&amp;zmin=0</datasource>
+      <keywordList><value></value></keywordList>
+      <layername>🌍 Esri High-Resolution Satellite Basemap</layername>
+      <srs>
+        <spatialrefsys nativeFormat="Wkt">
+          <wkt>PROJCRS["WGS 84 / Pseudo-Mercator",BASEGEOGCRS["WGS 84",DATUM["World Geodetic System 1984",ELLIPSOID["WGS 84",6378137,298.257223563,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],ID["EPSG",4326]],CONVERSION["Popular Visualisation Pseudo-Mercator",METHOD["Popular Visualisation Pseudo Mercator",ID["EPSG",1024]],PARAMETER["Latitude of natural origin",0,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8801]],PARAMETER["Longitude of natural origin",0,ANGLEUNIT["degree",0.0174532925199433],ID["EPSG",8802]],PARAMETER["False easting",0,LENGTHUNIT["metre",1],ID["EPSG",8806]],PARAMETER["False northing",0,LENGTHUNIT["metre",1],ID["EPSG",8807]]],CS[Cartesian,2],AXIS["easting (X)",east,ORDER[1],LENGTHUNIT["metre",1]],AXIS["northing (Y)",north,ORDER[2],LENGTHUNIT["metre",1]],USAGE[SCOPE["Web mapping and visualization."],AREA["World between 85.06°S and 85.06°N."],BBOX[-85.06,-180,85.06,180]],ID["EPSG",3857]]</wkt>
+          <proj4>+proj=merc +a=6378137 +b=6378137 +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +nadgrids=@null +wktext +no_defs</proj4>
+          <srsid>3857</srsid>
+          <srid>3857</srid>
+          <authid>EPSG:3857</authid>
+          <description>WGS 84 / Pseudo-Mercator</description>
+          <projectionacronym>merc</projectionacronym>
+          <ellipsoidacronym>EPSG:7030</ellipsoidacronym>
+          <geographicflag>false</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <provider>wms</provider>
+      <pipe>
+        <provider><layerType>xyz</layerType></provider>
+        <rasterrenderer type="singlebandcolordata" opacity="1" alphaBand="-1"/>
+      </pipe>
+      <blendMode>0</blendMode>
+    </maplayer>
+
+    <!-- Sentinel-2 T2 Monitoring Raster Layer -->
+    <maplayer type="raster" minScale="1e+08" maxScale="0" autoRefreshTime="0" hasScaleBasedVisibilityFlag="0" refreshOnNotifyEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" refreshOnNotifyMessage="">
+      <id>sentinel2_t2_raster</id>
+      <datasource>../data/raw/sentinel2_t2.tif</datasource>
+      <keywordList><value></value></keywordList>
+      <layername>🛰️ Sentinel-2 T2 Monitoring (False Color NIR 8-4-3)</layername>
+      <srs>
+        <spatialrefsys nativeFormat="Wkt">
+          <authid>EPSG:32644</authid>
+        </spatialrefsys>
+      </srs>
+      <provider>gdal</provider>
+      <pipe>
+        <provider><layerType>gdal</layerType></provider>
+        <rasterrenderer type="multibandcolor" redBand="4" greenBand="3" blueBand="2" opacity="1">
+          <redContrastEnhancement><algorithm>StretchToMinimumMaximum</algorithm></redContrastEnhancement>
+          <greenContrastEnhancement><algorithm>StretchToMinimumMaximum</algorithm></greenContrastEnhancement>
+          <blueContrastEnhancement><algorithm>StretchToMinimumMaximum</algorithm></blueContrastEnhancement>
+        </rasterrenderer>
+      </pipe>
+      <blendMode>0</blendMode>
+    </maplayer>
+
+    <!-- Sentinel-2 T1 Baseline Raster Layer -->
+    <maplayer type="raster" minScale="1e+08" maxScale="0" autoRefreshTime="0" hasScaleBasedVisibilityFlag="0" refreshOnNotifyEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" refreshOnNotifyMessage="">
+      <id>sentinel2_t1_raster</id>
+      <datasource>../data/raw/sentinel2_t1.tif</datasource>
+      <keywordList><value></value></keywordList>
+      <layername>🛰️ Sentinel-2 T1 Baseline (False Color NIR 8-4-3)</layername>
+      <srs>
+        <spatialrefsys nativeFormat="Wkt">
+          <authid>EPSG:32644</authid>
+        </spatialrefsys>
+      </srs>
+      <provider>gdal</provider>
+      <pipe>
+        <provider><layerType>gdal</layerType></provider>
+        <rasterrenderer type="multibandcolor" redBand="4" greenBand="3" blueBand="2" opacity="1">
+          <redContrastEnhancement><algorithm>StretchToMinimumMaximum</algorithm></redContrastEnhancement>
+          <greenContrastEnhancement><algorithm>StretchToMinimumMaximum</algorithm></greenContrastEnhancement>
+          <blueContrastEnhancement><algorithm>StretchToMinimumMaximum</algorithm></blueContrastEnhancement>
+        </rasterrenderer>
+      </pipe>
+      <blendMode>0</blendMode>
+    </maplayer>
+
+    <!-- Vector Deforestation Alerts Layer -->
+    <maplayer type="vector" minScale="1e+08" maxScale="0" autoRefreshTime="0" hasScaleBasedVisibilityFlag="0" refreshOnNotifyEnabled="0" styleCategories="AllStyleCategories" autoRefreshMode="Disabled" refreshOnNotifyMessage="" geometry="Polygon">
+      <id>deforestation_alerts_vector</id>
+      <datasource>../results/deforestation_alerts.geojson</datasource>
+      <keywordList><value></value></keywordList>
+      <layername>🔴 ISRO Deforestation Alerts (Polygons)</layername>
+      <srs>
+        <spatialrefsys nativeFormat="Wkt">
+          <authid>EPSG:4326</authid>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="UTF-8">ogr</provider>
+      <renderer-v2 type="RuleRenderer" symbollevels="0">
+        <rules key="{rule_root}">
+          <rule key="{rule_crit}" filter="&quot;area_ha&quot; >= 5.0" symbol="0" label="CRITICAL Alert (> 5.0 ha - Open Mine Pit)"/>
+          <rule key="{rule_high}" filter="&quot;area_ha&quot; >= 1.0 AND &quot;area_ha&quot; &lt; 5.0" symbol="1" label="HIGH Alert (1.0 - 5.0 ha - Logging Front)"/>
+          <rule key="{rule_mod}" filter="&quot;area_ha&quot; &lt; 1.0" symbol="2" label="MODERATE Alert (&lt; 1.0 ha - Encroachment)"/>
+        </rules>
+        <symbols>
+          <symbol type="fill" name="0" clip_to_extent="1" alpha="0.85">
+            <layer pass="0" class="SimpleFill" locked="0">
+              <prop k="color" v="213,0,0,215"/>
+              <prop k="outline_color" v="183,28,28,255"/>
+              <prop k="outline_width" v="0.8"/>
+              <prop k="style" v="solid"/>
+            </layer>
+          </symbol>
+          <symbol type="fill" name="1" clip_to_extent="1" alpha="0.80">
+            <layer pass="0" class="SimpleFill" locked="0">
+              <prop k="color" v="255,109,0,200"/>
+              <prop k="outline_color" v="230,81,0,255"/>
+              <prop k="outline_width" v="0.6"/>
+              <prop k="style" v="solid"/>
+            </layer>
+          </symbol>
+          <symbol type="fill" name="2" clip_to_extent="1" alpha="0.75">
+            <layer pass="0" class="SimpleFill" locked="0">
+              <prop k="color" v="255,214,0,190"/>
+              <prop k="outline_color" v="245,127,23,255"/>
+              <prop k="outline_width" v="0.5"/>
+              <prop k="style" v="solid"/>
+            </layer>
+          </symbol>
+        </symbols>
+      </renderer-v2>
+    </maplayer>
+  </projectlayers>
+</qgis>

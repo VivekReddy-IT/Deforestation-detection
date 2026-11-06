@@ -1,25 +1,4 @@
 {
-  "region": {
-    "name": "Hasdeo Arand, Chhattisgarh (India)",
-    "description": "The 'Lungs of Chhattisgarh'. Contiguous Sal and Teak forest facing open-cast coal mining concessions (PEKB block).",
-    "center_lat": 22.82,
-    "center_lon": 82.78,
-    "bbox": [
-      82.73,
-      22.77,
-      82.83,
-      22.87
-    ],
-    "t1_dates": [
-      "2021-02-15",
-      "2021-04-15"
-    ],
-    "t2_dates": [
-      "2024-02-15",
-      "2024-04-15"
-    ],
-    "utm_epsg": "EPSG:32644"
-  },
   "ndvi_baseline": {
     "iou": 0.9999999999961399,
     "f1": 0.9999994999963899,
@@ -28,25 +7,25 @@
     "threshold": 0.3
   },
   "unet_resnet34": {
-    "iou": 0.9561877917021633,
-    "f1": 0.9776032707679287,
-    "precision": 0.9890800624183115,
-    "recall": 0.9663897659946175
+    "iou": 0.9831534845348486,
+    "f1": 0.9915051882789079,
+    "precision": 0.9884375323645959,
+    "recall": 0.9945919446572019
   },
   "retrospective_change_detection": {
-    "total_cleared_pixels": 1281,
-    "total_cleared_hectares": 12.81,
-    "num_clearing_events": 31,
-    "filtered_noise_pixels": 19761,
-    "noise_hectares": 197.61,
-    "mean_event_hectares": 0.41
+    "total_cleared_pixels": 783,
+    "total_cleared_hectares": 7.83,
+    "num_clearing_events": 13,
+    "filtered_noise_pixels": 1545,
+    "noise_hectares": 15.45,
+    "mean_event_hectares": 0.6
   },
   "predictive_risk_forecast": {
-    "total_forest_ha": 10121.38,
+    "total_forest_ha": 10386.25,
     "imminent_risk_ha": 0.0,
-    "high_risk_ha": 249.74,
-    "moderate_risk_ha": 9871.64,
+    "high_risk_ha": 100.73,
+    "moderate_risk_ha": 10285.52,
     "low_risk_ha": 0.0,
-    "mean_risk_score": 0.3954
+    "mean_risk_score": 0.3971
   }
 }
