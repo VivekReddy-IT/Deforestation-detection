@@ -85,6 +85,25 @@ Models are strictly evaluated on an **independent held-out eastern geographic bl
 
 ---
 
+## 🔌 v2.1 — Local bind + read-only MCP
+
+The Streamlit UI stays on **127.0.0.1** (not the LAN). Cursor talks to the same data through a **read-only MCP server** (no secrets, no writes):
+
+```json
+{
+  "mcpServers": {
+    "vanaspati-ai": {
+      "command": ".venv/Scripts/python.exe",
+      "args": ["-m", "src.mcp_server"]
+    }
+  }
+}
+```
+
+Tools: `list_landscapes`, `get_landscape`, `get_deforestation_alerts`, `get_monsoon_summary`, `get_pipeline_metrics`.
+
+---
+
 ## 🌧️ v2.0 — Monsoon SAR watch (does not change deforestation outputs)
 
 Optical Sentinel-2 / VIIRS scenes go white under Indian southwest monsoon cloud. v2 adds a **separate** wet-season panel:
@@ -100,7 +119,8 @@ Optical Sentinel-2 / VIIRS scenes go white under Indian southwest monsoon cloud.
 ### 1. Interactive Split-Screen Swipe Curtain & Live Dynamic AI Probe
 * **Live Dynamic Geospatial AI on Cursor Move:** Hover any pixel for coordinates, Forest Canopy Density (FCD %), $\Delta\text{NDVI}$, frontier hazard, land-cover class, distance-to-clearing, SWIR stress, and a 6-band spectral response.
 * **Hover satellite stack:** A cursor chip plus four live frames — **Esri current**, **Esri Clarity archive**, **Sentinel-2 cloudless** (year slider 2018–2024), and **Sentinel-1 OPERA SAR**. Optional NASA GIBS VIIRS, MODIS 7-2-1, Harmonized Landsat-Sentinel (HLS), and IMERG rain-rate layers.
-* **Region-aware telemetry ribbon:** Switching Hasdeo / Western Ghats / Sumatra / Amazon updates monitored area, cleared hectares, clusters, 12-month high-risk, carbon, and UTM grid without overlapping zoom controls.
+* **Region-aware telemetry ribbon:** Switching Indian corridors (Hasdeo, Saranda, Sundarbans, Kaziranga, Western Ghats, Silent Valley, Satpura, Tadoba, Namdapha) or Sumatra / Amazon updates monitored area, cleared hectares, clusters, 12-month high-risk, carbon, and UTM grid without overlapping zoom controls.
+* **GeoJSON / KML export:** Workstation HUD buttons download alert files from embedded data (no blank browser tabs). Streamlit also exposes the same files on the QGIS and Bhuvan tab.
 * **Before / After Split Slider:** Drag the curtain to inspect **archive imagery** vs **current Esri World Imagery**.
 
 ### 2. Desktop QGIS Integration Suite (`qgis/`)

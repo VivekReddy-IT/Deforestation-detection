@@ -11,7 +11,7 @@ import streamlit as st
 from PIL import Image
 
 from src.data.real_earth_obs import gibs_wms_url
-from src.visualization.hotspots import HOTSPOTS
+from src.visualization.hotspots import HOTSPOTS, india_keys
 from src.visualization.interactive_workstation import build_isro_geospatial_workstation
 from src.visualization.monsoon_dashboard import render_monsoon_panel
 
@@ -48,7 +48,7 @@ def ensure_workstation(
     clusters: int,
     high_risk: float,
     monitored: float,
-    build_id: str = "hud-v3-sar",
+    build_id: str = "hud-v4-exports",
 ) -> str:
     path = ROOT / "results" / "maps" / f"isro_workstation_{code}.html"
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -101,9 +101,24 @@ risk = metrics.get("predictive_risk_forecast", {})
 with st.sidebar:
     st.title("VANASPATI-AI")
     st.caption("Forest sentinel suite")
+    corridor_set = st.segmented_control(
+        "Corridor set",
+        options=["India", "Global", "All"],
+        default="India",
+        key="corridor_set",
+    )
+    india = set(india_keys())
+    if corridor_set == "India":
+        landscape_options = [key for key in HOTSPOTS if key in india]
+    elif corridor_set == "Global":
+        landscape_options = [key for key in HOTSPOTS if key not in india]
+    else:
+        landscape_options = list(HOTSPOTS.keys())
+    if st.session_state.get("active_landscape") not in landscape_options:
+        st.session_state.active_landscape = landscape_options[0]
     selected_key = st.selectbox(
         "Active landscape",
-        options=list(HOTSPOTS.keys()),
+        options=landscape_options,
         format_func=lambda key: HOTSPOTS[key]["name"],
         key="active_landscape",
     )
@@ -115,7 +130,7 @@ with st.sidebar:
     )
     min_patch_ha = st.slider("Min patch filter (hectares)", 0.05, 2.0, 0.25, 0.05, key="min_patch_ha")
     hazard_cutoff = st.slider("12-month hazard threshold", 0.20, 0.90, 0.50, 0.05, key="hazard_cutoff")
-    st.caption("v2.0 · Prithvi-100M · Sentinel-2 · Sentinel-1 SAR · NASA GIBS · Open-Meteo")
+    st.caption("v2.1 · bind 127.0.0.1 · MCP read-only · Sentinel-1 SAR · NASA GIBS")
 
 st.header("Forest canopy sentinel")
 st.caption(
@@ -225,12 +240,29 @@ if tab_map.open:
                 mime="text/html",
                 width="content",
             )
+        if GEOJSON_PATH.exists():
+            st.download_button(
+                "Download GeoJSON",
+                data=GEOJSON_PATH.read_text(encoding="utf-8"),
+                file_name="vanaspati_deforestation_alerts.geojson",
+                mime="application/geo+json",
+                width="content",
+            )
+        if KML_PATH.exists():
+            st.download_button(
+                "Download KML",
+                data=KML_PATH.read_bytes(),
+                file_name="vanaspati_bhuvan_alerts.kml",
+                mime="application/vnd.google-earth.kml+xml",
+                width="content",
+            )
 
     if map_mode == "Split-swipe workstation":
         st.info(
             "Hover the imagery for live canopy density, ΔNDVI, land cover, and a four-sensor preview "
             "(Esri current, Esri archive, Sentinel-2 cloudless, Sentinel-1 SAR). Drag the curtain for 2021 vs now. "
-            "Switch landscapes in the left map panel — the bottom telemetry bar updates with that corridor.",
+            "Switch landscapes in the left map panel — the bottom telemetry bar updates with that corridor. "
+            "GeoJSON and KML in the HUD download as files (they no longer open a blank tab).",
             icon=":material/ads_click:",
         )
         st.iframe(
@@ -455,9 +487,11 @@ if tab_scope.open:
           Harmonized Landsat-Sentinel, IMERG rain, and Sentinel-1 OPERA SAR (cloud-penetrating).
         - v2 monsoon watch: Open-Meteo archive rainfall plus dry vs wet vs SAR snapshots.
           Deforestation detectors, GeoJSON alerts, and model scores are left untouched.
+        - v2.1: GeoJSON / KML HUD buttons download from in-map blobs (no blank tabs).
+          Nine Indian corridors. Streamlit bound to 127.0.0.1. Read-only MCP in `.cursor/mcp.json`.
 
         **Still on the roadmap:** MBTiles for offline rangers, and 5 cm UAV orthomosaics
         for enforcement-grade canopy work.
         """
     )
-    st.caption("VANASPATI-AI v2.0 · Sentinel-2 L2A · Sentinel-1 SAR · NASA GIBS · Open-Meteo")
+    st.caption("VANASPATI-AI v2.1 · Sentinel-2 L2A · Sentinel-1 SAR · NASA GIBS · Open-Meteo · MCP")

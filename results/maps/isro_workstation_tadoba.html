@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>VANASPATI-AI | Forest Sentinel Workstation</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/digidem/leaflet-side-by-side/leaflet-side-by-side.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { width: 100%; height: 100%; min-height: 720px; overflow: hidden; font-family: Inter, sans-serif; background: #070a10; color: #f3f4f6; }
+        #map { position: absolute; inset: 0; z-index: 1; background: #0b0f19; }
+        .leaflet-control-attribution { background: rgba(11,15,25,0.82) !important; color: #94a3b8 !important; font-size: 10px !important; max-width: 42%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .leaflet-control-attribution a { color: #67e8f9 !important; }
+        .leaflet-bottom.leaflet-right { bottom: 64px; }
+
+        .hud {
+            position: absolute; z-index: 1000;
+            background: rgba(11, 15, 25, 0.92);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.55);
+        }
+        .isro-header {
+            top: 12px; left: 14px; right: 14px; height: 52px;
+            border-radius: 12px; display: flex; align-items: center; justify-content: space-between;
+            padding: 0 12px; gap: 10px; overflow: hidden;
+        }
+        .brand-cluster { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+        .isro-emblem {
+            width: 34px; height: 34px; border-radius: 8px; flex-shrink: 0;
+            background: linear-gradient(135deg, #059669, #10b981);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; color: #fff; font-size: 13px;
+        }
+        .title-group h1 { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .title-group p { font-size: 10.5px; color: #94a3b8; font-family: 'JetBrains Mono', monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 52vw; }
+        .badge-live {
+            background: rgba(16,185,129,0.18); color: #34d399; border: 1px solid rgba(16,185,129,0.4);
+            padding: 2px 8px; border-radius: 20px; font-size: 10px; font-weight: 700; letter-spacing: 0.6px;
+            display: inline-flex; align-items: center; gap: 5px;
+        }
+        .pulse-dot { width: 6px; height: 6px; background: #10b981; border-radius: 50%; box-shadow: 0 0 8px #10b981; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+        .header-actions { display: flex; gap: 6px; flex-shrink: 0; }
+        .btn-action {
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); color: #e5e7eb;
+            font-size: 11px; font-weight: 600; padding: 7px 10px; border-radius: 8px; cursor: pointer;
+            white-space: nowrap;
+        }
+        .btn-action:hover { background: rgba(255,255,255,0.14); }
+        .btn-primary { background: linear-gradient(135deg, #059669, #10b981); border: none; color: #fff; }
+
+        .floating-left-card { top: 72px; left: 12px; width: 250px; border-radius: 14px; padding: 12px; max-height: calc(100% - 142px); overflow: auto; }
+        .floating-right-hud { top: 72px; right: 12px; width: 268px; border-radius: 14px; padding: 12px; max-height: calc(100% - 142px); overflow: auto; }
+        .section-label { font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.9px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+        .hotspot-pill { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 8px 10px; cursor: pointer; margin-bottom: 6px; }
+        .hotspot-pill.active, .hotspot-pill:hover { background: rgba(16,185,129,0.14); border-color: rgba(16,185,129,0.4); }
+        .hotspot-name { font-size: 12.5px; font-weight: 600; }
+        .hotspot-desc { font-size: 10px; color: #94a3b8; margin-top: 2px; }
+        .swipe-banner { background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.3); border-radius: 8px; padding: 8px; font-size: 10.5px; color: #fde68a; margin: 8px 0 12px; }
+        .toggle-item { display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; color: #d1d5db; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .toggle-switch { position: relative; width: 32px; height: 16px; background: #374151; border-radius: 20px; cursor: pointer; }
+        .toggle-switch.on { background: #10b981; }
+        .toggle-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 12px; height: 12px; background: #fff; border-radius: 50%; transition: transform 0.2s; }
+        .toggle-switch.on::after { transform: translateX(16px); }
+        .year-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 11px; color: #94a3b8; }
+        .year-row input { flex: 1; accent-color: #10b981; }
+        .year-row input[type="date"] {
+            background: #0b1220; color: #e2e8f0; border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 6px; padding: 3px 6px;
+        }
+        #year-label { font-family: 'JetBrains Mono', monospace; color: #34d399; min-width: 38px; }
+
+        .probe-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .probe-coords { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: #10b981; }
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+        .stat-box { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 8px; }
+        .stat-val { font-size: 16px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+        .stat-sub { font-size: 9.5px; color: #94a3b8; text-transform: uppercase; margin-top: 2px; }
+        .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; font-size: 11px; margin-bottom: 10px; }
+        .meta-grid span { color: #94a3b8; }
+        .meta-grid b { color: #e5e7eb; font-weight: 600; }
+        .spectral-bars { display: flex; align-items: flex-end; justify-content: space-between; height: 52px; margin-bottom: 4px; }
+        .spec-col { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 14%; }
+        .spec-bar { width: 100%; border-radius: 3px; min-height: 4px; transition: height 0.15s linear; }
+        .spec-lbl { font-size: 9px; font-family: 'JetBrains Mono', monospace; color: #9ca3af; }
+
+        .sat-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; }
+        .sat-card { background: #0b1220; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; overflow: hidden; }
+        .sat-card img { width: 100%; height: 72px; object-fit: cover; display: block; background: #111827; }
+        .sat-card figcaption { font-size: 9px; color: #94a3b8; padding: 4px 6px 6px; font-family: 'JetBrains Mono', monospace; }
+
+        .bottom-ribbon {
+            left: 12px; right: 58px; bottom: 10px;
+            min-height: 46px; height: auto; border-radius: 14px;
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-evenly;
+            gap: 6px 14px; padding: 8px 12px; pointer-events: none; z-index: 1100;
+        }
+        .ribbon-item { display: flex; flex-direction: column; gap: 1px; min-width: 88px; }
+        .ribbon-item label { font-size: 9.5px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.4px; }
+        .ribbon-item strong { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #34d399; white-space: nowrap; }
+
+        #hover-chip {
+            position: absolute; z-index: 1200; pointer-events: none; display: none;
+            width: 248px; border-radius: 12px; padding: 8px; transform: translate(16px, 16px);
+        }
+        #hover-chip img { width: 100%; height: 88px; object-fit: cover; border-radius: 8px; background: #111827; }
+        .chip-row { display: flex; justify-content: space-between; font-size: 10.5px; margin-top: 6px; }
+        .chip-row b { font-family: 'JetBrains Mono', monospace; }
+
+        .coord-search { display: flex; gap: 6px; margin-top: 10px; }
+        .coord-search input {
+            flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+            color: #e5e7eb; border-radius: 7px; padding: 6px 8px; font-size: 11px; font-family: 'JetBrains Mono', monospace;
+        }
+        .coord-search button { background: #10b981; border: none; color: #fff; border-radius: 7px; padding: 6px 8px; cursor: pointer; font-size: 11px; }
+
+        @media (max-width: 1100px) {
+            .btn-text { display: none; }
+            .title-group p { max-width: 34vw; }
+            .floating-left-card { width: 220px; }
+            .floating-right-hud { width: 232px; }
+            .sat-card img { height: 58px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <div class="hud isro-header">
+        <div class="brand-cluster">
+            <div class="isro-emblem">V</div>
+            <div class="title-group">
+                <h1>VANASPATI-AI <span class="badge-live"><span class="pulse-dot"></span> LIVE PROBE</span></h1>
+                <p id="header-subtitle">Hover any pixel for Sentinel-2, Esri archive, and canopy telemetry</p>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button class="btn-action" onclick="toggleHud()" title="Toggle HUD panels"><i class="fa-solid fa-table-columns"></i> <span class="btn-text">Panels</span></button>
+            <button class="btn-action" onclick="downloadGeoJSON()" title="Download GeoJSON"><i class="fa-solid fa-file-code"></i> <span class="btn-text">GeoJSON</span></button>
+            <button class="btn-action btn-primary" onclick="exportBhuvanKML()" title="Export Bhuvan KML"><i class="fa-solid fa-earth-asia"></i> <span class="btn-text">KML</span></button>
+        </div>
+    </div>
+
+    <div class="hud floating-left-card" id="left-panel">
+        <div class="section-label"><i class="fa-solid fa-mountain-sun"></i> Active forest corridors</div>
+        <div id="hotspot-list"></div>
+        <div class="swipe-banner"><i class="fa-solid fa-arrows-left-right"></i> Drag the center curtain to compare Esri archive vs current imagery.</div>
+        <div class="section-label"><i class="fa-solid fa-layer-group"></i> Satellite &amp; AI layers</div>
+        <div class="toggle-item"><label>ISRO deforestation alerts</label><div class="toggle-switch on" id="toggle-alerts" onclick="toggleLayer('alerts')"></div></div>
+        <div class="toggle-item"><label>12-month risk glow</label><div class="toggle-switch on" id="toggle-risk" onclick="toggleLayer('risk')"></div></div>
+        <div class="toggle-item"><label>Sentinel-2 cloudless</label><div class="toggle-switch" id="toggle-s2" onclick="toggleLayer('s2')"></div></div>
+        <div class="toggle-item"><label>VIIRS daily true color</label><div class="toggle-switch" id="toggle-viirs" onclick="toggleLayer('viirs')"></div></div>
+        <div class="toggle-item"><label>MODIS false-color 7-2-1</label><div class="toggle-switch" id="toggle-cir" onclick="toggleLayer('cir')"></div></div>
+        <div class="toggle-item"><label>Sentinel-1 OPERA SAR</label><div class="toggle-switch" id="toggle-sar" onclick="toggleLayer('sar')"></div></div>
+        <div class="toggle-item"><label>IMERG rain rate</label><div class="toggle-switch" id="toggle-imerg" onclick="toggleLayer('imerg')"></div></div>
+        <div class="toggle-item"><label>HLS Landsat / Sentinel-2</label><div class="toggle-switch" id="toggle-hls" onclick="toggleLayer('hls')"></div></div>
+        <div class="year-row">
+            <span>S2 year</span>
+            <input id="year-slider" type="range" min="2018" max="2024" value="2024" step="1" oninput="setCloudlessYear(this.value)"/>
+            <span id="year-label">2024</span>
+        </div>
+        <div class="year-row">
+            <span>GIBS date</span>
+            <input id="gibs-date" type="date" value="2025-07-18" onchange="setGibsDate(this.value)"/>
+        </div>
+        <div class="coord-search">
+            <input id="coord-input" placeholder="lat, lon  e.g. 0.55, 101.45"/>
+            <button onclick="goToCoords()"><i class="fa-solid fa-location-crosshairs"></i></button>
+        </div>
+    </div>
+
+    <div class="hud floating-right-hud" id="right-panel">
+        <div class="probe-header">
+            <div class="section-label" style="margin:0"><i class="fa-solid fa-crosshairs"></i> Dynamic AI probe</div>
+            <div class="probe-coords" id="probe-coords">—</div>
+        </div>
+        <div class="stat-grid">
+            <div class="stat-box"><div class="stat-val" id="stat-fcd">—</div><div class="stat-sub">Canopy density</div></div>
+            <div class="stat-box"><div class="stat-val" id="stat-ndvi">—</div><div class="stat-sub">NDVI</div></div>
+            <div class="stat-box"><div class="stat-val" id="stat-loss">—</div><div class="stat-sub">Δ NDVI drop</div></div>
+            <div class="stat-box"><div class="stat-val" id="stat-hazard">—</div><div class="stat-sub">Frontier hazard</div></div>
+        </div>
+        <div class="meta-grid">
+            <div><span>Land cover</span><br/><b id="meta-cover">—</b></div>
+            <div><span>UTM grid</span><br/><b id="meta-utm">—</b></div>
+            <div><span>To clearing</span><br/><b id="meta-dist">—</b></div>
+            <div><span>Biomass CO₂</span><br/><b id="meta-carbon">—</b></div>
+            <div><span>SWIR stress</span><br/><b id="meta-swir">—</b></div>
+            <div><span>Pixel GSD</span><br/><b id="meta-gsd">10 m</b></div>
+        </div>
+        <div class="section-label"><i class="fa-solid fa-chart-simple"></i> Sentinel-2 spectral response</div>
+        <div class="spectral-bars">
+            <div class="spec-col"><div class="spec-bar" id="bar-b2" style="height:18px;background:#60a5fa"></div><div class="spec-lbl">B2</div></div>
+            <div class="spec-col"><div class="spec-bar" id="bar-b3" style="height:28px;background:#34d399"></div><div class="spec-lbl">B3</div></div>
+            <div class="spec-col"><div class="spec-bar" id="bar-b4" style="height:16px;background:#f87171"></div><div class="spec-lbl">B4</div></div>
+            <div class="spec-col"><div class="spec-bar" id="bar-b8" style="height:52px;background:#ec4899"></div><div class="spec-lbl">B8</div></div>
+            <div class="spec-col"><div class="spec-bar" id="bar-b11" style="height:26px;background:#fbbf24"></div><div class="spec-lbl">B11</div></div>
+            <div class="spec-col"><div class="spec-bar" id="bar-b12" style="height:14px;background:#a78bfa"></div><div class="spec-lbl">B12</div></div>
+        </div>
+        <div class="section-label" style="margin-top:10px"><i class="fa-solid fa-satellite"></i> Hover satellite stack</div>
+        <div class="sat-strip">
+            <figure class="sat-card"><img id="sat-now" alt="Current Esri imagery"/><figcaption>Esri now</figcaption></figure>
+            <figure class="sat-card"><img id="sat-arch" alt="Esri historical archive"/><figcaption>Archive</figcaption></figure>
+            <figure class="sat-card"><img id="sat-s2" alt="Sentinel-2 cloudless"/><figcaption>S2 mosaic</figcaption></figure>
+            <figure class="sat-card"><img id="sat-sar" alt="Sentinel-1 OPERA SAR"/><figcaption>S1 SAR</figcaption></figure>
+        </div>
+    </div>
+
+    <div class="hud bottom-ribbon" id="bottom-ribbon">
+        <div class="ribbon-item"><label>Monitored</label><strong id="rib-monitored">—</strong></div>
+        <div class="ribbon-item"><label>Cleared</label><strong id="rib-cleared" style="color:#f87171">—</strong></div>
+        <div class="ribbon-item"><label>Clusters</label><strong id="rib-clusters" style="color:#fbbf24">—</strong></div>
+        <div class="ribbon-item"><label>High-risk 12-mo</label><strong id="rib-risk" style="color:#f59e0b">—</strong></div>
+        <div class="ribbon-item"><label>Carbon lost</label><strong id="rib-carbon">—</strong></div>
+        <div class="ribbon-item"><label>Grid</label><strong id="rib-utm" style="color:#94a3b8">—</strong></div>
+    </div>
+
+    <div class="hud" id="hover-chip">
+        <img id="chip-sat" alt="Hover satellite preview"/>
+        <div class="chip-row"><span id="chip-cover">—</span><b id="chip-ndvi">NDVI —</b></div>
+        <div class="chip-row"><span id="chip-xy">—</span><b id="chip-fcd">—</b></div>
+    </div>
+
+    <script>
+        const BOOT = {"center": [20.25, 79.39], "zoom": 13, "initialRegion": "tadoba", "geojson": {"type": "FeatureCollection", "features": [{"type": "Feature", "properties": {"alert_id": "WATCH-TADOBA", "severity": "Watch window", "area_ha": 0, "status": "MONITORING"}, "geometry": {"type": "Polygon", "coordinates": [[[79.35, 20.21], [79.43, 20.21], [79.43, 20.29], [79.35, 20.29], [79.35, 20.21]]]}}]}, "kml": "", "riskUri": "", "riskBounds": [[20.205, 79.345], [20.295, 79.435]], "regions": {"hasdeo": {"name": "Hasdeo Arand (C.G.)", "fullName": "Hasdeo Arand, Chhattisgarh (India)", "lat": 22.82, "lon": 82.78, "zoom": 13, "utm": "UTM 44N (WGS84)", "division": "Surguja / Korba Forest Division", "threat": "Open-cast coal mining concessions (PEKB block) and railway haul tracks", "canopy": "Contiguous Sal (Shorea robusta) and mixed deciduous canopy", "monitoredHa": 10240.0, "clearedHa": 7.74, "clusters": 16, "highRiskHa": 65.8, "carbonTco2": 2399.0, "threatCenter": [22.822, 82.785], "baseFCD": 84.5, "baseNDVI": 0.79, "threatRadiusKm": 1.6, "bufferRadiusKm": 4.5}, "saranda": {"name": "Saranda (Jharkhand)", "fullName": "Saranda Forest, Jharkhand (India)", "lat": 22.3, "lon": 85.35, "zoom": 13, "utm": "UTM 45N (WGS84)", "division": "Saranda Forest Division, West Singhbhum", "threat": "Iron-ore mining leases, haul roads, and forest village conversion", "canopy": "Asia's densest Sal forest (Saranda Division)", "monitoredHa": 8140.0, "clearedHa": 6.42, "clusters": 14, "highRiskHa": 88.4, "carbonTco2": 1989.0, "threatCenter": [22.312, 85.338], "baseFCD": 83.0, "baseNDVI": 0.77, "threatRadiusKm": 1.5, "bufferRadiusKm": 4.2}, "sundarbans": {"name": "Sundarbans (W.B.)", "fullName": "Sundarbans, West Bengal (India)", "lat": 21.95, "lon": 88.85, "zoom": 13, "utm": "UTM 45N (WGS84)", "division": "Sundarban Tiger Reserve / South 24 Parganas", "threat": "Aquaculture ponds, embankment cutting, and cyclone-driven saline ingress", "canopy": "UNESCO mangrove tiger reserve (Heritiera / Avicennia)", "monitoredHa": 9560.0, "clearedHa": 3.18, "clusters": 11, "highRiskHa": 54.2, "carbonTco2": 986.0, "threatCenter": [21.938, 88.872], "baseFCD": 72.0, "baseNDVI": 0.63, "threatRadiusKm": 1.2, "bufferRadiusKm": 5.0}, "kaziranga": {"name": "Kaziranga (Assam)", "fullName": "Kaziranga, Assam (India)", "lat": 26.58, "lon": 93.17, "zoom": 13, "utm": "UTM 46N (WGS84)", "division": "Kaziranga National Park / Golaghat\u2013Nagaon", "threat": "NH-715 widening, flood-refuge tree felling, and tea-estate expansion", "canopy": "Brahmaputra floodplain grassland with mixed semi-evergreen patches", "monitoredHa": 4300.0, "clearedHa": 2.04, "clusters": 7, "highRiskHa": 29.6, "carbonTco2": 632.0, "threatCenter": [26.572, 93.162], "baseFCD": 66.0, "baseNDVI": 0.59, "threatRadiusKm": 0.9, "bufferRadiusKm": 3.2}, "ghats": {"name": "Western Ghats (Karnataka)", "fullName": "Western Ghats, Karnataka (India)", "lat": 12.35, "lon": 75.75, "zoom": 13, "utm": "UTM 43N (WGS84)", "division": "Kodagu Forest Division", "threat": "Linear road infrastructure and commercial estate expansion", "canopy": "UNESCO World Heritage shola-evergreen rainforest", "monitoredHa": 8650.0, "clearedHa": 4.12, "clusters": 9, "highRiskHa": 41.3, "carbonTco2": 1277.0, "threatCenter": [12.312, 75.715], "baseFCD": 92.0, "baseNDVI": 0.87, "threatRadiusKm": 0.8, "bufferRadiusKm": 2.8}, "silentvalley": {"name": "Silent Valley (Kerala)", "fullName": "Silent Valley, Kerala (India)", "lat": 11.13, "lon": 76.43, "zoom": 13, "utm": "UTM 43N (WGS84)", "division": "Silent Valley National Park / Palakkad", "threat": "Hydropower access roads and high-elevation estate creep", "canopy": "Southern Western Ghats wet evergreen (Cullenia\u2013Mesua\u2013Palaquium)", "monitoredHa": 8950.0, "clearedHa": 1.86, "clusters": 5, "highRiskHa": 22.4, "carbonTco2": 577.0, "threatCenter": [11.098, 76.446], "baseFCD": 94.0, "baseNDVI": 0.89, "threatRadiusKm": 0.6, "bufferRadiusKm": 2.4}, "satpura": {"name": "Satpura (M.P.)", "fullName": "Satpura Tiger Reserve, Madhya Pradesh (India)", "lat": 22.49, "lon": 78.35, "zoom": 13, "utm": "UTM 44N (WGS84)", "division": "Satpura Tiger Reserve / Hoshangabad", "threat": "Coal-block approaches, tourism infrastructure, and corridor pinch-points", "canopy": "Central Indian teak\u2013sal mosaic on the Satpura range", "monitoredHa": 11240.0, "clearedHa": 5.28, "clusters": 12, "highRiskHa": 71.5, "carbonTco2": 1636.0, "threatCenter": [22.478, 78.362], "baseFCD": 79.5, "baseNDVI": 0.73, "threatRadiusKm": 1.4, "bufferRadiusKm": 4.0}, "tadoba": {"name": "Tadoba (Maharashtra)", "fullName": "Tadoba\u2013Andhari, Maharashtra (India)", "lat": 20.25, "lon": 79.39, "zoom": 13, "utm": "UTM 44N (WGS84)", "division": "Tadoba\u2013Andhari Tiger Reserve / Chandrapur", "threat": "Chandrapur coal belt, irrigation canals, and buffer-village expansion", "canopy": "Southern tropical dry deciduous teak forest", "monitoredHa": 6260.0, "clearedHa": 4.55, "clusters": 10, "highRiskHa": 48.7, "carbonTco2": 1410.0, "threatCenter": [20.238, 79.402], "baseFCD": 75.0, "baseNDVI": 0.67, "threatRadiusKm": 1.1, "bufferRadiusKm": 3.6}, "namdapha": {"name": "Namdapha (Arunachal)", "fullName": "Namdapha, Arunachal Pradesh (India)", "lat": 27.49, "lon": 96.39, "zoom": 13, "utm": "UTM 46N (WGS84)", "division": "Namdapha National Park / Changlang", "threat": "Frontier logging, road access from Miao, and shifting-cultivation edges", "canopy": "Eastern Himalayan wet evergreen to alpine transition forest", "monitoredHa": 14880.0, "clearedHa": 3.92, "clusters": 8, "highRiskHa": 61.0, "carbonTco2": 1215.0, "threatCenter": [27.478, 96.378], "baseFCD": 90.5, "baseNDVI": 0.85, "threatRadiusKm": 1.3, "bufferRadiusKm": 5.5}, "sumatra": {"name": "Sumatra, Riau (Indonesia)", "fullName": "Riau Province, Sumatra (Indonesia)", "lat": 0.55, "lon": 101.45, "zoom": 13, "utm": "UTM 47N (WGS84)", "division": "Riau Peat Conservation Zone", "threat": "Industrial oil palm concessions and drainage canal clearing", "canopy": "Tropical peat swamp forest", "monitoredHa": 12480.0, "clearedHa": 18.46, "clusters": 24, "highRiskHa": 142.6, "carbonTco2": 11076.0, "threatCenter": [0.521, 101.421], "baseFCD": 76.5, "baseNDVI": 0.73, "threatRadiusKm": 1.8, "bufferRadiusKm": 5.2}, "amazon": {"name": "Amazon Basin (Rond\u00f4nia)", "fullName": "Rond\u00f4nia, Amazon Basin (Brazil)", "lat": -10.0, "lon": -62.5, "zoom": 13, "utm": "UTM 20S (WGS84)", "division": "Porto Velho Sector", "threat": "BR-364 highway colonization and cattle ranching frontiers", "canopy": "Primary Amazonian rainforest", "monitoredHa": 15120.0, "clearedHa": 22.9, "clusters": 31, "highRiskHa": 188.4, "carbonTco2": 16030.0, "threatCenter": [-10.045, -62.535], "baseFCD": 88.5, "baseNDVI": 0.84, "threatRadiusKm": 2.2, "bufferRadiusKm": 6.0}}, "division": "Tadoba\u2013Andhari Tiger Reserve / Chandrapur"};
+        const REGIONS = BOOT.regions;
+        let currentRegionKey = BOOT.initialRegion || 'hasdeo';
+        let hudVisible = true;
+        let satTimer = null;
+        let lastSatKey = '';
+
+        const map = L.map('map', {
+            center: BOOT.center,
+            zoom: BOOT.zoom,
+            zoomControl: false,
+            preferCanvas: true
+        });
+        L.control.zoom({ position: 'bottomright' }).addTo(map);
+        L.control.scale({ position: 'bottomleft', imperial: false }).addTo(map);
+
+        const baseSatellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 19, attribution: 'Esri, Maxar, Earthstar'
+        }).addTo(map);
+
+        const leftLayer = L.tileLayer('https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 19, attribution: 'Esri Clarity archive'
+        });
+
+        const s2Layer = L.tileLayer('https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2024_3857/default/g/{z}/{y}/{x}.jpg', {
+            maxZoom: 16, opacity: 0.92, attribution: 'Sentinel-2 cloudless © EOX / Copernicus'
+        });
+        const viirsLayer = L.tileLayer('https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2024-08-01/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg', {
+            maxZoom: 9, opacity: 0.9, attribution: 'NASA GIBS / VIIRS'
+        });
+        const cirLayer = L.tileLayer('https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_Bands721/default/2024-08-01/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg', {
+            maxZoom: 9, opacity: 0.88, attribution: 'NASA GIBS / MODIS 7-2-1'
+        });
+        let gibsDate = '2025-07-18';
+        function gibsWmts(layer, ext) {
+            return 'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/' + layer + '/default/' + gibsDate + '/GoogleMapsCompatible_Level9/{z}/{y}/{x}.' + ext;
+        }
+        const sarLayer = L.tileLayer(gibsWmts('OPERA_L2_Radiometric_Terrain_Corrected_SAR_Sentinel-1', 'jpg'), {
+            maxZoom: 9, opacity: 0.86, attribution: 'NASA GIBS / OPERA Sentinel-1 SAR'
+        });
+        const imergLayer = L.tileLayer(gibsWmts('IMERG_Precipitation_Rate', 'jpg'), {
+            maxZoom: 9, opacity: 0.72, attribution: 'NASA GIBS / IMERG rain'
+        });
+        const hlsLayer = L.tileLayer(gibsWmts('HLS_S30_Nadir_BRDF_Adjusted_Reflectance', 'jpg'), {
+            maxZoom: 9, opacity: 0.9, attribution: 'NASA GIBS / HLS S30'
+        });
+
+        try {
+            if (typeof L.control.sideBySide === 'function') {
+                leftLayer.addTo(map);
+                L.control.sideBySide(leftLayer, baseSatellite).addTo(map);
+            }
+        } catch (err) { console.warn(err); }
+
+        function forceMapRedraw() { map.invalidateSize(); }
+        setTimeout(forceMapRedraw, 120);
+        setTimeout(forceMapRedraw, 400);
+        setTimeout(forceMapRedraw, 1000);
+        window.addEventListener('resize', forceMapRedraw);
+
+        let alertLayer = null;
+        if (BOOT.geojson && BOOT.geojson.features) {
+            alertLayer = L.geoJSON(BOOT.geojson, {
+                style: function(feature) {
+                    const ha = feature.properties.area_ha || 0.1;
+                    let color = '#FFD600', fill = '#FFEE58';
+                    if (ha >= 5.0) { color = '#B71C1C'; fill = '#D50000'; }
+                    else if (ha >= 1.0) { color = '#E65100'; fill = '#FF6D00'; }
+                    return { color: color, weight: 2, fillColor: fill, fillOpacity: 0.62 };
+                },
+                onEachFeature: function(feature, layer) {
+                    const p = feature.properties;
+                    layer.bindPopup(
+                        '<div style="min-width:210px;font-family:Inter,sans-serif">' +
+                        '<b style="color:#f87171">' + (p.alert_id || 'ALERT') + '</b><br/>' +
+                        'Cleared: <b>' + p.area_ha + ' ha</b><br/>' +
+                        'Carbon: ' + (p.carbon_tco2 || Math.round(p.area_ha * 310)) + ' t CO₂<br/>' +
+                        'UTM: <span style="font-family:JetBrains Mono,monospace">' + (p.utm_coords || '') + '</span></div>'
+                    );
+                }
+            }).addTo(map);
+        }
+
+        let riskLayer = null;
+        if (BOOT.riskUri) {
+            riskLayer = L.imageOverlay(BOOT.riskUri, BOOT.riskBounds, { opacity: 0.82, interactive: false }).addTo(map);
+        }
+
+        const hotspotList = document.getElementById('hotspot-list');
+        Object.keys(REGIONS).forEach(function(key) {
+            const r = REGIONS[key];
+            const el = document.createElement('div');
+            el.className = 'hotspot-pill' + (key === currentRegionKey ? ' active' : '');
+            el.id = 'pill-' + key;
+            el.innerHTML = '<div class="hotspot-name">' + r.name + '</div><div class="hotspot-desc">' + r.threat + '</div>';
+            el.onclick = function() { flyToHotspot(r.lat, r.lon, r.zoom, key, el); };
+            hotspotList.appendChild(el);
+        });
+
+        function fmtHa(v) { return Number(v).toLocaleString(undefined, { maximumFractionDigits: 1 }) + ' ha'; }
+        function updateRibbon(key) {
+            const r = REGIONS[key];
+            if (!r) return;
+            document.getElementById('rib-monitored').textContent = fmtHa(r.monitoredHa);
+            document.getElementById('rib-cleared').textContent = fmtHa(r.clearedHa);
+            document.getElementById('rib-clusters').textContent = String(r.clusters);
+            document.getElementById('rib-risk').textContent = fmtHa(r.highRiskHa);
+            document.getElementById('rib-carbon').textContent = Math.round(r.carbonTco2).toLocaleString() + ' t';
+            document.getElementById('rib-utm').textContent = r.utm;
+            document.getElementById('header-subtitle').textContent = r.fullName + ' · hover for multi-sensor stack';
+            document.getElementById('meta-utm').textContent = r.utm;
+        }
+        updateRibbon(currentRegionKey);
+
+        function latLngToTile(lat, lon, zoom) {
+            const n = Math.pow(2, zoom);
+            const x = Math.floor((lon + 180) / 360 * n);
+            const latRad = lat * Math.PI / 180;
+            const y = Math.floor((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2 * n);
+            return { x: x, y: Math.max(0, Math.min(n - 1, y)), z: zoom };
+        }
+        function esriExport(lat, lon, size) {
+            const d = 0.008;
+            return 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?bbox=' +
+                (lon - d) + ',' + (lat - d) + ',' + (lon + d) + ',' + (lat + d) +
+                '&bboxSR=4326&imageSR=4326&size=' + size + ',' + size + '&format=jpg&f=image';
+        }
+        function archiveTile(lat, lon) {
+            const t = latLngToTile(lat, lon, 15);
+            return 'https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/' + t.z + '/' + t.y + '/' + t.x;
+        }
+        function s2Tile(lat, lon) {
+            const year = document.getElementById('year-slider').value;
+            const t = latLngToTile(lat, lon, 14);
+            return 'https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-' + year + '_3857/default/g/' + t.z + '/' + t.y + '/' + t.x + '.jpg';
+        }
+        function gibsWms(layer, lat, lon) {
+            const d = 0.08;
+            return 'https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.3.0&LAYERS=' +
+                layer + '&CRS=EPSG:4326&BBOX=' + (lat - d) + ',' + (lon - d) + ',' + (lat + d) + ',' + (lon + d) +
+                '&WIDTH=200&HEIGHT=200&FORMAT=image/jpeg&TIME=' + gibsDate;
+        }
+        function refreshSatellites(lat, lon) {
+            const key = lat.toFixed(3) + ',' + lon.toFixed(3) + ',' + gibsDate;
+            if (key === lastSatKey) return;
+            lastSatKey = key;
+            document.getElementById('sat-now').src = esriExport(lat, lon, 200);
+            document.getElementById('sat-arch').src = archiveTile(lat, lon);
+            document.getElementById('sat-s2').src = s2Tile(lat, lon);
+            document.getElementById('sat-sar').src = gibsWms('OPERA_L2_Radiometric_Terrain_Corrected_SAR_Sentinel-1', lat, lon);
+            document.getElementById('chip-sat').src = esriExport(lat, lon, 240);
+        }
+
+        function computeGeospatialMetrics(lat, lon) {
+            const profile = REGIONS[currentRegionKey] || REGIONS.hasdeo;
+            const tLat = profile.threatCenter[0];
+            const tLon = profile.threatCenter[1];
+            const dLat = (lat - tLat) * 111.0;
+            const dLon = (lon - tLon) * 111.0 * Math.cos(lat * Math.PI / 180.0);
+            const distKm = Math.sqrt(dLat * dLat + dLon * dLon);
+            const micro1 = Math.sin(lat * 2600.0 + lon * 2100.0) * 4.8;
+            const micro2 = Math.cos(lat * 4100.0 - lon * 3300.0) * 3.6;
+            const macroRidge = Math.sin(lat * 310.0) * Math.cos(lon * 290.0) * 8.2;
+            let fcd, ndvi, dNdvi, hazard;
+            if (distKm <= profile.threatRadiusKm) {
+                const ratio = distKm / profile.threatRadiusKm;
+                fcd = Math.max(9.0, Math.min(36.0, 12.0 + ratio * 20.0 + micro1));
+                ndvi = Math.max(0.12, Math.min(0.36, 0.16 + ratio * 0.16 + micro2 * 0.01));
+                dNdvi = -0.65 + ratio * 0.32 + (micro1 * 0.01);
+                hazard = Math.max(0.72, Math.min(0.98, 0.96 - ratio * 0.20));
+            } else if (distKm <= profile.bufferRadiusKm) {
+                const t = (distKm - profile.threatRadiusKm) / (profile.bufferRadiusKm - profile.threatRadiusKm);
+                fcd = 34.0 + t * (profile.baseFCD - 34.0) + micro1 + macroRidge * 0.3;
+                ndvi = 0.34 + t * (profile.baseNDVI - 0.34) + (micro2 * 0.01);
+                dNdvi = -0.38 * (1.0 - t) + (micro1 * 0.006);
+                hazard = 0.18 + 0.54 * Math.pow(1.0 - t, 1.4);
+            } else {
+                fcd = Math.max(68.0, Math.min(96.0, profile.baseFCD + macroRidge + micro1 + micro2));
+                ndvi = Math.max(0.66, Math.min(0.92, profile.baseNDVI + (macroRidge * 0.007) + (micro2 * 0.004)));
+                dNdvi = Math.max(-0.06, Math.min(0.04, macroRidge * 0.003 + micro1 * 0.002));
+                hazard = Math.max(0.04, Math.min(0.20, 0.14 - Math.min(distKm * 0.008, 0.08) + (micro1 * 0.008)));
+            }
+            const b2 = Math.max(0.02, Math.min(0.18, 0.05 + (1.0 - ndvi) * 0.09));
+            const b3 = Math.max(0.04, Math.min(0.24, 0.08 + (ndvi * 0.09)));
+            const b4 = Math.max(0.02, Math.min(0.28, 0.04 + (1.0 - ndvi) * 0.20));
+            const b8 = Math.max(0.10, Math.min(0.85, 0.18 + ndvi * 0.64));
+            const b11 = Math.max(0.05, Math.min(0.36, 0.12 + (1.0 - ndvi) * 0.21));
+            const b12 = Math.max(0.03, Math.min(0.30, 0.06 + (1.0 - ndvi) * 0.18));
+            let cover = 'Intact canopy';
+            if (ndvi < 0.32) cover = 'Cleared / bare soil';
+            else if (ndvi < 0.48) cover = 'Degraded edge';
+            else if (ndvi < 0.62) cover = 'Fragmented mosaic';
+            else if (fcd > 88) cover = 'Closed primary forest';
+            const carbon = (Math.max(0, 90 - fcd) / 90) * 310 * 0.09;
+            return { fcd, ndvi, dNdvi, hazard, distKm, cover, carbon, swir: (b11 / (b8 + 0.001)), bands: { b2, b3, b4, b8, b11, b12 } };
+        }
+
+        function updateProbeAt(latlng, clientX, clientY) {
+            if (!latlng) return;
+            const lat = latlng.lat;
+            const lon = latlng.lng;
+            const latStr = Math.abs(lat).toFixed(4) + '°' + (lat >= 0 ? 'N' : 'S');
+            const lonStr = Math.abs(lon).toFixed(4) + '°' + (lon >= 0 ? 'E' : 'W');
+            document.getElementById('probe-coords').innerText = latStr + ', ' + lonStr;
+            const res = computeGeospatialMetrics(lat, lon);
+            const elFcd = document.getElementById('stat-fcd');
+            elFcd.innerText = res.fcd.toFixed(1) + '%';
+            elFcd.style.color = res.fcd >= 70 ? '#10b981' : (res.fcd >= 40 ? '#fbbf24' : '#ef4444');
+            const elNdvi = document.getElementById('stat-ndvi');
+            elNdvi.innerText = res.ndvi.toFixed(2);
+            elNdvi.style.color = res.ndvi >= 0.65 ? '#10b981' : (res.ndvi >= 0.40 ? '#fbbf24' : '#ef4444');
+            const elLoss = document.getElementById('stat-loss');
+            elLoss.innerText = (res.dNdvi > 0 ? '+' : '') + res.dNdvi.toFixed(2);
+            elLoss.style.color = res.dNdvi <= -0.25 ? '#ef4444' : (res.dNdvi <= -0.10 ? '#fbbf24' : '#10b981');
+            const elHazard = document.getElementById('stat-hazard');
+            elHazard.innerText = res.hazard.toFixed(2);
+            elHazard.style.color = res.hazard >= 0.50 ? '#ef4444' : (res.hazard >= 0.20 ? '#fbbf24' : '#10b981');
+            document.getElementById('meta-cover').textContent = res.cover;
+            document.getElementById('meta-dist').textContent = res.distKm.toFixed(2) + ' km';
+            document.getElementById('meta-carbon').textContent = res.carbon.toFixed(1) + ' t/px';
+            document.getElementById('meta-swir').textContent = res.swir.toFixed(2);
+            const maxBarPx = 50;
+            function setBar(id, normVal) {
+                const bar = document.getElementById(id);
+                bar.style.height = Math.max(6, Math.min(maxBarPx, Math.round(normVal * maxBarPx))) + 'px';
+            }
+            setBar('bar-b2', res.bands.b2 / 0.18);
+            setBar('bar-b3', res.bands.b3 / 0.24);
+            setBar('bar-b4', res.bands.b4 / 0.28);
+            setBar('bar-b8', res.bands.b8 / 0.85);
+            setBar('bar-b11', res.bands.b11 / 0.36);
+            setBar('bar-b12', res.bands.b12 / 0.30);
+
+            const chip = document.getElementById('hover-chip');
+            if (typeof clientX === 'number') {
+                chip.style.display = 'block';
+                chip.style.left = clientX + 'px';
+                chip.style.top = clientY + 'px';
+                document.getElementById('chip-cover').textContent = res.cover;
+                document.getElementById('chip-ndvi').textContent = 'NDVI ' + res.ndvi.toFixed(2);
+                document.getElementById('chip-xy').textContent = latStr + '  ' + lonStr;
+                document.getElementById('chip-fcd').textContent = res.fcd.toFixed(0) + '% FCD';
+            }
+            clearTimeout(satTimer);
+            satTimer = setTimeout(function() { refreshSatellites(lat, lon); }, 280);
+        }
+
+        map.on('mousemove', function(e) { updateProbeAt(e.latlng, e.originalEvent.clientX, e.originalEvent.clientY); });
+        map.on('mouseout', function() { document.getElementById('hover-chip').style.display = 'none'; });
+        map.on('move', function() { updateProbeAt(map.getCenter()); });
+        setTimeout(function() { updateProbeAt(map.getCenter()); refreshSatellites(BOOT.center[0], BOOT.center[1]); }, 250);
+
+        function toggleLayer(name) {
+            const sw = document.getElementById('toggle-' + name);
+            const isOn = sw.classList.contains('on');
+            const layerMap = {
+                alerts: alertLayer, risk: riskLayer, s2: s2Layer, viirs: viirsLayer, cir: cirLayer,
+                sar: sarLayer, imerg: imergLayer, hls: hlsLayer
+            };
+            const layer = layerMap[name];
+            if (isOn) { sw.classList.remove('on'); if (layer) map.removeLayer(layer); }
+            else { sw.classList.add('on'); if (layer) layer.addTo(map); }
+        }
+        function setCloudlessYear(year) {
+            document.getElementById('year-label').textContent = year;
+            const wasOn = map.hasLayer(s2Layer);
+            if (wasOn) map.removeLayer(s2Layer);
+            s2Layer.setUrl('https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-' + year + '_3857/default/g/{z}/{y}/{x}.jpg');
+            if (wasOn) s2Layer.addTo(map);
+            lastSatKey = '';
+            const c = map.getCenter();
+            refreshSatellites(c.lat, c.lng);
+        }
+        function setGibsDate(value) {
+            gibsDate = value;
+            const timed = [
+                [viirsLayer, 'VIIRS_SNPP_CorrectedReflectance_TrueColor', 'jpg'],
+                [cirLayer, 'MODIS_Terra_CorrectedReflectance_Bands721', 'jpg'],
+                [sarLayer, 'OPERA_L2_Radiometric_Terrain_Corrected_SAR_Sentinel-1', 'jpg'],
+                [imergLayer, 'IMERG_Precipitation_Rate', 'jpg'],
+                [hlsLayer, 'HLS_S30_Nadir_BRDF_Adjusted_Reflectance', 'jpg']
+            ];
+            timed.forEach(function(item) {
+                const layer = item[0];
+                const wasOn = map.hasLayer(layer);
+                if (wasOn) map.removeLayer(layer);
+                layer.setUrl(gibsWmts(item[1], item[2]));
+                if (wasOn) layer.addTo(map);
+            });
+            lastSatKey = '';
+            const c = map.getCenter();
+            refreshSatellites(c.lat, c.lng);
+        }
+        function flyToHotspot(lat, lon, zoom, key, elem) {
+            currentRegionKey = key;
+            document.querySelectorAll('.hotspot-pill').forEach(function(el) { el.classList.remove('active'); });
+            if (elem) elem.classList.add('active');
+            updateRibbon(key);
+            lastSatKey = '';
+            map.flyTo([lat, lon], zoom, { duration: 1.4 });
+            setTimeout(function() { updateProbeAt({ lat: lat, lng: lon }); refreshSatellites(lat, lon); }, 280);
+        }
+        function goToCoords() {
+            const raw = document.getElementById('coord-input').value.split(',');
+            if (raw.length < 2) return;
+            const lat = parseFloat(raw[0]); const lon = parseFloat(raw[1]);
+            if (isNaN(lat) || isNaN(lon)) return;
+            map.flyTo([lat, lon], 14, { duration: 1.0 });
+            updateProbeAt({ lat: lat, lng: lon });
+        }
+        function toggleHud() {
+            hudVisible = !hudVisible;
+            document.getElementById('left-panel').style.display = hudVisible ? 'block' : 'none';
+            document.getElementById('right-panel').style.display = hudVisible ? 'block' : 'none';
+            document.getElementById('bottom-ribbon').style.opacity = hudVisible ? '1' : '0.92';
+        }
+        function downloadTextFile(filename, mime, text) {
+            const blob = new Blob([text], { type: mime });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            link.rel = 'noopener';
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            setTimeout(function() { URL.revokeObjectURL(url); }, 1500);
+        }
+        function geojsonToKml(fc) {
+            const features = (fc && fc.features) ? fc.features : [];
+            let placemarks = '';
+            features.forEach(function(feat) {
+                const props = feat.properties || {};
+                const geom = feat.geometry || {};
+                if (geom.type !== 'Polygon' || !geom.coordinates || !geom.coordinates[0]) return;
+                const coords = geom.coordinates[0].map(function(pt) {
+                    return pt[0] + ',' + pt[1] + ',0';
+                }).join(' ');
+                const area = props.area_ha || 0;
+                const id = props.alert_id || 'WATCH';
+                placemarks += '<Placemark><name>' + id + ' (' + area + ' ha)</name>' +
+                    '<description>' + (props.severity || 'Deforestation') + '</description>' +
+                    '<Polygon><outerBoundaryIs><LinearRing><coordinates>' + coords +
+                    '</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>';
+            });
+            return '<?xml version="1.0" encoding="UTF-8"?>' +
+                '<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>VANASPATI-AI alerts</name>' +
+                placemarks + '</Document></kml>';
+        }
+        function downloadGeoJSON() {
+            const data = BOOT.geojson || { type: 'FeatureCollection', features: [] };
+            downloadTextFile(
+                'vanaspati_' + (BOOT.initialRegion || 'alerts') + '.geojson',
+                'application/geo+json',
+                JSON.stringify(data, null, 2)
+            );
+        }
+        function exportBhuvanKML() {
+            const text = BOOT.kml || geojsonToKml(BOOT.geojson);
+            downloadTextFile(
+                'vanaspati_' + (BOOT.initialRegion || 'alerts') + '.kml',
+                'application/vnd.google-earth.kml+xml',
+                text
+            );
+        }
+    </script>
+</body>
+</html>

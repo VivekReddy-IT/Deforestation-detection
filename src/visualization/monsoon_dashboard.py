@@ -35,7 +35,7 @@ def render_monsoon_panel(landscape: Dict[str, Any]) -> None:
             float(landscape["lon"]),
             start.isoformat(),
             end.isoformat(),
-            str(landscape["timezone"]),
+            str(landscape.get("timezone") or "auto"),
         )
     except Exception as exc:
         st.error(f"Open-Meteo archive is unavailable right now: {exc}")

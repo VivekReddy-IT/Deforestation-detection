@@ -7,6 +7,7 @@ No synthetic rasters and no changes to the deforestation detectors.
 from __future__ import annotations
 
 import json
+import urllib.error
 import urllib.parse
 import urllib.request
 from typing import Any, Dict, Tuple
@@ -63,9 +64,10 @@ def fetch_daily_climate(
     lon: float,
     start_date: str,
     end_date: str,
-    timezone: str = "UTC",
+    timezone: str = "auto",
 ) -> pd.DataFrame:
     """Daily precipitation and cloud cover from the Open-Meteo archive (ERA5-backed)."""
+    zone = timezone or "auto"
     query = urllib.parse.urlencode(
         {
             "latitude": f"{lat:.4f}",
@@ -73,15 +75,25 @@ def fetch_daily_climate(
             "start_date": start_date,
             "end_date": end_date,
             "daily": "precipitation_sum,rain_sum,cloud_cover_mean,et0_fao_evapotranspiration",
-            "timezone": timezone,
+            "timezone": zone,
         }
     )
     req = urllib.request.Request(
         f"{OPEN_METEO_ARCHIVE}?{query}",
         headers={"User-Agent": USER_AGENT},
     )
-    with urllib.request.urlopen(req, timeout=45) as response:
-        payload: Dict[str, Any] = json.loads(response.read().decode("utf-8"))
+    try:
+        with urllib.request.urlopen(req, timeout=45) as response:
+            payload: Dict[str, Any] = json.loads(response.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")
+        try:
+            parsed = json.loads(detail)
+            raise RuntimeError(parsed.get("reason") or parsed.get("error") or str(exc)) from exc
+        except json.JSONDecodeError:
+            raise RuntimeError(f"Open-Meteo HTTP {exc.code}: {detail[:180]}") from exc
+    if payload.get("error"):
+        raise RuntimeError(str(payload.get("reason") or "Open-Meteo rejected the request"))
     daily = payload.get("daily") or {}
     if not daily.get("time"):
         return pd.DataFrame()

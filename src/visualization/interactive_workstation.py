@@ -59,9 +59,17 @@ def build_isro_geospatial_workstation(
     os.makedirs(os.path.dirname(os.path.abspath(output_html_path)), exist_ok=True)
 
     geojson_obj = None
+    kml_text = ""
     if geojson_path and os.path.exists(geojson_path):
         with open(geojson_path, "r", encoding="utf-8") as handle:
             geojson_obj = _filter_geojson(json.load(handle), min_patch_ha)
+        kml_path = os.path.join(
+            os.path.dirname(os.path.abspath(geojson_path)),
+            "isro_bhuvan_deforestation_alerts.kml",
+        )
+        if os.path.exists(kml_path):
+            with open(kml_path, "r", encoding="utf-8") as handle:
+                kml_text = handle.read()
 
     risk_data_uri = _risk_overlay_uri(risk_map) if risk_map is not None else ""
     delta = 0.045
@@ -82,11 +90,39 @@ def build_isro_geospatial_workstation(
             "total_forest_ha", regions[initial_region]["monitoredHa"]
         )
 
+    if geojson_obj is None:
+        delta_box = 0.04
+        geojson_obj = {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "alert_id": f"WATCH-{initial_region.upper()}",
+                        "severity": "Watch window",
+                        "area_ha": 0,
+                        "status": "MONITORING",
+                    },
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [center_lon - delta_box, center_lat - delta_box],
+                            [center_lon + delta_box, center_lat - delta_box],
+                            [center_lon + delta_box, center_lat + delta_box],
+                            [center_lon - delta_box, center_lat + delta_box],
+                            [center_lon - delta_box, center_lat - delta_box],
+                        ]],
+                    },
+                }
+            ],
+        }
+
     bootstrap = {
         "center": [center_lat, center_lon],
         "zoom": zoom_start,
         "initialRegion": initial_region,
         "geojson": geojson_obj,
+        "kml": kml_text,
         "riskUri": risk_data_uri,
         "riskBounds": [
             [center_lat - delta, center_lon - delta],

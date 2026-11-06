@@ -544,8 +544,55 @@
             document.getElementById('right-panel').style.display = hudVisible ? 'block' : 'none';
             document.getElementById('bottom-ribbon').style.opacity = hudVisible ? '1' : '0.92';
         }
-        function exportBhuvanKML() { window.open('../../results/isro_bhuvan_deforestation_alerts.kml', '_blank'); }
-        function downloadGeoJSON() { window.open('../../results/deforestation_alerts.geojson', '_blank'); }
+        function downloadTextFile(filename, mime, text) {
+            const blob = new Blob([text], { type: mime });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            link.rel = 'noopener';
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            setTimeout(function() { URL.revokeObjectURL(url); }, 1500);
+        }
+        function geojsonToKml(fc) {
+            const features = (fc && fc.features) ? fc.features : [];
+            let placemarks = '';
+            features.forEach(function(feat) {
+                const props = feat.properties || {};
+                const geom = feat.geometry || {};
+                if (geom.type !== 'Polygon' || !geom.coordinates || !geom.coordinates[0]) return;
+                const coords = geom.coordinates[0].map(function(pt) {
+                    return pt[0] + ',' + pt[1] + ',0';
+                }).join(' ');
+                const area = props.area_ha || 0;
+                const id = props.alert_id || 'WATCH';
+                placemarks += '<Placemark><name>' + id + ' (' + area + ' ha)</name>' +
+                    '<description>' + (props.severity || 'Deforestation') + '</description>' +
+                    '<Polygon><outerBoundaryIs><LinearRing><coordinates>' + coords +
+                    '</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>';
+            });
+            return '<?xml version="1.0" encoding="UTF-8"?>' +
+                '<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>VANASPATI-AI alerts</name>' +
+                placemarks + '</Document></kml>';
+        }
+        function downloadGeoJSON() {
+            const data = BOOT.geojson || { type: 'FeatureCollection', features: [] };
+            downloadTextFile(
+                'vanaspati_' + (BOOT.initialRegion || 'alerts') + '.geojson',
+                'application/geo+json',
+                JSON.stringify(data, null, 2)
+            );
+        }
+        function exportBhuvanKML() {
+            const text = BOOT.kml || geojsonToKml(BOOT.geojson);
+            downloadTextFile(
+                'vanaspati_' + (BOOT.initialRegion || 'alerts') + '.kml',
+                'application/vnd.google-earth.kml+xml',
+                text
+            );
+        }
     </script>
 </body>
 </html>
