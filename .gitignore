@@ -1,5 +1,5 @@
 # Data and models (large files)
-data/
+/data/
 *.tif
 *.tiff
 *.h5

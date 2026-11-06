@@ -85,11 +85,23 @@ Models are strictly evaluated on an **independent held-out eastern geographic bl
 
 ---
 
+## 🌧️ v2.0 — Monsoon SAR watch (does not change deforestation outputs)
+
+Optical Sentinel-2 / VIIRS scenes go white under Indian southwest monsoon cloud. v2 adds a **separate** wet-season panel:
+
+* **Open-Meteo archive rainfall** (ERA5-backed daily `precipitation_sum` and `cloud_cover_mean`) for each landscape.
+* **NASA GIBS live WMS snapshots**: dry-season VIIRS vs monsoon VIIRS vs cloud-penetrating **Sentinel-1 OPERA RTC SAR**, plus IMERG rain rate and HLS Landsat/Sentinel-2.
+* Map HUD toggles for SAR / IMERG / HLS. Clearing GeoJSON, U-Net, Prithvi, and risk hectares are **not recomputed**.
+
+---
+
 ## 🌟 Key Platform Features
 
 ### 1. Interactive Split-Screen Swipe Curtain & Live Dynamic AI Probe
-* **Live Dynamic Geospatial AI on Cursor Move:** Move your mouse over any pixel on the map to compute ground coordinates, Forest Canopy Density (FCD %), $\Delta\text{NDVI}$, Hazard Probability, and a dynamic 6-band spectral response bar chart in real time.
-* **Before / After Split Slider:** Drag the curtain horizontally across Hasdeo Arand to visually inspect **2021 Pre-clearing Sal Forest** vs **2024 Open-Cast Coal Pits & Haul Roads**.
+* **Live Dynamic Geospatial AI on Cursor Move:** Hover any pixel for coordinates, Forest Canopy Density (FCD %), $\Delta\text{NDVI}$, frontier hazard, land-cover class, distance-to-clearing, SWIR stress, and a 6-band spectral response.
+* **Hover satellite stack:** A cursor chip plus four live frames — **Esri current**, **Esri Clarity archive**, **Sentinel-2 cloudless** (year slider 2018–2024), and **Sentinel-1 OPERA SAR**. Optional NASA GIBS VIIRS, MODIS 7-2-1, Harmonized Landsat-Sentinel (HLS), and IMERG rain-rate layers.
+* **Region-aware telemetry ribbon:** Switching Hasdeo / Western Ghats / Sumatra / Amazon updates monitored area, cleared hectares, clusters, 12-month high-risk, carbon, and UTM grid without overlapping zoom controls.
+* **Before / After Split Slider:** Drag the curtain to inspect **archive imagery** vs **current Esri World Imagery**.
 
 ### 2. Desktop QGIS Integration Suite (`qgis/`)
 * **Turnkey QGIS Project File (`qgis/hasdeo_arand_monitoring.qgs`):**
@@ -186,8 +198,8 @@ Open `http://localhost:8501` to access the interactive split-screen swipe curtai
 ## 🔭 Future Scope & Enterprise Roadmap
 
 - **Offline Edge Tile Caching for Remote Rangers:** Packaging pre-rendered tile caches (`/tiles/{z}/{x}/{y}.png` / MBTiles) into hand-held Android field units operating in zero-cellular jungle reserves.
-- **Sentinel-1 SAR Penetration:** Integrating C-Band Synthetic Aperture Radar ($VV/VH$) to maintain uninterrupted deforestation detection during heavy monsoon cloud cover.
 - **UAV Micro-Canopy Orthomosaics:** Incorporating 5cm drone imagery for legal timber enforcement and tree species classification.
+- **SAR change detection:** Use Sentinel-1 OPERA stacks to flag monsoon-season canopy loss without waiting for a cloud-free optical overpass.
 
 ---
 
