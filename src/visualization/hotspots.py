@@ -1,4 +1,4 @@
-"""Shared landscape metadata for the Streamlit command center and Web GIS workstation."""
+"""Landscape metadata shared by the Streamlit app and the map HUD."""
 
 from typing import Any, Dict, Tuple
 

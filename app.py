@@ -1,4 +1,4 @@
-"""VANASPATI-AI mission workstation: deforestation detection and 12-month risk forecast."""
+"""VANASPATI-AI Streamlit app: deforestation maps and 12-month risk."""
 
 from __future__ import annotations
 
@@ -130,7 +130,7 @@ with st.sidebar:
     )
     min_patch_ha = st.slider("Min patch filter (hectares)", 0.05, 2.0, 0.25, 0.05, key="min_patch_ha")
     hazard_cutoff = st.slider("12-month hazard threshold", 0.20, 0.90, 0.50, 0.05, key="hazard_cutoff")
-    st.caption("v2.1 · bind 127.0.0.1 · MCP read-only · Sentinel-1 SAR · NASA GIBS")
+    st.caption("Sentinel-2 · Sentinel-1 SAR · NASA GIBS · Open-Meteo")
 
 st.header("Forest canopy sentinel")
 st.caption(
@@ -449,12 +449,12 @@ if tab_models.open:
         st.image(Image.open(worst_fig), width="stretch")
 
 if tab_export.open:
-    st.subheader("Desktop GIS and national geoportal packaging")
+    st.subheader("QGIS and Bhuvan")
     col_q, col_k = st.columns(2)
     with col_q:
         st.markdown(
-            "Turnkey QGIS project in **EPSG:32644 / EPSG:4326** with CIR 8-4-3 symbology "
-            "and hectare-classed alert rules. Processing tool: `qgis/isro_deforestation_detector.py`."
+            "QGIS project in **EPSG:32644 / EPSG:4326**, CIR 8-4-3, alerts coloured by size. "
+            "Script: `qgis/isro_deforestation_detector.py`."
         )
         if QGS_PATH.exists():
             st.download_button(
@@ -465,8 +465,7 @@ if tab_export.open:
             )
     with col_k:
         st.markdown(
-            "ISRO Bhuvan KML with ExtendedData telemetry, UTM grid references, and hectare classes "
-            "for `bhuvan.nrsc.gov.in`."
+            "Bhuvan KML with area, carbon, and UTM fields for `bhuvan.nrsc.gov.in`."
         )
         if KML_PATH.exists():
             st.download_button(
@@ -477,21 +476,18 @@ if tab_export.open:
             )
 
 if tab_scope.open:
-    st.subheader("What this release adds")
+    st.subheader("How the pieces fit")
     st.markdown(
         """
-        - Region-aware bottom telemetry so Sumatra / Ghats / Amazon no longer inherit Hasdeo totals.
-        - Hover probe now streams extra satellite frames (Esri current, Esri archive, Sentinel-2 cloudless)
-          plus land cover, distance-to-clearing, SWIR stress, and biomass.
-        - Extra map layers: Sentinel-2 cloudless year slider, NASA GIBS VIIRS, MODIS 7-2-1,
-          Harmonized Landsat-Sentinel, IMERG rain, and Sentinel-1 OPERA SAR (cloud-penetrating).
-        - v2 monsoon watch: Open-Meteo archive rainfall plus dry vs wet vs SAR snapshots.
-          Deforestation detectors, GeoJSON alerts, and model scores are left untouched.
-        - v2.1: GeoJSON / KML HUD buttons download from in-map blobs (no blank tabs).
-          Nine Indian corridors. Streamlit bound to 127.0.0.1. Read-only MCP in `.cursor/mcp.json`.
+        Hasdeo Arand is the site with real pipeline alerts. Other landscapes share the same
+        map and monsoon tools but keep their own totals.
 
-        **Still on the roadmap:** MBTiles for offline rangers, and 5 cm UAV orthomosaics
-        for enforcement-grade canopy work.
+        The map hover stack uses Esri, Sentinel-2 cloudless, VIIRS, MODIS, HLS, IMERG rain,
+        and Sentinel-1 SAR. GeoJSON and KML download as files from the HUD or from this
+        QGIS / Bhuvan tab.
+
+        Monsoon rainfall comes from Open-Meteo. SAR is there because optical scenes wash
+        out under cloud. Detection models and Hasdeo polygons are not rewritten by that tab.
         """
     )
-    st.caption("VANASPATI-AI v2.1 · Sentinel-2 L2A · Sentinel-1 SAR · NASA GIBS · Open-Meteo · MCP")
+    st.caption("VANASPATI-AI · Sentinel-2 · Sentinel-1 SAR · NASA GIBS · Open-Meteo")

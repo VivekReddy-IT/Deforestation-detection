@@ -1,6 +1,6 @@
 """Read-only VANASPATI-AI MCP server (stdio JSON-RPC).
 
-No secrets, no writes, no shell. Cursor talks to this instead of an open LAN Streamlit bind.
+Lists landscapes, alerts, monsoon stats, and pipeline metrics. No writes, no secrets.
 """
 
 from __future__ import annotations
