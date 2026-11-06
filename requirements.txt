@@ -19,10 +19,11 @@ matplotlib>=3.7.0
 tqdm>=4.66.0
 Pillow>=9.5.0
 
-# Interactive Mapping & Visualization
+# Interactive Mapping, Visualization & Web UI
 leafmap>=0.28.0
 folium>=0.14.0
 geemap>=0.29.0
+streamlit>=1.30.0
 
 # Notebook & Utility
 jupyter>=1.0.0
