@@ -1,4 +1,24 @@
-# VANASPATI-AI
+# CanopyWatch
+
+> Prototype: the existing workstation hover readings, alerts, forecasts and model
+> scores include simulated or unvalidated values. They are not operational findings.
+
+## Experimental real Sentinel-2 analysis
+
+The **Real Sentinel-2 analysis** tab compares cloud-masked Sentinel-2 surface
+reflectance composites for a fixed Hasdeo window and previews potential vegetation
+loss. This simple NDVI screening rule is not validated deforestation detection;
+clouds, seasonality and other vegetation changes can cause false results. Scene
+dates are shown in UTC, and date-range ends are exclusive. Satellite data are
+periodic observations, not continuous live imagery.
+
+To use it, enable Earth Engine for a Google Cloud project, authenticate on the
+machine running the app with `earthengine authenticate`, and enter the project ID
+in the tab. Access and imagery availability depend on Earth Engine and your
+credentials. Candidate polygons of at least 0.25 ha are displayed at 20 m
+analysis scale; only the 100 largest are included in the review and downloads.
+Review decisions are held in the browser session, so download the GeoJSON or CSV
+to retain them. These are screening candidates, not verified alerts.
 
 Forest change detection from Sentinel-2, plus a 12-month clearing-risk map. The web app is a Streamlit map workstation. Hasdeo Arand (Chhattisgarh) is the site with a full trained pipeline; other landscapes are watch windows on live satellite layers.
 

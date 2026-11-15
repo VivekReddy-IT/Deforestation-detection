@@ -1,5 +1,5 @@
 """
-VANASPATI-AI geospatial workstation builder.
+CanopyWatch geospatial workstation builder.
 
 Renders a standalone Leaflet HUD with split-swipe imagery, live cursor probe,
 multi-sensor hover previews, and region-aware telemetry.

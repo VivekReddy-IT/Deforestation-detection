@@ -1,4 +1,4 @@
-"""Read-only VANASPATI-AI MCP server (stdio JSON-RPC).
+"""Read-only CanopyWatch MCP server (stdio JSON-RPC).
 
 Lists landscapes, alerts, monsoon stats, and pipeline metrics. No writes, no secrets.
 """
@@ -44,7 +44,7 @@ def _public_landscape(item: Dict[str, Any]) -> Dict[str, Any]:
 TOOLS = [
     {
         "name": "list_landscapes",
-        "description": "List VANASPATI-AI forest watch corridors (India and global).",
+        "description": "List CanopyWatch forest watch corridors (India and global).",
         "inputSchema": {
             "type": "object",
             "properties": {
@@ -133,7 +133,7 @@ def handle(message: Dict[str, Any]) -> Dict[str, Any] | None:
             "result": {
                 "protocolVersion": PROTOCOL,
                 "capabilities": {"tools": {}},
-                "serverInfo": {"name": "vanaspati-ai", "version": "2.1.0"},
+                "serverInfo": {"name": "canopywatch", "version": "2.1.0"},
             },
         }
     if method == "notifications/initialized" or method == "initialized":

@@ -26,7 +26,7 @@ GIBS_LAYERS = {
     "blue_marble": "BlueMarble_NextGeneration",
 }
 
-USER_AGENT = "VANASPATI-AI/2.0 (forest-sentinel; educational)"
+USER_AGENT = "CanopyWatch/2.0 (forest-sentinel; educational)"
 
 
 def gibs_wms_url(

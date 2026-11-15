@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>VANASPATI-AI | Forest Sentinel Workstation</title>
+    <title>CanopyWatch | Forest Sentinel Workstation</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/digidem/leaflet-side-by-side/leaflet-side-by-side.min.js"></script>
@@ -136,7 +136,7 @@
         <div class="brand-cluster">
             <div class="isro-emblem">V</div>
             <div class="title-group">
-                <h1>VANASPATI-AI <span class="badge-live"><span class="pulse-dot"></span> LIVE PROBE</span></h1>
+                <h1>CanopyWatch <span class="badge-live"><span class="pulse-dot"></span> LIVE PROBE</span></h1>
                 <p id="header-subtitle">Hover any pixel for Sentinel-2, Esri archive, and canopy telemetry</p>
             </div>
         </div>
@@ -169,6 +169,7 @@
             <span>GIBS date</span>
             <input id="gibs-date" type="date" value="2025-07-18" onchange="setGibsDate(this.value)"/>
         </div>
+        <div style="font-size:10px;color:#9ca3af;line-height:1.4;padding-top:6px">Turn on Sentinel-2 to see the selected year. GIBS date applies to NASA layers; imagery may be unavailable on a given date. Rain is coarse resolution.</div>
         <div class="coord-search">
             <input id="coord-input" placeholder="lat, lon  e.g. 0.55, 101.45"/>
             <button onclick="goToCoords()"><i class="fa-solid fa-location-crosshairs"></i></button>
@@ -253,26 +254,26 @@
         });
 
         const s2Layer = L.tileLayer('https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2024_3857/default/g/{z}/{y}/{x}.jpg', {
-            maxZoom: 16, opacity: 0.92, attribution: 'Sentinel-2 cloudless © EOX / Copernicus'
+            maxNativeZoom: 16, maxZoom: 19, opacity: 0.92, attribution: 'Sentinel-2 cloudless © EOX / Copernicus'
         });
-        const viirsLayer = L.tileLayer('https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2024-08-01/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg', {
-            maxZoom: 9, opacity: 0.9, attribution: 'NASA GIBS / VIIRS'
+        const viirsLayer = L.tileLayer('https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_SNPP_CorrectedReflectance_TrueColor/default/2025-07-18/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpeg', {
+            maxNativeZoom: 9, maxZoom: 19, opacity: 0.9, attribution: 'NASA GIBS / VIIRS'
         });
-        const cirLayer = L.tileLayer('https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_Bands721/default/2024-08-01/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg', {
-            maxZoom: 9, opacity: 0.88, attribution: 'NASA GIBS / MODIS 7-2-1'
+        const cirLayer = L.tileLayer('https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_Bands721/default/2025-07-18/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpeg', {
+            maxNativeZoom: 9, maxZoom: 19, opacity: 0.88, attribution: 'NASA GIBS / MODIS 7-2-1'
         });
         let gibsDate = '2025-07-18';
-        function gibsWmts(layer, ext) {
-            return 'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/' + layer + '/default/' + gibsDate + '/GoogleMapsCompatible_Level9/{z}/{y}/{x}.' + ext;
+        function gibsWmts(layer, ext, level) {
+            return 'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/' + layer + '/default/' + gibsDate + '/GoogleMapsCompatible_Level' + level + '/{z}/{y}/{x}.' + ext;
         }
-        const sarLayer = L.tileLayer(gibsWmts('OPERA_L2_Radiometric_Terrain_Corrected_SAR_Sentinel-1', 'jpg'), {
-            maxZoom: 9, opacity: 0.86, attribution: 'NASA GIBS / OPERA Sentinel-1 SAR'
+        const sarLayer = L.tileLayer(gibsWmts('OPERA_L2_Radiometric_Terrain_Corrected_SAR_Sentinel-1', 'png', 12), {
+            maxNativeZoom: 12, maxZoom: 19, opacity: 0.86, attribution: 'NASA GIBS / OPERA Sentinel-1 SAR'
         });
-        const imergLayer = L.tileLayer(gibsWmts('IMERG_Precipitation_Rate', 'jpg'), {
-            maxZoom: 9, opacity: 0.72, attribution: 'NASA GIBS / IMERG rain'
+        const imergLayer = L.tileLayer(gibsWmts('IMERG_Precipitation_Rate', 'png', 6), {
+            maxNativeZoom: 6, maxZoom: 19, opacity: 0.72, attribution: 'NASA GIBS / IMERG rain'
         });
-        const hlsLayer = L.tileLayer(gibsWmts('HLS_S30_Nadir_BRDF_Adjusted_Reflectance', 'jpg'), {
-            maxZoom: 9, opacity: 0.9, attribution: 'NASA GIBS / HLS S30'
+        const hlsLayer = L.tileLayer(gibsWmts('HLS_S30_Nadir_BRDF_Adjusted_Reflectance', 'png', 12), {
+            maxNativeZoom: 12, maxZoom: 19, opacity: 0.9, attribution: 'NASA GIBS / HLS S30'
         });
 
         try {
@@ -504,17 +505,17 @@
         function setGibsDate(value) {
             gibsDate = value;
             const timed = [
-                [viirsLayer, 'VIIRS_SNPP_CorrectedReflectance_TrueColor', 'jpg'],
-                [cirLayer, 'MODIS_Terra_CorrectedReflectance_Bands721', 'jpg'],
-                [sarLayer, 'OPERA_L2_Radiometric_Terrain_Corrected_SAR_Sentinel-1', 'jpg'],
-                [imergLayer, 'IMERG_Precipitation_Rate', 'jpg'],
-                [hlsLayer, 'HLS_S30_Nadir_BRDF_Adjusted_Reflectance', 'jpg']
+                [viirsLayer, 'VIIRS_SNPP_CorrectedReflectance_TrueColor', 'jpeg', 9],
+                [cirLayer, 'MODIS_Terra_CorrectedReflectance_Bands721', 'jpeg', 9],
+                [sarLayer, 'OPERA_L2_Radiometric_Terrain_Corrected_SAR_Sentinel-1', 'png', 12],
+                [imergLayer, 'IMERG_Precipitation_Rate', 'png', 6],
+                [hlsLayer, 'HLS_S30_Nadir_BRDF_Adjusted_Reflectance', 'png', 12]
             ];
             timed.forEach(function(item) {
                 const layer = item[0];
                 const wasOn = map.hasLayer(layer);
                 if (wasOn) map.removeLayer(layer);
-                layer.setUrl(gibsWmts(item[1], item[2]));
+                layer.setUrl(gibsWmts(item[1], item[2], item[3]));
                 if (wasOn) layer.addTo(map);
             });
             lastSatKey = '';
@@ -574,13 +575,13 @@
                     '</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>';
             });
             return '<?xml version="1.0" encoding="UTF-8"?>' +
-                '<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>VANASPATI-AI alerts</name>' +
+                '<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>CanopyWatch alerts</name>' +
                 placemarks + '</Document></kml>';
         }
         function downloadGeoJSON() {
             const data = BOOT.geojson || { type: 'FeatureCollection', features: [] };
             downloadTextFile(
-                'vanaspati_' + (BOOT.initialRegion || 'alerts') + '.geojson',
+                'canopywatch_' + (BOOT.initialRegion || 'alerts') + '.geojson',
                 'application/geo+json',
                 JSON.stringify(data, null, 2)
             );
@@ -588,7 +589,7 @@
         function exportBhuvanKML() {
             const text = BOOT.kml || geojsonToKml(BOOT.geojson);
             downloadTextFile(
-                'vanaspati_' + (BOOT.initialRegion || 'alerts') + '.kml',
+                'canopywatch_' + (BOOT.initialRegion || 'alerts') + '.kml',
                 'application/vnd.google-earth.kml+xml',
                 text
             );

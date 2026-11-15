@@ -1,9 +1,10 @@
-"""VANASPATI-AI Streamlit app: deforestation maps and 12-month risk."""
+"""CanopyWatch Streamlit app: deforestation maps and 12-month risk."""
 
 from __future__ import annotations
 
 import json
 import os
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 import pandas as pd
@@ -16,7 +17,7 @@ from src.visualization.interactive_workstation import build_isro_geospatial_work
 from src.visualization.monsoon_dashboard import render_monsoon_panel
 
 st.set_page_config(
-    page_title="VANASPATI-AI | Forest Sentinel",
+    page_title="CanopyWatch | Forest Sentinel",
     page_icon=":material/forest:",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -48,7 +49,7 @@ def ensure_workstation(
     clusters: int,
     high_risk: float,
     monitored: float,
-    build_id: str = "hud-v4-exports",
+    build_id: str = "hud-v5-satellite-layers",
 ) -> str:
     path = ROOT / "results" / "maps" / f"isro_workstation_{code}.html"
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -99,7 +100,7 @@ retro = metrics.get("retrospective_change_detection", {})
 risk = metrics.get("predictive_risk_forecast", {})
 
 with st.sidebar:
-    st.title("VANASPATI-AI")
+    st.title("CanopyWatch")
     st.caption("Forest sentinel suite")
     corridor_set = st.segmented_control(
         "Corridor set",
@@ -133,6 +134,7 @@ with st.sidebar:
     st.caption("Sentinel-2 · Sentinel-1 SAR · NASA GIBS · Open-Meteo")
 
 st.header("Forest canopy sentinel")
+st.warning("Prototype dashboard: existing hover readings, alert statistics, model scores and forecasts include simulated or unvalidated values. Use the Real Sentinel-2 analysis tab for an experimental observation-based comparison.")
 st.caption(
     f"{landscape['name']} · hover the map for live canopy, NDVI, and extra satellite frames"
 )
@@ -183,9 +185,10 @@ kpi.metric(
     help=f"{clusters} incident clusters in the active landscape.",
 )
 
-tab_map, tab_monsoon, tab_incidents, tab_models, tab_export, tab_scope = st.tabs(
+tab_map, tab_real, tab_monsoon, tab_incidents, tab_models, tab_export, tab_scope = st.tabs(
     [
         "Satellite workstation",
+        "Real Sentinel-2 analysis",
         "Monsoon SAR watch",
         "Incident queue",
         "Model benchmarks",
@@ -195,6 +198,71 @@ tab_map, tab_monsoon, tab_incidents, tab_models, tab_export, tab_scope = st.tabs
     on_change="rerun",
     key="main_tabs",
 )
+
+if tab_real.open:
+    st.subheader("Hasdeo Sentinel-2 change screening")
+    st.info("Experimental screening from real Sentinel-2 observations. Candidates need human review; this is not verified deforestation or a real-time feed.")
+    with st.form("sentinel_analysis"):
+        project = st.text_input("Google Cloud project ID", help="Use an Earth Engine-enabled project and authenticate locally first.")
+        cols = st.columns(2)
+        with cols[0]:
+            baseline = st.date_input("Baseline period", (date(2021, 2, 15), date(2021, 4, 15)))
+        with cols[1]:
+            recent = st.date_input("Recent period", (date(2024, 2, 15), date(2024, 4, 15)))
+        baseline_ndvi = st.slider("Minimum baseline NDVI (experimental)", 0.2, 0.8, 0.4, 0.05, help="A lower threshold may find more candidates but can increase false alerts. Not a validated forest definition.")
+        run_analysis = st.form_submit_button("Analyze Hasdeo")
+    st.caption("End dates are exclusive. Choose comparable seasons to reduce seasonal effects. Cloud masking can leave gaps.")
+    if run_analysis:
+        st.session_state.pop('hasdeo_result', None)
+        st.session_state.pop('candidate_reviews', None)
+        if not project or len(baseline) != 2 or len(recent) != 2 or baseline[0] >= baseline[1] or recent[0] >= recent[1] or baseline[1] > recent[0]:
+            st.error("Enter a project ID and two valid, non-overlapping date ranges in chronological order.")
+        else:
+            try:
+                from src.data.hasdeo_analysis import analyze
+                with st.spinner("Loading satellite observations and preparing previews..."):
+                    st.session_state.hasdeo_result = analyze(project, tuple(d.isoformat() for d in baseline), tuple(d.isoformat() for d in recent), baseline_ndvi)
+            except Exception as exc:
+                st.error(f"Analysis could not be completed: {exc}")
+                st.caption("Check Earth Engine authentication, project access, network connection and date ranges.")
+    if 'hasdeo_result' in st.session_state:
+        result = st.session_state.hasdeo_result
+        cols = st.columns(3)
+        for col, key, label in zip(cols, ('before', 'after', 'change'), ('Baseline composite', 'Recent composite', 'Candidate vegetation loss')):
+            with col:
+                st.markdown(f"**{label}**")
+                st.image(result[key], alt=label, width="stretch")
+        for label, key in [('Baseline', 'before_dates'), ('Recent', 'after_dates')]:
+            dates = sorted(datetime.fromtimestamp(t / 1000, timezone.utc).date().isoformat() for t in result[key])
+            st.caption(f"{label}: {len(dates)} scenes; acquisition dates: {', '.join(dates)} (UTC).")
+        st.caption("Red pixels meet a preliminary NDVI screening rule. Cloud gaps, seasonal changes and non-forest vegetation can affect results.")
+        features = result['candidates']['features']
+        st.subheader("Review candidate patches")
+        st.caption(f"{result['candidate_count']} patches of at least 0.25 ha; showing up to the 100 largest. Reviews last only for this session; download them to keep a record.")
+        if features:
+            from shapely.geometry import shape
+            rows = []
+            for feature in features:
+                point = shape(feature['geometry']).representative_point()
+                props = feature['properties']
+                rows.append({'ID': props['candidate_id'], 'Area (ha)': round(props['area_ha'], 2),
+                             'Latitude': point.y, 'Longitude': point.x, 'Review': 'Unreviewed', 'Notes': ''})
+            reviewed = st.data_editor(pd.DataFrame(rows), hide_index=True, key='candidate_reviews',
+                disabled=['ID', 'Area (ha)', 'Latitude', 'Longitude'],
+                column_config={'Review': st.column_config.SelectboxColumn('Review', options=['Unreviewed', 'Possible loss', 'Dismissed'], required=True)},
+                alt='Candidate vegetation loss patches and review status')
+            st.map(reviewed, latitude='Latitude', longitude='Longitude', zoom=11, alt='Candidate patch locations in Hasdeo')
+            review_by_id = reviewed.set_index('ID').to_dict('index')
+            export = json.loads(json.dumps(result['candidates']))
+            for feature in export['features']:
+                review = review_by_id[feature['properties']['candidate_id']]
+                feature['properties'].update({'review': review['Review'], 'review_notes': review['Notes']})
+            st.download_button('Download reviewed GeoJSON', json.dumps(export, ensure_ascii=False),
+                               file_name='canopywatch_hasdeo_candidates.geojson', mime='application/geo+json')
+            st.download_button('Download review CSV', reviewed.to_csv(index=False),
+                               file_name='canopywatch_hasdeo_reviews.csv', mime='text/csv')
+        else:
+            st.info('No candidate patches met the screening and size thresholds for these periods.')
 
 if tab_map.open:
     map_mode = st.segmented_control(
@@ -228,7 +296,7 @@ if tab_map.open:
         st.download_button(
             "Download workstation HTML",
             data=workstation_path.read_bytes(),
-            file_name=f"vanaspati_{landscape['code']}_workstation.html",
+            file_name=f"canopywatch_{landscape['code']}_workstation.html",
             mime="text/html",
             width="content",
         )
@@ -236,7 +304,7 @@ if tab_map.open:
             st.download_button(
                 "Download Folium map",
                 data=FOLIUM_MAP.read_bytes(),
-                file_name="vanaspati_folium_map.html",
+                file_name="canopywatch_folium_map.html",
                 mime="text/html",
                 width="content",
             )
@@ -244,7 +312,7 @@ if tab_map.open:
             st.download_button(
                 "Download GeoJSON",
                 data=GEOJSON_PATH.read_text(encoding="utf-8"),
-                file_name="vanaspati_deforestation_alerts.geojson",
+                file_name="canopywatch_deforestation_alerts.geojson",
                 mime="application/geo+json",
                 width="content",
             )
@@ -252,7 +320,7 @@ if tab_map.open:
             st.download_button(
                 "Download KML",
                 data=KML_PATH.read_bytes(),
-                file_name="vanaspati_bhuvan_alerts.kml",
+                file_name="canopywatch_bhuvan_alerts.kml",
                 mime="application/vnd.google-earth.kml+xml",
                 width="content",
             )
@@ -490,4 +558,4 @@ if tab_scope.open:
         out under cloud. Detection models and Hasdeo polygons are not rewritten by that tab.
         """
     )
-    st.caption("VANASPATI-AI · Sentinel-2 · Sentinel-1 SAR · NASA GIBS · Open-Meteo")
+    st.caption("CanopyWatch · Sentinel-2 · Sentinel-1 SAR · NASA GIBS · Open-Meteo")
