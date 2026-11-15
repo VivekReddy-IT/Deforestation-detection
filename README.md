@@ -1,98 +1,60 @@
 # CanopyWatch
 
-> Prototype: the existing workstation hover readings, alerts, forecasts and model
-> scores include simulated or unvalidated values. They are not operational findings.
+CanopyWatch is a prototype forest-monitoring workstation. It combines satellite
+imagery, experimental vegetation-change screening, and map review tools, with
+Hasdeo Arand in Chhattisgarh as its initial analysis area.
 
-## Experimental real Sentinel-2 analysis
+**Prototype status:** Existing workstation hover readings, alert statistics,
+model scores, and risk forecasts include simulated or unvalidated values. They
+are not verified operational findings. Satellite imagery consists of periodic
+observations, not continuous live video.
 
-The **Real Sentinel-2 analysis** tab compares cloud-masked Sentinel-2 surface
-reflectance composites for a fixed Hasdeo window and previews potential vegetation
-loss. This simple NDVI screening rule is not validated deforestation detection;
-clouds, seasonality and other vegetation changes can cause false results. Scene
-dates are shown in UTC, and date-range ends are exclusive. Satellite data are
-periodic observations, not continuous live imagery.
+## Real Sentinel-2 analysis
 
-To use it, enable Earth Engine for a Google Cloud project, authenticate on the
-machine running the app with `earthengine authenticate`, and enter the project ID
-in the tab. Access and imagery availability depend on Earth Engine and your
-credentials. Candidate polygons of at least 0.25 ha are displayed at 20 m
-analysis scale; only the 100 largest are included in the review and downloads.
-Review decisions are held in the browser session, so download the GeoJSON or CSV
-to retain them. These are screening candidates, not verified alerts.
+The **Real Sentinel-2 analysis** tab uses Google Earth Engine's harmonized
+Sentinel-2 surface reflectance collection to compare two user-selected periods
+over a fixed Hasdeo window. It masks clouds and shadows, produces median
+composites, and applies an adjustable NDVI rule to identify candidate changes.
 
-Forest change detection from Sentinel-2, plus a 12-month clearing-risk map. The web app is a Streamlit map workstation. Hasdeo Arand (Chhattisgarh) is the site with a full trained pipeline; other landscapes are watch windows on live satellite layers.
+Candidates are not confirmed deforestation. Clouds, seasonal variation, and
+other vegetation changes can cause errors; the screening rule is not validated.
+The app displays source scene dates in UTC, and date-range ends are exclusive.
+Candidate polygons of at least 0.25 ha are generated at a 20 m analysis scale;
+the review list and downloads contain at most the 100 largest patches. Review
+statuses and notes last for the browser session, so download the GeoJSON or CSV
+to retain them.
 
-## What it does
+To use this tab, register a Google Cloud project for Earth Engine, enable the
+Earth Engine API, authenticate locally with `earthengine authenticate`, and
+enter your project ID. Access depends on your credentials and service access.
 
-Most forest products only show loss after it has already happened. This repo splits the work in two:
+## Workstation features
 
-1. **Detection.** Six-band Sentinel-2 L2A (`B2, B3, B4, B8, B11, B12`) goes through an NDVI baseline, a ResNet-34 U-Net, and NASA/IBM Prithvi-100M. Tiny blobs under 0.25 ha are dropped. Surviving patches become GeoJSON alerts.
-2. **Risk.** Distance to recent clearings and haul roads, plus canopy-edge features, feed a small conv net that paints a 12-month vulnerability map (imminent / high / moderate / low).
-3. **Delivery.** Streamlit map (before/after swipe, hover readout), a QGIS project, and an ISRO Bhuvan KML.
+- Compare Esri imagery with a split-swipe map and explore selected landscapes.
+- Display Sentinel-2 cloudless, NASA GIBS VIIRS, MODIS, HLS, OPERA SAR and
+  IMERG layers. Availability depends on location and date; rain data is coarse.
+- Explore rainfall and satellite imagery in the monsoon tab.
+- Download candidate GeoJSON and CSV, or use the existing experimental QGIS and
+  Bhuvan exports. Older map alerts and hover values are not independently verified.
 
-Held-out test tiles sit on a separate eastern block so train and test do not overlap in space.
+The repository also contains experimental NDVI, U-Net, transformer-inspired and
+risk-model code. The existing data-generation pipeline can derive synthetic
+spectral bands and labels from RGB imagery; its reported scores and risk values
+should not be treated as independent validation or calibrated probabilities. The
+transformer implementation does not load pretrained Prithvi weights.
 
-## App features
+## Run locally
 
-- Split swipe between Esri archive and current imagery
-- Hover readout: canopy %, NDVI, land cover, distance to clearing, SWIR, 6-band response
-- Extra layers: Sentinel-2 cloudless (2018–2024), VIIRS, MODIS 7-2-1, HLS, IMERG rain, Sentinel-1 OPERA SAR
-- Indian sites: Hasdeo, Saranda, Sundarbans, Kaziranga, Western Ghats, Silent Valley, Satpura, Tadoba, Namdapha (plus Sumatra and Amazon)
-- Monsoon tab: Open-Meteo rainfall and NASA GIBS snapshots (optical vs SAR). This does **not** rewrite the deforestation alerts
-- GeoJSON / KML downloads from the map HUD and from the QGIS / Bhuvan tab
-
-## Held-out scores (eastern block)
-
-| Model | Inputs | IoU | F1 | Precision | Recall |
-| --- | --- | ---: | ---: | ---: | ---: |
-| NDVI baseline | B4, B8 | 1.0000 | 1.0000 | 1.0000 | 1.0000 |
-| ResNet-34 U-Net | 6 bands | 0.9832 | 0.9915 | 0.9884 | 0.9946 |
-| Prithvi-100M | 6 bands | 0.9845 | 0.9922 | 0.9892 | 0.9951 |
-
-## 12-month risk (Hasdeo window)
-
-| Tier | P(loss) | Area |
-| --- | --- | ---: |
-| Imminent | > 80% | 0.00 ha |
-| High | 50–80% | 100.73 ha |
-| Moderate | 20–50% | 10,285.52 ha |
-| Low | < 20% | 0.00 ha |
-
-## Pipeline
-
-```mermaid
-flowchart TD
-    S2[Sentinel-2 L2A 6-band] --> Tile[256 px tiles, eastern block held out]
-    DW[Dynamic World trees] --> Tile
-    Tile --> NDVI[NDVI baseline]
-    Tile --> UNet[ResNet-34 U-Net]
-    Tile --> Prithvi[Prithvi-100M]
-    UNet --> Change[T1 forest, gone in T2]
-    Prithvi --> Change
-    Change --> Filter[Drop patches under 0.25 ha]
-    Filter --> Alerts[GeoJSON alerts]
-    Filter --> Risk[12-month risk map]
-    Alerts --> App[Streamlit app.py]
-    Risk --> App
-    Alerts --> QGIS[QGIS project]
-    Alerts --> Bhuvan[Bhuvan KML]
-```
-
-## Run the app
-
-Port 8501 is often taken by something else on this machine. Use 8502.
+On Windows, in PowerShell:
 
 ```powershell
-cd deforestation-detection
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 python -m streamlit run app.py --server.port 8502
 ```
 
-Then open http://127.0.0.1:8502
-
-On macOS/Linux:
+On macOS or Linux:
 
 ```bash
 python -m venv .venv
@@ -101,38 +63,22 @@ pip install -r requirements.txt
 python -m streamlit run app.py --server.port 8502
 ```
 
-Optional training/export:
+Open http://127.0.0.1:8502. The provided Streamlit configuration binds to
+localhost. The optional read-only tool server runs with `python -m src.mcp_server`.
 
-```bash
-python scripts/run_pipeline.py --region hasdeo_arand_india --force-data --epochs 3 --batch-size 4
-```
+## Project layout
 
-The Streamlit process listens on `127.0.0.1` only. There is also a read-only stdio tool server (`python -m src.mcp_server`) if you want to query landscapes and alerts from an MCP client. It does not write files or open the app to the network.
+- `app.py`: Streamlit interface.
+- `src/data/`: imagery ingestion, experimental Earth Engine analysis and datasets.
+- `src/models/`, `src/baseline/` and `src/postprocessing/`: experimental detection,
+  forecasting and export code.
+- `src/visualization/`: map workstation and monsoon views.
+- `scripts/`: pipeline and workstation-generation scripts.
+- `qgis/`: QGIS project and processing script.
+- `results/`: existing maps, figures, GeoJSON and KML outputs.
 
-## QGIS and Bhuvan
+## Next steps
 
-- `qgis/hasdeo_arand_monitoring.qgs` — UTM 44N / WGS84, CIR 8-4-3, alerts coloured by size
-- `qgis/isro_deforestation_detector.py` — Processing Toolbox script
-- `results/isro_bhuvan_deforestation_alerts.kml` — polygons with area, carbon, UTM
-
-## Layout
-
-```text
-app.py                      Streamlit UI
-scripts/run_pipeline.py     train / export
-qgis/                       QGIS project + processing script
-src/data/                   download, tiling, datasets
-src/models/                 U-Net, Prithvi, risk net
-src/postprocessing/         change polygons, Bhuvan KML
-src/visualization/          map HUD, hotspots, monsoon panel
-src/mcp_server.py           read-only MCP tools
-results/                    GeoJSON, KML, figures, HTML maps
-```
-
-## Next
-
-Offline MBTiles for field use, drone orthomosaics, and SAR-based change (not just a monsoon overlay) are still open.
-
-## License
-
-[MIT](LICENSE)
+Validate candidate changes against independently reviewed examples, test review
+and export workflows end to end, and measure false alerts before relying on
+detection or developing a calibrated forecast.
